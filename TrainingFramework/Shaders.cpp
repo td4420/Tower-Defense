@@ -1,4 +1,5 @@
-#include <stdafx.h>
+
+#include "stdafx.h"
 #include "Shaders.h"
 
 int Shaders::Init(char * fileVertexShader, char * fileFragmentShader)
