@@ -19,7 +19,7 @@ int Init(ESContext* esContext)
 
 	//triangle data (heap)
 	Vertex verticesData[3];
-	
+
 
 	verticesData[0].pos.x = 0.0f;  verticesData[0].pos.y = 0.5f;  verticesData[0].pos.z = 0.0f;
 	verticesData[1].pos.x = -0.5f;  verticesData[1].pos.y = -0.5f;  verticesData[1].pos.z = 0.0f;
@@ -29,6 +29,9 @@ int Init(ESContext* esContext)
 	verticesData[1].color.x = 0.0f;  verticesData[1].color.y = 1.0f;  verticesData[1].color.z = 0.0f;
 	verticesData[2].color.x = 0.0f;  verticesData[2].color.y = 0.0f;  verticesData[2].color.z = 1.0f;
 
+	verticesData[0].coords.x = 0.0f;  verticesData[0].coords.y = 0.0f;
+	verticesData[1].coords.x = 1.0f;  verticesData[1].coords.y = 0.0f;
+	verticesData[2].coords.x = 0.5f;  verticesData[2].coords.y = 1.0f;
 
 	int indices[] = { 0, 1, 2 };
 	//buffer object
@@ -42,6 +45,34 @@ int Init(ESContext* esContext)
 	glBufferData(GL_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+	//Textures
+	glGenTextures(1, &textureId);
+	glBindTexture(GL_TEXTURE_2D, textureId);
+
+	//Load image
+	int iWidth = 0, iHeight = 0, iBpp = 0;
+	char* imageData = LoadTGA("../ResourcesPacket/Textures/Woman1.tga", &iWidth, &iHeight, &iBpp);
+	GLenum format = (iBpp == 24 ? GL_RGB : GL_RGBA);
+	if (imageData)
+	{
+		std::cout << "Load texture succes" << std::endl;
+		glTexImage2D(GL_TEXTURE_2D, 0, format, iWidth, iHeight, 0, format, GL_UNSIGNED_BYTE, imageData);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+	{
+		std::cout << "Fail to load texture" << std::endl;
+	}
+
+	//Wraping
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+	//Filter
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
 	//creation of shaders and program 
 	return myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
 
@@ -52,7 +83,7 @@ void Draw(ESContext* esContext)
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	glUseProgram(myShaders.program);
-
+	glBindTexture(GL_TEXTURE_2D, textureId);
 	glBindBuffer(GL_ARRAY_BUFFER, vboId);
 	if (myShaders.positionAttribute != -1)
 	{
@@ -64,10 +95,15 @@ void Draw(ESContext* esContext)
 		glEnableVertexAttribArray(myShaders.colorAttribute);
 		glVertexAttribPointer(myShaders.colorAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)sizeof(Vector3));
 	}
-	
+
+	if (myShaders.uvAttribute != -1)
+	{
+		glEnableVertexAttribArray(myShaders.uvAttribute);
+		glVertexAttribPointer(myShaders.uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(2 * sizeof(Vector3)));
+	}
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboId);
 	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
-	
+
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
