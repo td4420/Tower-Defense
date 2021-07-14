@@ -8,6 +8,7 @@ public:
 	char fileVS[260];
 	char fileFS[260];
 	GLint positionAttribute;
+	GLint colorAttribute;
 	int Init(char * fileVertexShader, char * fileFragmentShader);
 	~Shaders();
 };
