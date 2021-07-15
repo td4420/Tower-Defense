@@ -8,15 +8,15 @@
 #include "Globals.h"
 #include <conio.h>
 #include <iostream>
-
+#include "Model.h"
 
 GLuint vboId, iboId, textureId;
 Shaders myShaders;
-
+Model* model;
 int Init(ESContext* esContext)
 {
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-
+	
 	//triangle data (heap)
 	Vertex verticesData[3];
 
@@ -55,7 +55,7 @@ int Init(ESContext* esContext)
 	GLenum format = (iBpp == 24 ? GL_RGB : GL_RGBA);
 	if (imageData)
 	{
-		std::cout << "Load texture succes" << std::endl;
+		//std::cout << "Load texture succes" << std::endl;
 		glTexImage2D(GL_TEXTURE_2D, 0, format, iWidth, iHeight, 0, format, GL_UNSIGNED_BYTE, imageData);
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
@@ -73,6 +73,13 @@ int Init(ESContext* esContext)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
+
+	//Model
+	model = new Model("../ResourcesPacket/Models/Woman1.nfg");
+	model->Init();
+	glBindBuffer(GL_ARRAY_BUFFER, model->mVBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, model->mIBO);
+
 	//creation of shaders and program 
 	return myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
 
@@ -80,11 +87,14 @@ int Init(ESContext* esContext)
 
 void Draw(ESContext* esContext)
 {
-	glClear(GL_COLOR_BUFFER_BIT);
-
+	glEnable(GL_DEPTH_TEST);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glUseProgram(myShaders.program);
+
 	glBindTexture(GL_TEXTURE_2D, textureId);
-	glBindBuffer(GL_ARRAY_BUFFER, vboId);
+	//glBindBuffer(GL_ARRAY_BUFFER, vboId);
+	glBindBuffer(GL_ARRAY_BUFFER, model->mVBO);
+	
 	if (myShaders.positionAttribute != -1)
 	{
 		glEnableVertexAttribArray(myShaders.positionAttribute);
@@ -101,8 +111,11 @@ void Draw(ESContext* esContext)
 		glEnableVertexAttribArray(myShaders.uvAttribute);
 		glVertexAttribPointer(myShaders.uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(2 * sizeof(Vector3)));
 	}
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboId);
-	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboId);
+	
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, model->mIBO);
+
+	glDrawElements(GL_TRIANGLES, model->mNumberOfIndices, GL_UNSIGNED_INT, 0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
