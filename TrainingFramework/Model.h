@@ -1,7 +1,8 @@
 #pragma once
+#include "../Utilities/utilities.h"
 #include <cstdio>
 #include <GLES2/gl2.h>
-#include "../Utilities/utilities.h"
+
 class Model
 {
 public:

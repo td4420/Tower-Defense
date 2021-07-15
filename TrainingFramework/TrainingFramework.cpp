@@ -9,14 +9,17 @@
 #include <conio.h>
 #include <iostream>
 #include "Model.h"
-
+#include "Texture.h"
 GLuint vboId, iboId, textureId;
 Shaders myShaders;
 Model* model;
+Texture* texture;
 int Init(ESContext* esContext)
 {
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-	
+	glEnable(GL_DEPTH_TEST);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	//triangle data (heap)
 	Vertex verticesData[3];
 
@@ -45,35 +48,10 @@ int Init(ESContext* esContext)
 	glBufferData(GL_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	//Textures
-	glGenTextures(1, &textureId);
-	glBindTexture(GL_TEXTURE_2D, textureId);
-
-	//Load image
-	int iWidth = 0, iHeight = 0, iBpp = 0;
-	char* imageData = LoadTGA("../ResourcesPacket/Textures/Woman1.tga", &iWidth, &iHeight, &iBpp);
-	GLenum format = (iBpp == 24 ? GL_RGB : GL_RGBA);
-	if (imageData)
-	{
-		//std::cout << "Load texture succes" << std::endl;
-		glTexImage2D(GL_TEXTURE_2D, 0, format, iWidth, iHeight, 0, format, GL_UNSIGNED_BYTE, imageData);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else
-	{
-		std::cout << "Fail to load texture" << std::endl;
-	}
-
-	//Wraping
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-	//Filter
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-	glBindTexture(GL_TEXTURE_2D, 0);
-
+	//Texture
+	texture = new Texture("../ResourcesPacket/Textures/Woman1.tga");
+	texture->Init();
+	glBindTexture(GL_TEXTURE_2D, texture->mTextureId);
 	//Model
 	model = new Model("../ResourcesPacket/Models/Woman1.nfg");
 	model->Init();
@@ -87,11 +65,10 @@ int Init(ESContext* esContext)
 
 void Draw(ESContext* esContext)
 {
-	glEnable(GL_DEPTH_TEST);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
 	glUseProgram(myShaders.program);
 
-	glBindTexture(GL_TEXTURE_2D, textureId);
+	glBindTexture(GL_TEXTURE_2D, texture->mTextureId);
 	//glBindBuffer(GL_ARRAY_BUFFER, vboId);
 	glBindBuffer(GL_ARRAY_BUFFER, model->mVBO);
 	
