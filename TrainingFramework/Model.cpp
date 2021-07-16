@@ -29,7 +29,6 @@ bool Model::InitNFG(FILE* file)
 
 		(vertices + i)->pos.x = posX; (vertices + i)->pos.y = posY - 1; (vertices + i)->pos.z = posZ;
 		(vertices + i)->coords.x = uvX; (vertices + i)->coords.y = uvY;
-		
 
 	}
 	glGenBuffers(1, &this->mVBO);
@@ -58,7 +57,8 @@ bool Model::InitNFG(FILE* file)
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * numberOfIndices, indices, GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	this->mNumberOfIndices = numberOfIndices;
-	delete indices;
+	delete[] indices;
+	delete[] vertices;
 }
 Model::Model(const char* modelFile)
 {

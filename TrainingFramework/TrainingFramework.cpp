@@ -86,7 +86,9 @@ void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 void CleanUp()
 {
 	model->~Model();
+	delete model;
 	texture->~Texture();
+	delete texture;
 }
 
 int _tmain(int argc, TCHAR* argv[])

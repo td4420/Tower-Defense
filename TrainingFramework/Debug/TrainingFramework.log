@@ -1,4 +1,19 @@
 ﻿cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-  TrainingFramework.cpp
-C:\Users\trong\Desktop\3DFramework\TrainingFramework\TrainingFramework.cpp(18,24): warning C4305: 'initializing': truncation from 'double' to 'float'
+  Texture.cpp
+C:\Users\trong\Desktop\3DFramework\TrainingFramework\Texture.cpp(41,17): warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _strdup. See online help for details.
+  Model.cpp
+C:\Users\trong\Desktop\3DFramework\TrainingFramework\Model.cpp(10,2): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\trong\Desktop\3DFramework\TrainingFramework\Model.cpp(23,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\trong\Desktop\3DFramework\TrainingFramework\Model.cpp(24,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\trong\Desktop\3DFramework\TrainingFramework\Model.cpp(25,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\trong\Desktop\3DFramework\TrainingFramework\Model.cpp(26,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\trong\Desktop\3DFramework\TrainingFramework\Model.cpp(27,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\trong\Desktop\3DFramework\TrainingFramework\Model.cpp(28,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\trong\Desktop\3DFramework\TrainingFramework\Model.cpp(40,2): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\trong\Desktop\3DFramework\TrainingFramework\Model.cpp(51,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\trong\Desktop\3DFramework\TrainingFramework\Model.cpp(52,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\trong\Desktop\3DFramework\TrainingFramework\Model.cpp(65,15): warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _strdup. See online help for details.
+C:\Users\trong\Desktop\3DFramework\TrainingFramework\Model.cpp(76,15): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  Generating Code...
+C:\Users\trong\Desktop\3DFramework\TrainingFramework\Model.cpp(62): warning C4715: 'Model::InitNFG': not all control paths return a value
   TrainingFramework.vcxproj -> C:\Users\trong\Desktop\3DFramework\BIN\TrainingFramework.exe
