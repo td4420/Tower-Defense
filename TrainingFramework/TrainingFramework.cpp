@@ -10,10 +10,12 @@
 #include <iostream>
 #include "Model.h"
 #include "Texture.h"
-GLuint vboId, iboId, textureId;
+#include "MVP.h"
+
 Shaders myShaders;
-Model* model;
 Texture* texture;
+Model* model;
+float PI = 3.1415926535;
 int Init(ESContext* esContext)
 {
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -27,7 +29,6 @@ int Init(ESContext* esContext)
 	model = new Model("../ResourcesPacket/Models/Woman1.nfg");
 	model->Init();
 	glBindBuffer(GL_ARRAY_BUFFER, model->mVBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, model->mIBO);
 
 	//creation of shaders and program 
 	return myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
@@ -40,9 +41,13 @@ void Draw(ESContext* esContext)
 	glUseProgram(myShaders.program);
 
 	glBindTexture(GL_TEXTURE_2D, texture->mTextureId);
-	//glBindBuffer(GL_ARRAY_BUFFER, vboId);
 	glBindBuffer(GL_ARRAY_BUFFER, model->mVBO);
-	
+	MVP* mvp = new MVP(myShaders);
+	mvp->Translation(Vector3(0.5f, 0.0f, 0.0f));
+	mvp->RotationY(PI);
+	mvp->Scale(0.5f);
+	mvp->Init();
+	delete mvp;
 	if (myShaders.positionAttribute != -1)
 	{
 		glEnableVertexAttribArray(myShaders.positionAttribute);
@@ -59,16 +64,13 @@ void Draw(ESContext* esContext)
 		glEnableVertexAttribArray(myShaders.uvAttribute);
 		glVertexAttribPointer(myShaders.uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(2 * sizeof(Vector3)));
 	}
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboId);
-	
+
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, model->mIBO);
-
 	glDrawElements(GL_TRIANGLES, model->mNumberOfIndices, GL_UNSIGNED_INT, 0);
-
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
 	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
+	
 }
 
 void Update(ESContext* esContext, float deltaTime)
@@ -83,8 +85,8 @@ void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 
 void CleanUp()
 {
-	glDeleteBuffers(1, &vboId);
-	glDeleteBuffers(1, &iboId);
+	model->~Model();
+	texture->~Texture();
 }
 
 int _tmain(int argc, TCHAR* argv[])

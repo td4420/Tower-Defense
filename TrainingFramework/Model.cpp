@@ -13,7 +13,6 @@ bool Model::InitNFG(FILE* file)
 	Vertex *vertices = new Vertex[numberOfVertices];
 	for (int i = 0; i < numberOfVertices; ++i)
 	{
-		//fscanf(file, "pos[%f,%f,%f];", (vertices + i)->pos.x, (vertices + i)->pos.y, (vertices + i)->pos.z);
 		float posX, posY, posZ;
 		float normX, normY, normZ;
 		float binormX, binormY, binormZ;
@@ -27,8 +26,11 @@ bool Model::InitNFG(FILE* file)
 		fscanf(file, "binorm:[%f, %f, %f]; ", &binormX, &binormY, &binormZ);
 		fscanf(file, "tgt:[%f, %f, %f]; ", &tgtX, &tgtY, &tgtZ);
 		fscanf(file, "uv:[%f, %f];\n ", &uvX, &uvY);
+
 		(vertices + i)->pos.x = posX; (vertices + i)->pos.y = posY - 1; (vertices + i)->pos.z = posZ;
 		(vertices + i)->coords.x = uvX; (vertices + i)->coords.y = uvY;
+		
+
 	}
 	glGenBuffers(1, &this->mVBO);
 	glBindBuffer(GL_ARRAY_BUFFER, this->mVBO);
@@ -56,6 +58,7 @@ bool Model::InitNFG(FILE* file)
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * numberOfIndices, indices, GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	this->mNumberOfIndices = numberOfIndices;
+	delete indices;
 }
 Model::Model(const char* modelFile)
 {
