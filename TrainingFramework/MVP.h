@@ -4,12 +4,12 @@
 class MVP
 {
 public:
-	Shaders myShaders;
-	Matrix Rx, Ry, Rz;
-	Matrix transform, scale, rotation;
-	Matrix World;
-	MVP(Shaders shader);
-	void Init();
+	Matrix w_Rx, w_Ry, w_Rz; //For world matrix
+	Matrix v_Rx, v_Ry, v_Rz; //For view matrix
+	Matrix w_transform, scale, w_rotation, v_rotation, v_transform;
+	Matrix World, View;
+	MVP();
+	void Init(GLuint program);
 	void RotationX(GLfloat angle);
 	void RotationY(GLfloat angle);
 	void RotationZ(GLfloat angle);

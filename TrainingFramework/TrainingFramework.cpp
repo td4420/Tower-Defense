@@ -1,6 +1,5 @@
 // TrainingFramework.cpp : Defines the entry point for the console application.
 //
-
 #include "stdafx.h"
 #include "../Utilities/utilities.h" // if you use STL, please include this line AFTER all other include
 #include "Vertex.h"
@@ -10,25 +9,43 @@
 #include <iostream>
 #include "Model.h"
 #include "Texture.h"
-#include "MVP.h"
+#include "Camera.h"
+#include "Object.h"
+
+#define MOVE_FORWARD 1
+#define MOVE_BACKWARD 1 << 1
+#define MOVE_LEFT 1 << 2
+#define MOVE_RIGHT 1 << 3
+#define ROTATE_UP 1 << 4
+#define ROTATE_DOWN 1 << 5
+#define ROTATE_LEFT 1 << 6
+#define ROTATE_RIGHT 1 << 7
+
+
+int keyPressed = 0;
 
 Shaders myShaders;
 Texture* texture;
 Model* model;
-float PI = 3.1415926535;
+Camera* camera;
+Object* object;
 int Init(ESContext* esContext)
 {
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//Texture
 	texture = new Texture("../ResourcesPacket/Textures/Woman1.tga");
 	texture->Init();
-	glBindTexture(GL_TEXTURE_2D, texture->mTextureId);
+
 	//Model
 	model = new Model("../ResourcesPacket/Models/Woman1.nfg");
 	model->Init();
-	glBindBuffer(GL_ARRAY_BUFFER, model->mVBO);
+	//Object
+	object = new Object();
+	object->InitObject();
+	//Camera
+	camera = new Camera();
+	camera->InitCamera();
 
 	//creation of shaders and program 
 	return myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
@@ -37,50 +54,163 @@ int Init(ESContext* esContext)
 
 void Draw(ESContext* esContext)
 {
-	
 	glUseProgram(myShaders.program);
 
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	glBindTexture(GL_TEXTURE_2D, texture->mTextureId);
+
 	glBindBuffer(GL_ARRAY_BUFFER, model->mVBO);
-	MVP* mvp = new MVP(myShaders);
-	mvp->Translation(Vector3(0.5f, 0.0f, 0.0f));
-	mvp->RotationY(PI);
-	mvp->Scale(0.5f);
-	mvp->Init();
-	delete mvp;
+
 	if (myShaders.positionAttribute != -1)
 	{
 		glEnableVertexAttribArray(myShaders.positionAttribute);
 		glVertexAttribPointer(myShaders.positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
 	}
-	if (myShaders.colorAttribute != -1)
-	{
-		glEnableVertexAttribArray(myShaders.colorAttribute);
-		glVertexAttribPointer(myShaders.colorAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)sizeof(Vector3));
-	}
-
 	if (myShaders.uvAttribute != -1)
 	{
 		glEnableVertexAttribArray(myShaders.uvAttribute);
-		glVertexAttribPointer(myShaders.uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(2 * sizeof(Vector3)));
+		glVertexAttribPointer(myShaders.uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(2*sizeof(Vector3)));
 	}
+	glUniformMatrix4fv(myShaders.u_MVP, 1, GL_FALSE, *object->WorldMatrix.m);
+	glUniformMatrix4fv(myShaders.u_projection, 1, GL_FALSE, *camera->PerspectiveMatrix.m);
+	glUniformMatrix4fv(myShaders.u_view, 1, GL_FALSE, *camera->ViewMatrix.m);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, model->mIBO);
 	glDrawElements(GL_TRIANGLES, model->mNumberOfIndices, GL_UNSIGNED_INT, 0);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
 	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
 	
 }
 
 void Update(ESContext* esContext, float deltaTime)
 {
+	if (keyPressed & MOVE_FORWARD) {
+		camera->MoveForward(deltaTime);
+	}
 
+	if (keyPressed & MOVE_BACKWARD) {
+		camera->MoveBackward(deltaTime);
+	}
+
+	if (keyPressed & MOVE_LEFT) {
+		camera->MoveToLeft(deltaTime);
+	}
+
+	if (keyPressed & MOVE_RIGHT) {
+		camera->MoveToRight(deltaTime);
+	}
+	if (keyPressed & ROTATE_UP) {
+		camera->RotationUp(deltaTime);
+	}
+
+	if (keyPressed & ROTATE_DOWN) {
+		camera->RotationDown(deltaTime);
+	}
+	if (keyPressed & ROTATE_LEFT) {
+		camera->RotationLeft(deltaTime);
+	}
+	if (keyPressed & ROTATE_RIGHT) {
+		camera->RotationRight(deltaTime);
+	}
+	camera->Update(deltaTime);
 }
 
 void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 {
+	if (bIsPressed) 
+	{
+		if (key == VK_UP) 
+		{
+			keyPressed = keyPressed | ROTATE_UP;
+			return;
+		}
 
+		if (key == VK_DOWN) 
+		{
+			keyPressed = keyPressed | ROTATE_DOWN;
+			return;
+		}
+
+		if (key == VK_LEFT) 
+		{
+			keyPressed = keyPressed | ROTATE_LEFT;
+			return;
+		}
+		if (key == VK_RIGHT) 
+		{
+			keyPressed = keyPressed | ROTATE_RIGHT;
+			return;
+		}
+		if (key == 'A')
+		{
+			keyPressed = keyPressed | MOVE_LEFT;
+			return;
+		}
+		if (key == 'D') 
+		{
+			keyPressed = keyPressed | MOVE_RIGHT;
+			return;
+		}
+		if (key == 'W') 
+		{
+			keyPressed = keyPressed | MOVE_FORWARD;
+			return;
+		}
+		if (key == 'S')
+		{
+			keyPressed = keyPressed | MOVE_BACKWARD;
+			return;
+		}
+	}
+	else 
+	{
+		if (key == VK_UP) 
+		{
+			keyPressed = keyPressed ^ ROTATE_UP;
+			return;
+		}
+
+		if (key == VK_DOWN) 
+		{
+			keyPressed = keyPressed ^ ROTATE_DOWN;
+			return;
+		}
+
+		if (key == VK_LEFT) 
+		{
+			keyPressed = keyPressed ^ ROTATE_LEFT;
+			return;
+		}
+		if (key == VK_RIGHT)
+		{
+			keyPressed = keyPressed ^ ROTATE_RIGHT;
+			return;
+		}
+		if (key == 'A') 
+		{
+			keyPressed = keyPressed ^ MOVE_LEFT;
+			return;
+		}
+		if ( key == 'D') 
+		{
+			keyPressed = keyPressed ^ MOVE_RIGHT;
+			return;
+		}
+		if (key == 'W') 
+		{
+			keyPressed = keyPressed ^ MOVE_FORWARD;
+			return;
+		}
+		if (key == 'S') {
+			keyPressed = keyPressed ^ MOVE_BACKWARD;
+			return;
+		}
+	}
 }
 
 void CleanUp()
@@ -89,6 +219,8 @@ void CleanUp()
 	delete model;
 	texture->~Texture();
 	delete texture;
+	delete object;
+	delete camera;
 }
 
 int _tmain(int argc, TCHAR* argv[])
