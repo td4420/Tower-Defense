@@ -7,11 +7,8 @@
 #include "Globals.h"
 #include <conio.h>
 #include <iostream>
-#include "Model.h"
-#include "Texture.h"
-#include "Camera.h"
-#include "Object.h"
-
+#include "SceneManager.h"
+#include "ResourceManager.h"
 #define MOVE_FORWARD 1
 #define MOVE_BACKWARD 1 << 1
 #define MOVE_LEFT 1 << 2
@@ -24,32 +21,41 @@
 
 int keyPressed = 0;
 
-Shaders myShaders;
 Texture* texture;
 Model* model;
-Camera* camera;
 Object* object;
+
+Shaders myShaders;
+Camera* camera;
 int Init(ESContext* esContext)
 {
+	
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
+	SceneManager* scenemanager = SceneManager::GetInstance("../ResourcesPacket/SM.txt");
+	scenemanager->InitSceneManager();
 	//Texture
-	texture = new Texture("../ResourcesPacket/Textures/Woman1.tga");
+	//texture = new Texture("../ResourcesPacket/Textures/Woman1.tga");
+	texture = &scenemanager->s_ListObject.at(0)->o_Texture.at(0);
 	texture->Init();
 
 	//Model
-	model = new Model("../ResourcesPacket/Models/Woman1.nfg");
+	//model = new Model("../ResourcesPacket/Models/Woman1.nfg");
+	model = &scenemanager->s_ListObject.at(0)->o_Model;
 	model->Init();
 	//Object
-	object = new Object();
+	//object = new Object();
+	object = scenemanager->s_ListObject.at(0);
 	object->InitObject();
 	//Camera
-	camera = new Camera();
+	//camera = new Camera();
+	camera = scenemanager->camera;
 	camera->InitCamera();
-
+	//scenemanager->Init();
 	//creation of shaders and program 
+	myShaders = scenemanager->s_ListObject.at(0)->o_shaders;
 	return myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
-
+	//return myShaders.Init(myShaders.fileVS,myShaders.fileFS);
 }
 
 void Draw(ESContext* esContext)
@@ -59,9 +65,9 @@ void Draw(ESContext* esContext)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glBindTexture(GL_TEXTURE_2D, texture->mTextureId);
-
+	//glBindTexture(GL_TEXTURE_2D, scenemanager->s_ListObject.at(0)->o_Texture.at(0).mTextureId);
 	glBindBuffer(GL_ARRAY_BUFFER, model->mVBO);
-
+	//glBindBuffer(GL_ARRAY_BUFFER, scenemanager->s_ListObject.at(0)->o_Model.mVBO);
 	if (myShaders.positionAttribute != -1)
 	{
 		glEnableVertexAttribArray(myShaders.positionAttribute);
@@ -77,6 +83,7 @@ void Draw(ESContext* esContext)
 	glUniformMatrix4fv(myShaders.u_view, 1, GL_FALSE, *camera->ViewMatrix.m);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, model->mIBO);
+	//glBindBuffer(GL_ARRAY_BUFFER, scenemanager->s_ListObject.at(0)->o_Model.mVBO);
 	glDrawElements(GL_TRIANGLES, model->mNumberOfIndices, GL_UNSIGNED_INT, 0);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
@@ -216,10 +223,14 @@ void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 void CleanUp()
 {
 	model->~Model();
+	model = NULL;
 	delete model;
 	texture->~Texture();
+	texture = NULL;
 	delete texture;
+	object = NULL;
 	delete object;
+	camera = NULL;
 	delete camera;
 }
 

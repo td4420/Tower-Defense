@@ -4,7 +4,7 @@
 void Camera::InitCamera()
 {
 	m_far = 100.0f; m_near = 0.1f; m_FOV = 0.5f;
-	position = Vector3(0.0f, 0.0f, -5.0f);
+	position = Vector3(0.0f, 0.0f, 5.0f);
 	target = Vector3(0.0f, 0.0f, -1.0f);
 	up = Vector3(0.0f, 1.0f, 0.0f);
 	zaxis = (position - target).Normalize();
@@ -66,6 +66,10 @@ void Camera::MoveToLeft(float deltaTime)
 	position += deltaMove;
 	target += deltaMove;
 	
+}
+Camera::Camera()
+{
+
 }
 void Camera::MoveToRight(float deltaTime)
 {

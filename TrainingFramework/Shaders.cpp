@@ -28,6 +28,17 @@ int Shaders::Init(char * fileVertexShader, char * fileFragmentShader)
 	return 0;
 }
 
+Shaders::Shaders(char* vsFile, char* fsFile, vector<State> state)
+{
+	strcpy(fileVS, vsFile);
+	strcpy(fileFS, fsFile);
+	mShaderState = state;
+}
+
+Shaders::Shaders()
+{
+}
+
 Shaders::~Shaders()
 {
 	glDeleteProgram(program);

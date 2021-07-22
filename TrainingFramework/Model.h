@@ -6,12 +6,13 @@
 class Model
 {
 public:
-	char* mModelFile;
-	bool InitNFG(FILE* file);
+	int ID;
+	char mModelFile[50];
 	GLuint mVBO;
 	GLuint mIBO;
 	int mNumberOfIndices;
 	void Init();
-	Model(const char* modelFile);
+	Model(char* modelFile,int modelID = 0);
+	Model();
 	~Model();
 };

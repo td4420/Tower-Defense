@@ -3,13 +3,15 @@
 #include "Vertex.h"
 #include <string.h>
 #include <conio.h>
+#include <iostream>
 
-bool Model::InitNFG(FILE* file)
+void Model::Init()
 {
+	FILE* file = fopen(mModelFile, "r");
+	
 	int numberOfVertices;
 	fscanf(file, "NrVertices: %d\n", &numberOfVertices);
-	if (numberOfVertices <= 0)
-		return false;
+	if (numberOfVertices <= 0) return;
 	Vertex *vertices = new Vertex[numberOfVertices];
 	for (int i = 0; i < numberOfVertices; ++i)
 	{
@@ -41,7 +43,7 @@ bool Model::InitNFG(FILE* file)
 	if (numberOfIndices <= 0)
 	{
 		glDeleteBuffers(1, &mVBO);
-		return 0;
+		return ;
 	}
 	int* indices = new int[numberOfIndices];
 	for (int i = 0; i < numberOfIndices; i += 3)
@@ -60,9 +62,14 @@ bool Model::InitNFG(FILE* file)
 	delete[] indices;
 	delete[] vertices;
 }
-Model::Model(const char* modelFile)
+Model::Model(char* modelFile,int modelID)
 {
-	mModelFile = strdup(modelFile);
+	strcpy(mModelFile,modelFile);
+	ID = modelID;
+}
+Model::Model()
+{
+
 }
 Model::~Model()
 {
@@ -70,13 +77,4 @@ Model::~Model()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glDeleteBuffers(1, &mVBO);
 	glDeleteBuffers(1, &mIBO);
-}
-void Model::Init()
-{
-	FILE* file = fopen(mModelFile, "rb");
-	if (file != NULL)
-	{
-		bool result = InitNFG(file);
-		fclose(file);
-	}
 }

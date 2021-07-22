@@ -3,13 +3,13 @@
 #include <cstdio>
 class Texture
 {
-private:
-	char* mTgaFilePath;
-	GLenum mTiling;
-	void ConfigTexture();
 public:
+	int ID;
+	char* mTgaFilePath;
+	GLenum mTiling, fTilling1, fTilling2;
+	void ConfigTexture();
 	GLuint mTextureId;
 	void Init();
-	Texture(const char* tgaFilePath, GLenum tiling = GL_REPEAT);
+	Texture(const char* tgaFilePath, int id = 0, GLenum tiling = GL_REPEAT, GLenum fTilling1 = GL_LINEAR, GLenum fTilling2 = GL_LINEAR);
 	~Texture();
 };

@@ -5,8 +5,8 @@ void Texture::ConfigTexture()
 {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, mTiling);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, mTiling);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, fTilling1);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, fTilling2);
 	glGenerateMipmap(GL_TEXTURE_2D);
 }
 void Texture::Init()
@@ -36,10 +36,13 @@ void Texture::Init()
 	glBindTexture(GL_TEXTURE_2D, 0);
 	delete imageData;
 }
-Texture::Texture(const char* tgaFilePath, GLenum tiling)
+Texture::Texture(const char* tgaFilePath, int id, GLenum tiling,GLenum fTiling1,GLenum fTiling2)
 {
 	mTgaFilePath = strdup(tgaFilePath);
 	mTiling = tiling;
+	this->fTilling1 = fTiling1;
+	this->fTilling2 = fTiling2;
+	ID = id;
 }
 
 Texture::~Texture()

@@ -1,7 +1,9 @@
 #pragma once
 #include "../Utilities/utilities.h"
-class Camera {
+#include "Object.h"
+class Camera : public Object{
 public:
+	int c_Id;
 	float m_far, m_near, m_FOV;
 	float m_cameraSpeed = 2.0f;
 	float m_rotationSpeed = 0.5f;
@@ -11,6 +13,7 @@ public:
 	Matrix ViewMatrix, WorldMatrix, PerspectiveMatrix;
 	Matrix MVP;
 	Matrix Rotation, Translation;
+	Camera();
 	void InitCamera();
 	void MoveForward(float deltaTime);
 	void MoveBackward(float deltaTime);
