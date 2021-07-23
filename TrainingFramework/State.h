@@ -3,5 +3,5 @@
 struct State
 {
 	GLenum glState;
-	bool isEnable;
+	int isEnable;
 };

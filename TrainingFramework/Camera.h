@@ -1,7 +1,7 @@
 #pragma once
 #include "../Utilities/utilities.h"
 #include "Object.h"
-class Camera : public Object{
+class Camera : public Object {
 public:
 	int c_Id;
 	float m_far, m_near, m_FOV;

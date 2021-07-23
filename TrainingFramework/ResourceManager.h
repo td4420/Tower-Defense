@@ -18,6 +18,7 @@ public:
 	vector<Shaders*> mListShaders;
 	ResourceManager(char* file);
 	ResourceManager();
+	~ResourceManager();
 	void Init();
 	static ResourceManager* GetInstance(char* file);
 };

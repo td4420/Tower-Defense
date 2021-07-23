@@ -1,7 +1,12 @@
 #include "stdafx.h"
 #include "Object.h"
+#include <iostream>
+#include "Vertex.h"
 Matrix Object::SetRotation()
 {
+	Rx.SetRotationX(o_rotation.x);
+	Ry.SetRotationY(o_rotation.y);
+	Rz.SetRotationZ(o_rotation.z);
 	return Rz * Rx * Ry;
 }
 Matrix Object::SetWorldMatrix()
@@ -21,14 +26,12 @@ Object::Object()
 }
 void Object::InitObject()
 {
-	Rx.SetIdentity(); Ry.SetIdentity(); Rz.SetIdentity();
-	Scale.SetIdentity(); Translation.SetIdentity();
+	Translation.SetTranslation(o_positon);
+	Scale.SetScale(o_scale);
 	Rotation = SetRotation();
 	WorldMatrix = SetWorldMatrix();
-
 	for (int i = 0; i <numberOfTexture; i++)
 	{
 		o_Texture.at(i).Init();
 	}
-	
 }

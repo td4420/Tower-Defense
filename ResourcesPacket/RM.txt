@@ -1,9 +1,15 @@
-#Models: 1
+#Models: 2
 ID 0
+FILE ../ResourcesPacket/Models/Woman1.nfg
+ID 1
 FILE ../ResourcesPacket/Models/Woman2.nfg
 
-#2D Textures: 1
+#2D Textures: 2
 ID 0
+FILE ../ResourcesPacket/Textures/Woman1.tga
+WRAP REPEAT
+FILTER LINEAR LINEAR
+ID 1
 FILE ../ResourcesPacket/Textures/Woman2.tga
 WRAP REPEAT
 FILTER LINEAR LINEAR

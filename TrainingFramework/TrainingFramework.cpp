@@ -1,5 +1,3 @@
-// TrainingFramework.cpp : Defines the entry point for the console application.
-//
 #include "stdafx.h"
 #include "../Utilities/utilities.h" // if you use STL, please include this line AFTER all other include
 #include "Vertex.h"
@@ -20,78 +18,62 @@
 
 
 int keyPressed = 0;
-
+SceneManager* scenemanager = SceneManager::GetInstance("../ResourcesPacket/SM.txt");
 Texture* texture;
 Model* model;
 Object* object;
-
 Shaders myShaders;
 Camera* camera;
 int Init(ESContext* esContext)
 {
-	
+
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
-	SceneManager* scenemanager = SceneManager::GetInstance("../ResourcesPacket/SM.txt");
-	scenemanager->InitSceneManager();
-	//Texture
-	//texture = new Texture("../ResourcesPacket/Textures/Woman1.tga");
-	texture = &scenemanager->s_ListObject.at(0)->o_Texture.at(0);
-	texture->Init();
-
-	//Model
-	//model = new Model("../ResourcesPacket/Models/Woman1.nfg");
-	model = &scenemanager->s_ListObject.at(0)->o_Model;
-	model->Init();
-	//Object
-	//object = new Object();
-	object = scenemanager->s_ListObject.at(0);
-	object->InitObject();
-	//Camera
-	//camera = new Camera();
+	scenemanager->Init();
 	camera = scenemanager->camera;
-	camera->InitCamera();
-	//scenemanager->Init();
 	//creation of shaders and program 
 	myShaders = scenemanager->s_ListObject.at(0)->o_shaders;
-	return myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
-	//return myShaders.Init(myShaders.fileVS,myShaders.fileFS);
+	return myShaders.Init(myShaders.fileVS,myShaders.fileFS);
 }
 
 void Draw(ESContext* esContext)
 {
-	glUseProgram(myShaders.program);
-
+	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	glBindTexture(GL_TEXTURE_2D, texture->mTextureId);
-	//glBindTexture(GL_TEXTURE_2D, scenemanager->s_ListObject.at(0)->o_Texture.at(0).mTextureId);
-	glBindBuffer(GL_ARRAY_BUFFER, model->mVBO);
-	//glBindBuffer(GL_ARRAY_BUFFER, scenemanager->s_ListObject.at(0)->o_Model.mVBO);
-	if (myShaders.positionAttribute != -1)
+	for (int i = 0; i < scenemanager->numberOfObject; i++)
 	{
-		glEnableVertexAttribArray(myShaders.positionAttribute);
-		glVertexAttribPointer(myShaders.positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
-	}
-	if (myShaders.uvAttribute != -1)
-	{
-		glEnableVertexAttribArray(myShaders.uvAttribute);
-		glVertexAttribPointer(myShaders.uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(2*sizeof(Vector3)));
-	}
-	glUniformMatrix4fv(myShaders.u_MVP, 1, GL_FALSE, *object->WorldMatrix.m);
-	glUniformMatrix4fv(myShaders.u_projection, 1, GL_FALSE, *camera->PerspectiveMatrix.m);
-	glUniformMatrix4fv(myShaders.u_view, 1, GL_FALSE, *camera->ViewMatrix.m);
+		texture = &scenemanager->s_ListObject.at(i)->o_Texture.at(0);
+		model = &scenemanager->s_ListObject.at(i)->o_Model;
+		object = scenemanager->s_ListObject.at(i);
+		myShaders = scenemanager->s_ListObject.at(i)->o_shaders;
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, model->mIBO);
-	//glBindBuffer(GL_ARRAY_BUFFER, scenemanager->s_ListObject.at(0)->o_Model.mVBO);
-	glDrawElements(GL_TRIANGLES, model->mNumberOfIndices, GL_UNSIGNED_INT, 0);
+		glUseProgram(myShaders.program);
 
+		glBindTexture(GL_TEXTURE_2D, texture->mTextureId);
+		glBindBuffer(GL_ARRAY_BUFFER, model->mVBO);
+		if (myShaders.positionAttribute != -1)
+		{
+			glEnableVertexAttribArray(myShaders.positionAttribute);
+			glVertexAttribPointer(myShaders.positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
+		}
+		if (myShaders.uvAttribute != -1)
+		{
+			glEnableVertexAttribArray(myShaders.uvAttribute);
+			glVertexAttribPointer(myShaders.uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(2 * sizeof(Vector3)));
+		}
+		glUniformMatrix4fv(myShaders.u_MVP, 1, GL_FALSE, *object->WorldMatrix.m);
+		glUniformMatrix4fv(myShaders.u_projection, 1, GL_FALSE, *camera->PerspectiveMatrix.m);
+		glUniformMatrix4fv(myShaders.u_view, 1, GL_FALSE, *camera->ViewMatrix.m);
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, model->mIBO);
+		glDrawElements(GL_TRIANGLES, model->mNumberOfIndices, GL_UNSIGNED_INT, 0);
+	}
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
-	
+
 }
 
 void Update(ESContext* esContext, float deltaTime)
@@ -129,26 +111,26 @@ void Update(ESContext* esContext, float deltaTime)
 
 void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 {
-	if (bIsPressed) 
+	if (bIsPressed)
 	{
-		if (key == VK_UP) 
+		if (key == VK_UP)
 		{
 			keyPressed = keyPressed | ROTATE_UP;
 			return;
 		}
 
-		if (key == VK_DOWN) 
+		if (key == VK_DOWN)
 		{
 			keyPressed = keyPressed | ROTATE_DOWN;
 			return;
 		}
 
-		if (key == VK_LEFT) 
+		if (key == VK_LEFT)
 		{
 			keyPressed = keyPressed | ROTATE_LEFT;
 			return;
 		}
-		if (key == VK_RIGHT) 
+		if (key == VK_RIGHT)
 		{
 			keyPressed = keyPressed | ROTATE_RIGHT;
 			return;
@@ -158,12 +140,12 @@ void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 			keyPressed = keyPressed | MOVE_LEFT;
 			return;
 		}
-		if (key == 'D') 
+		if (key == 'D')
 		{
 			keyPressed = keyPressed | MOVE_RIGHT;
 			return;
 		}
-		if (key == 'W') 
+		if (key == 'W')
 		{
 			keyPressed = keyPressed | MOVE_FORWARD;
 			return;
@@ -174,21 +156,21 @@ void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 			return;
 		}
 	}
-	else 
+	else
 	{
-		if (key == VK_UP) 
+		if (key == VK_UP)
 		{
 			keyPressed = keyPressed ^ ROTATE_UP;
 			return;
 		}
 
-		if (key == VK_DOWN) 
+		if (key == VK_DOWN)
 		{
 			keyPressed = keyPressed ^ ROTATE_DOWN;
 			return;
 		}
 
-		if (key == VK_LEFT) 
+		if (key == VK_LEFT)
 		{
 			keyPressed = keyPressed ^ ROTATE_LEFT;
 			return;
@@ -198,17 +180,17 @@ void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 			keyPressed = keyPressed ^ ROTATE_RIGHT;
 			return;
 		}
-		if (key == 'A') 
+		if (key == 'A')
 		{
 			keyPressed = keyPressed ^ MOVE_LEFT;
 			return;
 		}
-		if ( key == 'D') 
+		if (key == 'D')
 		{
 			keyPressed = keyPressed ^ MOVE_RIGHT;
 			return;
 		}
-		if (key == 'W') 
+		if (key == 'W')
 		{
 			keyPressed = keyPressed ^ MOVE_FORWARD;
 			return;

@@ -58,6 +58,7 @@ void Model::Init()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->mIBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * numberOfIndices, indices, GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
 	this->mNumberOfIndices = numberOfIndices;
 	delete[] indices;
 	delete[] vertices;

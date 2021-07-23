@@ -22,7 +22,7 @@ void ResourceManager::Init()
 	FILE* file = fopen(mResourceManagerFile, "r");
 	//Model
 	fscanf(file, "#Models: %d\n", &numberOfModel);
-	
+
 	char modelFile[50];
 	int modelID;
 	for (int i = 0; i < numberOfModel; i++)
@@ -44,17 +44,17 @@ void ResourceManager::Init()
 		fscanf(file, "FILE %s\n", textureFile);
 		fscanf(file, "WRAP %s\n", &wrap);
 		fscanf(file, "FILTER %s %s\n", &filter1, &filter2);
-		mListTexture.push_back(new Texture(textureFile, textureID, GL_REPEAT,GL_LINEAR,GL_LINEAR));
+		mListTexture.push_back(new Texture(textureFile, textureID, GL_REPEAT, GL_LINEAR, GL_LINEAR));
 	}
 	fscanf(file, "\n");
 	//Shaders
 	int shadersID, numberOfState;
 	char fileVS[50], fileFS[50];
 	vector<State> listState;
-	GLenum state;
-	bool isEnable;
+	char state[50];
+	int isEnable;
 	fscanf(file, "#Shaders: %d\n", &numberOfShader);
-	
+
 	for (int i = 0; i < numberOfShader; i++)
 	{
 		fscanf(file, "ID %d\n", &shadersID);
@@ -65,10 +65,15 @@ void ResourceManager::Init()
 		{
 			fscanf(file, "%c %d\n", &state, &isEnable);
 			State st;
-			st.glState = state;
+			st.glState = GLenum(state);
 			st.isEnable = isEnable;
 			listState.push_back(st);
 		}
 		mListShaders.push_back(new Shaders(fileVS, fileFS, listState));
 	}
+}
+ResourceManager::~ResourceManager()
+{
+	s_Instance = NULL;
+	delete s_Instance;
 }

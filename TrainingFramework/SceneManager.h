@@ -6,11 +6,12 @@ class SceneManager
 {
 public:
 	static SceneManager* s_Instance;
-	Camera* camera;
+	Camera* camera = new Camera();
 	char* s_SceneManagerFile;
 	int numberOfObject;
 	vector<Object*> s_ListObject;
 	SceneManager(char* file);
+	SceneManager();
 	void Init();
 	void InitSceneManager();
 	static SceneManager* GetInstance(char* file);

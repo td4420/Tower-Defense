@@ -8,6 +8,10 @@ SceneManager::SceneManager(char* file)
 	s_SceneManagerFile = file;
 }
 
+SceneManager::SceneManager()
+{
+}
+
 SceneManager* SceneManager::GetInstance(char* file)
 {
 	if (!s_Instance)
@@ -29,25 +33,21 @@ void SceneManager::InitSceneManager()
 	fscanf(file, "#Cameras: %d\n", &numberOfCam);
 	for (int i = 0; i < numberOfCam; i++)
 	{
-		Camera* cam = new Camera();
-		fscanf(file, "ID %d\n", &cam->c_Id);
-		fscanf(file, "POSITION %f %f %f\n", &cam->position.x, &cam->position.y, &cam->position.z);
-		fscanf(file, "TARGET %f %f %f\n", &cam->target.x, &cam->target.y, &cam->target.z);
-		fscanf(file, "UP %f %f %f\n", &cam->up.x, &cam->up.y, &cam->up.z);
-		fscanf(file, "FOVY %f\n", &cam->m_FOV);
-		fscanf(file, "NEAR %f\n", &cam->m_near);
-		fscanf(file, "FAR %f\n", &cam->m_far);
-		fscanf(file, "MOVE_SPEED %f\n", &cam->m_cameraSpeed);
-		fscanf(file, "ROTATE_SPEED %f\n", &cam->m_rotationSpeed);
-		camera = cam;
+		fscanf(file, "ID %d\n", &camera->c_Id);
+		fscanf(file, "POSITION %f %f %f\n", &camera->position.x, &camera->position.y, &camera->position.z);
+		fscanf(file, "TARGET %f %f %f\n", &camera->target.x, &camera->target.y, &camera->target.z);
+		fscanf(file, "UP %f %f %f\n", &camera->up.x, &camera->up.y, &camera->up.z);
+		fscanf(file, "FOVY %f\n", &camera->m_FOV);
+		fscanf(file, "NEAR %f\n", &camera->m_near);
+		fscanf(file, "FAR %f\n", &camera->m_far);
+		fscanf(file, "MOVE_SPEED %f\n", &camera->m_cameraSpeed);
+		fscanf(file, "ROTATE_SPEED %f\n", &camera->m_rotationSpeed);
 	}
 	fscanf(file, "\n");
 
 	//Object
 	ResourceManager* resource = new ResourceManager("../ResourcesPacket/RM.txt");
 	resource->Init();
-	std::cout << resource->mListModel.back()->mModelFile << std::endl;
-	std::cout << resource->mListShaders.back()->fileFS << std::endl;
 
 	fscanf(file, "#Objects: %d\n", &numberOfObject);
 	for (int i = 0; i < numberOfObject; i++)
@@ -69,8 +69,8 @@ void SceneManager::InitSceneManager()
 		fscanf(file, "ROTATION %f %f %f\n", &ob->o_rotation.x, &ob->o_rotation.y, &ob->o_rotation.z);
 		fscanf(file, "SCALE %f %f %f\n", &ob->o_scale.x, &ob->o_scale.y, &ob->o_scale.z);
 		s_ListObject.push_back(ob);
-		fscanf(file, "\n");
 	}
+	delete resource;
 }
 void SceneManager::Init()
 {
