@@ -22,7 +22,6 @@ void ResourceManager::Init()
 	FILE* file = fopen(mResourceManagerFile, "r");
 	//Model
 	fscanf(file, "#Models: %d\n", &numberOfModel);
-
 	char modelFile[50];
 	int modelID;
 	for (int i = 0; i < numberOfModel; i++)
@@ -47,6 +46,20 @@ void ResourceManager::Init()
 		mListTexture.push_back(new Texture(textureFile, textureID, GL_REPEAT, GL_LINEAR, GL_LINEAR));
 	}
 	fscanf(file, "\n");
+	//Cube
+	int cubeID;
+	char cubeFile[250];
+	char c_wrap[50], c_filter1[50], c_filter2[50];
+	fscanf(file, "#Cube Textures: %d\n", &numberOfCube);
+	for (int i = 0; i < numberOfCube; i++)
+	{
+		fscanf(file, "ID %d\n", &cubeID);
+		fscanf(file, "FILE %s\n", cubeFile);
+		fscanf(file, "WRAP %s\n", &c_wrap);
+		fscanf(file, "FILTER %s %s\n", &c_filter1, &c_filter2);
+		mListCube.push_back(new Texture(cubeFile, cubeID, GL_REPEAT, GL_LINEAR, GL_LINEAR));
+	}
+
 	//Shaders
 	int shadersID, numberOfState;
 	char fileVS[50], fileFS[50];

@@ -13,6 +13,7 @@ public:
 	SceneManager(char* file);
 	SceneManager();
 	void Init();
+	void Update(float deltaTime);
 	void InitSceneManager();
 	static SceneManager* GetInstance(char* file);
 };

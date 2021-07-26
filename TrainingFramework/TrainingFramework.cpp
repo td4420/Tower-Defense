@@ -61,10 +61,7 @@ void Draw(ESContext* esContext)
 			glEnableVertexAttribArray(myShaders.uvAttribute);
 			glVertexAttribPointer(myShaders.uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(2 * sizeof(Vector3)));
 		}
-		glUniformMatrix4fv(myShaders.u_MVP, 1, GL_FALSE, *object->WorldMatrix.m);
-		glUniformMatrix4fv(myShaders.u_projection, 1, GL_FALSE, *camera->PerspectiveMatrix.m);
-		glUniformMatrix4fv(myShaders.u_view, 1, GL_FALSE, *camera->ViewMatrix.m);
-
+		glUniformMatrix4fv(myShaders.u_MVP, 1, GL_FALSE, *object->MVP.m);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, model->mIBO);
 		glDrawElements(GL_TRIANGLES, model->mNumberOfIndices, GL_UNSIGNED_INT, 0);
 	}
@@ -106,7 +103,7 @@ void Update(ESContext* esContext, float deltaTime)
 	if (keyPressed & ROTATE_RIGHT) {
 		camera->RotationRight(deltaTime);
 	}
-	camera->Update(deltaTime);
+	scenemanager->Update(deltaTime);
 }
 
 void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
