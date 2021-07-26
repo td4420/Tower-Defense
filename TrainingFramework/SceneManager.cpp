@@ -53,7 +53,7 @@ void SceneManager::InitSceneManager()
 	for (int i = 0; i < numberOfObject; i++)
 	{
 		Object* ob = new Object();
-		int modelId, idTexture, idShader;
+		int modelId, idTexture,idCube, idShader;
 		fscanf(file, "ID %d\n", &ob->o_Id);
 		fscanf(file, "MODEL %d\n", &modelId);
 		ob->o_Model = *resource->mListModel.at(modelId);
@@ -62,6 +62,12 @@ void SceneManager::InitSceneManager()
 		{
 			fscanf(file, "TEXTURE %d\n", &idTexture);
 			ob->o_Texture.push_back(*resource->mListTexture.at(idTexture));
+		}
+		fscanf(file, "CUBETEXTURES %d\n",&ob->numberOfCube);
+		for (int j = 0; j < ob->numberOfCube; j++)
+		{
+			fscanf(file, "TEXTURE %d\n", &idCube);
+			ob->o_Cube.push_back(*resource->mListCube.at(idCube));
 		}
 		fscanf(file, "SHADER %d\n", &idShader);
 		ob->o_shaders = *resource->mListShaders.at(idShader);
@@ -72,16 +78,26 @@ void SceneManager::InitSceneManager()
 	}
 	delete resource;
 }
+void SceneManager::Update(float deltaTime)
+{
+	camera->Update(deltaTime);
+	for (int i = 0; i < numberOfObject; i++)
+	{
+		s_ListObject.at(i)->MVP = s_ListObject.at(i)->setMVPMatrix(camera->ViewMatrix,camera->PerspectiveMatrix);
+	}
+}
 void SceneManager::Init()
 {
 	InitSceneManager();
+	//Init camera
+	camera->InitCamera();
 	//Init Object
 	for (int i = 0; i < numberOfObject; i++)
 	{
 		s_ListObject.at(i)->InitObject();
 		s_ListObject.at(i)->o_Model.Init();
+		s_ListObject.at(i)->MVP = s_ListObject.at(i)->setMVPMatrix(camera->ViewMatrix,camera->PerspectiveMatrix);
 		s_ListObject.at(i)->o_shaders.Init(s_ListObject.at(i)->o_shaders.fileVS, s_ListObject.at(i)->o_shaders.fileFS);
 	}
-	//Init camera
-	camera->InitCamera();
+
 }

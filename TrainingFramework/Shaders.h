@@ -12,9 +12,8 @@ public:
 	char fileVS[260];
 	char fileFS[260];
 	GLint positionAttribute;
-	GLint colorAttribute;
-	GLint uvAttribute;
-	GLint u_MVP, u_view, u_projection;
+	GLint cubeTexture;
+	GLint u_MVP;
 	int Init(char * fileVertexShader, char * fileFragmentShader);
 	Shaders(char* vsFile, char* fsFile, vector<State> state);
 	Shaders();

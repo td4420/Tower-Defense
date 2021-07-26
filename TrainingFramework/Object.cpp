@@ -13,6 +13,10 @@ Matrix Object::SetWorldMatrix()
 {
 	return Scale * Rotation * Translation;
 }
+Matrix Object::setMVPMatrix(Matrix v, Matrix p)
+{
+	return WorldMatrix * v * p;
+}
 Object::Object(Model model, vector<Texture> texture, Shaders shaders,int id)
 {
 	o_Model = model;
@@ -33,5 +37,9 @@ void Object::InitObject()
 	for (int i = 0; i <numberOfTexture; i++)
 	{
 		o_Texture.at(i).Init();
+	}
+	for (int i = 0; i < numberOfCube; i++)
+	{
+		o_Cube.at(i).Init();
 	}
 }

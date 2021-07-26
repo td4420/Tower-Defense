@@ -13,8 +13,10 @@ public:
 	int numberOfTexture;
 	int numberOfModel;
 	int numberOfShader;
+	int numberOfCube;
 	vector<Model*> mListModel;
 	vector<Texture*> mListTexture;
+	vector<Texture* > mListCube;
 	vector<Shaders*> mListShaders;
 	ResourceManager(char* file);
 	ResourceManager();

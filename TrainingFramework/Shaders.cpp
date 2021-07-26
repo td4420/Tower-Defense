@@ -21,10 +21,8 @@ int Shaders::Init(char * fileVertexShader, char * fileFragmentShader)
 
 	//finding location of uniforms / attributes
 	positionAttribute = glGetAttribLocation(program, "a_posL");
-	uvAttribute = glGetAttribLocation(program, "a_uv");
+	cubeTexture = glGetUniformLocation(program, "texture");
 	u_MVP = glGetUniformLocation(program, "u_MVP");
-	u_view = glGetUniformLocation(program, "u_view");
-	u_projection = glGetUniformLocation(program, "u_projection");
 	return 0;
 }
 

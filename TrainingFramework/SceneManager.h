@@ -14,5 +14,6 @@ public:
 	SceneManager();
 	void Init();
 	void InitSceneManager();
+	void Update(float deltaTime);
 	static SceneManager* GetInstance(char* file);
 };

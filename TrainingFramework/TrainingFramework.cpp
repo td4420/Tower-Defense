@@ -19,56 +19,73 @@
 
 int keyPressed = 0;
 SceneManager* scenemanager = SceneManager::GetInstance("../ResourcesPacket/SM.txt");
-Texture* texture;
+Texture* cube;
 Model* model;
 Object* object;
 Shaders myShaders;
 Camera* camera;
+GLuint textureId;
 int Init(ESContext* esContext)
 {
-
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
 	scenemanager->Init();
 	camera = scenemanager->camera;
+	model = new Model("../ResourcesPacket/Models/SkyBox.nfg");
+	model->Init();
+	vector<char*> data;
+	int iWidth = 512;
+	int iHeight = 512;
+	int iBpp = 0;
+	char* image1 = LoadTGA(("../ResourcesPacket/Skybox Textures/right.tga"), &iWidth, &iHeight, &iBpp);
+	char* image2 = LoadTGA(("../ResourcesPacket/Skybox Textures/left.tga"), &iWidth, &iHeight, &iBpp);
+	char* image3 = LoadTGA(("../ResourcesPacket/Skybox Textures/top.tga"), &iWidth, &iHeight, &iBpp);
+	char* image4 = LoadTGA(("../ResourcesPacket/Skybox Textures/bottom.tga"), &iWidth, &iHeight, &iBpp);
+	char* image5 = LoadTGA(("../ResourcesPacket/Skybox Textures/back.tga"), &iWidth, &iHeight, &iBpp);
+	char* image6 = LoadTGA(("../ResourcesPacket/Skybox Textures/front.tga"), &iWidth, &iHeight, &iBpp);
+	data.push_back(image1);
+	data.push_back(image2);
+	data.push_back(image3);
+	data.push_back(image4);
+	data.push_back(image5);
+	data.push_back(image6);
+	GLenum format = (iBpp == 24 ? GL_RGB : GL_RGBA);
+	glGenTextures(1, &textureId);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, textureId);
+	for (int i = 0; i < 6; i++)
+	{
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, format, iWidth, iHeight, 0, format, GL_UNSIGNED_BYTE, data.at(i));
+	}
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 	//creation of shaders and program 
-	myShaders = scenemanager->s_ListObject.at(0)->o_shaders;
-	return myShaders.Init(myShaders.fileVS,myShaders.fileFS);
+	//myShaders = scenemanager->s_ListObject.at(0)->o_shaders;
+	return myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
 }
 
 void Draw(ESContext* esContext)
 {
-	
+
+	object = scenemanager->s_ListObject.at(0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	for (int i = 0; i < scenemanager->numberOfObject; i++)
+	glUseProgram(myShaders.program);
+	glBindBuffer(GL_ARRAY_BUFFER, model->mVBO);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, textureId);
+	if (myShaders.positionAttribute != -1)
 	{
-		texture = &scenemanager->s_ListObject.at(i)->o_Texture.at(0);
-		model = &scenemanager->s_ListObject.at(i)->o_Model;
-		object = scenemanager->s_ListObject.at(i);
-		myShaders = scenemanager->s_ListObject.at(i)->o_shaders;
-
-		glUseProgram(myShaders.program);
-
-		glBindTexture(GL_TEXTURE_2D, texture->mTextureId);
-		glBindBuffer(GL_ARRAY_BUFFER, model->mVBO);
-		if (myShaders.positionAttribute != -1)
-		{
-			glEnableVertexAttribArray(myShaders.positionAttribute);
-			glVertexAttribPointer(myShaders.positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
-		}
-		if (myShaders.uvAttribute != -1)
-		{
-			glEnableVertexAttribArray(myShaders.uvAttribute);
-			glVertexAttribPointer(myShaders.uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(2 * sizeof(Vector3)));
-		}
-		glUniformMatrix4fv(myShaders.u_MVP, 1, GL_FALSE, *object->WorldMatrix.m);
-		glUniformMatrix4fv(myShaders.u_projection, 1, GL_FALSE, *camera->PerspectiveMatrix.m);
-		glUniformMatrix4fv(myShaders.u_view, 1, GL_FALSE, *camera->ViewMatrix.m);
-
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, model->mIBO);
-		glDrawElements(GL_TRIANGLES, model->mNumberOfIndices, GL_UNSIGNED_INT, 0);
+		glEnableVertexAttribArray(myShaders.positionAttribute);
+		glVertexAttribPointer(myShaders.positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
 	}
-	glBindTexture(GL_TEXTURE_2D, 0);
+	glUniform1i(myShaders.cubeTexture, 0);
+	glUniformMatrix4fv(myShaders.u_MVP, 1, GL_FALSE, *object->MVP.m);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, model->mIBO);
+	glDrawElements(GL_TRIANGLES, model->mNumberOfIndices, GL_UNSIGNED_INT, 0);
+
+	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
@@ -106,7 +123,8 @@ void Update(ESContext* esContext, float deltaTime)
 	if (keyPressed & ROTATE_RIGHT) {
 		camera->RotationRight(deltaTime);
 	}
-	camera->Update(deltaTime);
+	scenemanager->Update(deltaTime);
+	
 }
 
 void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
@@ -207,9 +225,9 @@ void CleanUp()
 	model->~Model();
 	model = NULL;
 	delete model;
-	texture->~Texture();
-	texture = NULL;
-	delete texture;
+	//texture->~Texture();
+	//texture = NULL;
+	//delete texture;
 	object = NULL;
 	delete object;
 	camera = NULL;

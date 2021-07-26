@@ -24,7 +24,6 @@ void Texture::Init()
 	glTexImage2D(GL_TEXTURE_2D, 0, format, iWidth, iHeight, 0, format, GL_UNSIGNED_BYTE, imageData);
 	if (imageData)
 	{
-		//std::cout << "Load texture succes" << std::endl;
 		glTexImage2D(GL_TEXTURE_2D, 0, format, iWidth, iHeight, 0, format, GL_UNSIGNED_BYTE, imageData);
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
@@ -35,6 +34,9 @@ void Texture::Init()
 	ConfigTexture();
 	glBindTexture(GL_TEXTURE_2D, 0);
 	delete imageData;
+}
+Texture::Texture()
+{
 }
 Texture::Texture(const char* tgaFilePath, int id, GLenum tiling,GLenum fTiling1,GLenum fTiling2)
 {
