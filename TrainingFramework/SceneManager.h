@@ -12,6 +12,8 @@ public:
 	vector<Object*> s_ListObject;
 	SceneManager(char* file);
 	SceneManager();
+	~SceneManager();
+	void Draw();
 	void Init();
 	void Update(float deltaTime);
 	void InitSceneManager();

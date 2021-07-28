@@ -44,10 +44,6 @@ void Camera::SetPerSpectiveMatrix()
 	float aspect = float(Globals::screenWidth) / float(Globals::screenHeight);
 	PerspectiveMatrix.SetPerspective(m_FOV, aspect, m_near, m_far);
 }
-void Camera::SetMVP()
-{
-	MVP = WorldMatrix * ViewMatrix * PerspectiveMatrix;
-}
 void Camera::MoveForward(float deltaTime)
 {
 	Vector3 deltaMove = -(position - target).Normalize() * deltaTime * m_cameraSpeed;
@@ -70,6 +66,9 @@ void Camera::MoveToLeft(float deltaTime)
 Camera::Camera()
 {
 
+}
+Camera::~Camera()
+{
 }
 void Camera::MoveToRight(float deltaTime)
 {
@@ -136,5 +135,4 @@ void Camera::Update(float deltaTime)
 	SetTranslation();
 	SetWorldMatrix();
 	SetViewMatrix();
-	SetMVP();
 }

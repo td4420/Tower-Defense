@@ -14,6 +14,7 @@ public:
 	Matrix MVP;
 	Matrix Rotation, Translation;
 	Camera();
+	~Camera();
 	void InitCamera();
 	void MoveForward(float deltaTime);
 	void MoveBackward(float deltaTime);
@@ -31,6 +32,5 @@ public:
 	void SetWorldMatrix();
 	void SetViewMatrix();
 	void SetPerSpectiveMatrix();
-	void SetMVP();
 	void Update(float deltaTime);
 };

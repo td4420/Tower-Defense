@@ -10,6 +10,16 @@ SceneManager::SceneManager(char* file)
 
 SceneManager::SceneManager()
 {
+
+}
+
+SceneManager::~SceneManager()
+{
+	/*for (int i = 0; i < numberOfObject; i++)
+	{
+		s_ListObject.at(i)->~Object();
+	}
+	this->s_ListObject.clear();*/
 }
 
 SceneManager* SceneManager::GetInstance(char* file)
@@ -46,36 +56,36 @@ void SceneManager::InitSceneManager()
 	fscanf(file, "\n");
 
 	//Object
-	ResourceManager* resource = new ResourceManager("../ResourcesPacket/RM.txt");
+	ResourceManager* resource = ResourceManager::GetInstance("../ResourcesPacket/RM.txt");
 	resource->Init();
-
 	fscanf(file, "#Objects: %d\n", &numberOfObject);
 	for (int i = 0; i < numberOfObject; i++)
 	{
-		Object* ob = new Object();
 		int modelId, idTexture, idCube, idShader;
+		Object* ob = new Object();
 		fscanf(file, "ID %d\n", &ob->o_Id);
 		fscanf(file, "MODEL %d\n", &modelId);
-		ob->o_Model = *resource->mListModel.at(modelId);
+		ob->o_Model = resource->mListModel.at(modelId);
 		fscanf(file, "TEXTURES %d\n", &ob->numberOfTexture);
 		for (int j = 0; j < ob->numberOfTexture; j++)
 		{
 			fscanf(file, "TEXTURE %d\n", &idTexture);
-			ob->o_Texture.push_back(*resource->mListTexture.at(idTexture));
+			ob->o_Texture.push_back(resource->mListTexture.at(idTexture));
 		}
 		fscanf(file, "CUBETEXTURES %d\n", &ob->numberOfCube);
 		for (int j = 0; j < ob->numberOfCube; j++)
 		{
 			fscanf(file, "TEXTURE %d\n", &idCube);
-			ob->o_Cube.push_back(*resource->mListCube.at(idCube));
+			ob->o_Cube.push_back(resource->mListCube.at(idCube));
 		}
 		fscanf(file, "SHADER %d\n", &idShader);
-		ob->o_shaders = *resource->mListShaders.at(idShader);
-		fscanf(file, "POSITION %f %f %f\n", &ob->o_positon.x, &ob->o_positon.y, &ob->o_positon.z);
+		ob->o_shaders = resource->mListShaders.at(idShader);
+		fscanf(file, "POSITION %f %f %f\n", &ob->o_position.x, &ob->o_position.y, &ob->o_position.z);
 		fscanf(file, "ROTATION %f %f %f\n", &ob->o_rotation.x, &ob->o_rotation.y, &ob->o_rotation.z);
 		fscanf(file, "SCALE %f %f %f\n", &ob->o_scale.x, &ob->o_scale.y, &ob->o_scale.z);
 		s_ListObject.push_back(ob);
 	}
+	fclose(file);
 	delete resource;
 }
 void SceneManager::Update(float deltaTime)
@@ -83,21 +93,26 @@ void SceneManager::Update(float deltaTime)
 	camera->Update(deltaTime);
 	for (int i = 0; i < numberOfObject; i++)
 	{
-		s_ListObject.at(i)->MVP = s_ListObject.at(i)->setMVPMatrix(camera->ViewMatrix, camera->PerspectiveMatrix);
+		s_ListObject.at(i)->setMVPMatrix(camera->ViewMatrix, camera->PerspectiveMatrix);
 	}
 }
 void SceneManager::Init()
 {
 	InitSceneManager();
-	//Init camera
 	camera->InitCamera();
 	//Init Object
 	for (int i = 0; i < numberOfObject; i++)
 	{
 		s_ListObject.at(i)->InitObject();
 		s_ListObject.at(i)->o_Model.Init();
-		s_ListObject.at(i)->MVP = s_ListObject.at(i)->setMVPMatrix(camera->ViewMatrix, camera->PerspectiveMatrix);
+		s_ListObject.at(i)->setMVPMatrix(camera->ViewMatrix, camera->PerspectiveMatrix);
 		s_ListObject.at(i)->o_shaders.Init(s_ListObject.at(i)->o_shaders.fileVS, s_ListObject.at(i)->o_shaders.fileFS);
 	}
-
+}
+void SceneManager::Draw()
+{
+	for (int i = 0; i < numberOfObject; i++)
+	{
+		s_ListObject.at(i)->DrawObject();
+	}
 }

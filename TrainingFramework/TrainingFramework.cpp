@@ -19,9 +19,6 @@
 
 int keyPressed = 0;
 SceneManager* scenemanager = SceneManager::GetInstance("../ResourcesPacket/SM.txt");
-Texture* texture;
-Model* model;
-Object* object;
 Shaders myShaders;
 Camera* camera;
 int Init(ESContext* esContext)
@@ -38,39 +35,9 @@ int Init(ESContext* esContext)
 
 void Draw(ESContext* esContext)
 {
-	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	for (int i = 0; i < scenemanager->numberOfObject; i++)
-	{
-		texture = &scenemanager->s_ListObject.at(i)->o_Texture.at(0);
-		model = &scenemanager->s_ListObject.at(i)->o_Model;
-		object = scenemanager->s_ListObject.at(i);
-		myShaders = scenemanager->s_ListObject.at(i)->o_shaders;
-
-		glUseProgram(myShaders.program);
-
-		glBindTexture(GL_TEXTURE_2D, texture->mTextureId);
-		glBindBuffer(GL_ARRAY_BUFFER, model->mVBO);
-		if (myShaders.positionAttribute != -1)
-		{
-			glEnableVertexAttribArray(myShaders.positionAttribute);
-			glVertexAttribPointer(myShaders.positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
-		}
-		if (myShaders.uvAttribute != -1)
-		{
-			glEnableVertexAttribArray(myShaders.uvAttribute);
-			glVertexAttribPointer(myShaders.uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(2 * sizeof(Vector3)));
-		}
-		glUniformMatrix4fv(myShaders.u_MVP, 1, GL_FALSE, *object->MVP.m);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, model->mIBO);
-		glDrawElements(GL_TRIANGLES, model->mNumberOfIndices, GL_UNSIGNED_INT, 0);
-	}
-	glBindTexture(GL_TEXTURE_2D, 0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
+	scenemanager->Draw();
 	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
-
 }
 
 void Update(ESContext* esContext, float deltaTime)
@@ -201,16 +168,10 @@ void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 
 void CleanUp()
 {
-	model->~Model();
-	model = NULL;
-	delete model;
-	texture->~Texture();
-	texture = NULL;
-	delete texture;
-	object = NULL;
-	delete object;
-	camera = NULL;
-	delete camera;
+	for (int i = 0; i < scenemanager->numberOfObject; i++)
+	{
+		scenemanager->s_ListObject.at(i)->~Object();
+	}
 }
 
 int _tmain(int argc, TCHAR* argv[])
