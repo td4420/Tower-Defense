@@ -32,7 +32,7 @@ int Init(ESContext* esContext)
 	myShaders = scenemanager->s_ListObject.at(0)->o_shaders;
 	return myShaders.Init(myShaders.fileVS,myShaders.fileFS);
 }
-
+// test push
 void Draw(ESContext* esContext)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
