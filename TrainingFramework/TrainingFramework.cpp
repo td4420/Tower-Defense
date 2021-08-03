@@ -11,10 +11,8 @@
 #define MOVE_BACKWARD 1 << 1
 #define MOVE_LEFT 1 << 2
 #define MOVE_RIGHT 1 << 3
-#define ROTATE_UP 1 << 4
-#define ROTATE_DOWN 1 << 5
-#define ROTATE_LEFT 1 << 6
-#define ROTATE_RIGHT 1 << 7
+#define MOVE_UP 1 << 4
+#define MOVE_DOWN 1 << 5
 
 
 int keyPressed = 0;
@@ -57,19 +55,14 @@ void Update(ESContext* esContext, float deltaTime)
 	if (keyPressed & MOVE_RIGHT) {
 		camera->MoveToRight(deltaTime);
 	}
-	if (keyPressed & ROTATE_UP) {
-		camera->RotationUp(deltaTime);
+	if (keyPressed & MOVE_UP) {
+		camera->MoveUp(deltaTime);
 	}
 
-	if (keyPressed & ROTATE_DOWN) {
-		camera->RotationDown(deltaTime);
+	if (keyPressed & MOVE_DOWN) {
+		camera->MoveDown(deltaTime);
 	}
-	if (keyPressed & ROTATE_LEFT) {
-		camera->RotationLeft(deltaTime);
-	}
-	if (keyPressed & ROTATE_RIGHT) {
-		camera->RotationRight(deltaTime);
-	}
+	
 	scenemanager->Update(deltaTime);
 }
 
@@ -79,26 +72,16 @@ void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 	{
 		if (key == VK_UP)
 		{
-			keyPressed = keyPressed | ROTATE_UP;
+			keyPressed = keyPressed | MOVE_UP;
 			return;
 		}
 
 		if (key == VK_DOWN)
 		{
-			keyPressed = keyPressed | ROTATE_DOWN;
+			keyPressed = keyPressed | MOVE_DOWN;
 			return;
 		}
 
-		if (key == VK_LEFT)
-		{
-			keyPressed = keyPressed | ROTATE_LEFT;
-			return;
-		}
-		if (key == VK_RIGHT)
-		{
-			keyPressed = keyPressed | ROTATE_RIGHT;
-			return;
-		}
 		if (key == 'A')
 		{
 			keyPressed = keyPressed | MOVE_LEFT;
@@ -124,26 +107,16 @@ void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 	{
 		if (key == VK_UP)
 		{
-			keyPressed = keyPressed ^ ROTATE_UP;
+			keyPressed = keyPressed ^ MOVE_UP;
 			return;
 		}
 
 		if (key == VK_DOWN)
 		{
-			keyPressed = keyPressed ^ ROTATE_DOWN;
+			keyPressed = keyPressed ^ MOVE_DOWN;
 			return;
 		}
 
-		if (key == VK_LEFT)
-		{
-			keyPressed = keyPressed ^ ROTATE_LEFT;
-			return;
-		}
-		if (key == VK_RIGHT)
-		{
-			keyPressed = keyPressed ^ ROTATE_RIGHT;
-			return;
-		}
 		if (key == 'A')
 		{
 			keyPressed = keyPressed ^ MOVE_LEFT;

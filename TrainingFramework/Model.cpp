@@ -33,6 +33,16 @@ void Model::Init()
 		(vertices + i)->coords.x = uvX; (vertices + i)->coords.y = uvY;
 
 	}
+
+		(vertices + 0)->coords.x =0.0f ; (vertices + 0)->coords.y = 0.0f;
+		(vertices + 1)->coords.x =1.0f ; (vertices + 1)->coords.y = 0.0f;
+		(vertices + 2)->coords.x =1.0f ; (vertices + 2)->coords.y = 1.0f;
+		(vertices + 3)->coords.x =0.0f ; (vertices + 3)->coords.y = 1.0f;
+		(vertices + 4)->coords.x =1.0f ; (vertices + 4)->coords.y = 1.0f;
+		(vertices + 5)->coords.x =0.0f ; (vertices + 5)->coords.y = 1.0f;
+		(vertices + 6)->coords.x =0.0f ; (vertices + 6)->coords.y = 0.0f;
+		(vertices + 7)->coords.x =1.0f ; (vertices + 7)->coords.y = 0.0f;
+
 	glGenBuffers(1, &this->mVBO);
 	glBindBuffer(GL_ARRAY_BUFFER, this->mVBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * numberOfVertices, vertices, GL_STATIC_DRAW);

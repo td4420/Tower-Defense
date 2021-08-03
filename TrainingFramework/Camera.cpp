@@ -14,18 +14,12 @@ void Camera::InitCamera()
 	SetViewMatrix();
 	SetPerSpectiveMatrix();
 }
-void Camera::SetRotation()
-{
-	Rotation.m[0][0] = xaxis.x; Rotation.m[0][1] = xaxis.y; Rotation.m[0][2] = xaxis.z; Rotation.m[0][3] = 0;
-	Rotation.m[1][0] = yaxis.x; Rotation.m[1][1] = yaxis.y; Rotation.m[1][2] = yaxis.z; Rotation.m[1][3] = 0;
-	Rotation.m[2][0] = zaxis.x; Rotation.m[2][1] = zaxis.y; Rotation.m[2][2] = zaxis.z; Rotation.m[2][3] = 0;
-	Rotation.m[3][0] = 0; Rotation.m[3][1] = 0; Rotation.m[3][2] = 0; Rotation.m[3][3] = 1;
-}
+
 void Camera::SetTranslation()
 {
 	Translation.m[0][0] = 1; Translation.m[0][1] = 0; Translation.m[0][2] = 0; Translation.m[0][3] = 0;
 	Translation.m[1][0] = 0; Translation.m[1][1] = 1; Translation.m[1][2] = 0; Translation.m[1][3] = 0;
-	Translation.m[2][0] = 0; Translation.m[2][1] = 0; Translation.m[2][2] = 1; Translation.m[2][3] = 0;
+	Translation.m[2][0] = 0; Translation.m[2][1] = 0; Translation.m[2][2] = 0; Translation.m[2][3] = 0;
 	Translation.m[3][0] = position.x; Translation.m[3][1] = position.y; Translation.m[3][2] = position.z; Translation.m[3][3] = 1;
 }
 void Camera::SetWorldMatrix()
@@ -34,9 +28,10 @@ void Camera::SetWorldMatrix()
 }
 void Camera::SetViewMatrix()
 {
-	ViewMatrix.m[0][0] = xaxis.x; ViewMatrix.m[0][1] = yaxis.x; ViewMatrix.m[0][2] = zaxis.x; ViewMatrix.m[0][3] = 0;
-	ViewMatrix.m[1][0] = xaxis.y; ViewMatrix.m[1][1] = yaxis.y; ViewMatrix.m[1][2] = zaxis.y; ViewMatrix.m[1][3] = 0;
-	ViewMatrix.m[2][0] = xaxis.z; ViewMatrix.m[2][1] = yaxis.z; ViewMatrix.m[2][2] = zaxis.z; ViewMatrix.m[2][3] = 0;
+	ViewMatrix.m[0][0] = xaxis.x; ViewMatrix.m[0][1] = yaxis.x; ViewMatrix.m[0][2] = 0; ViewMatrix.m[0][3] = 0;
+	ViewMatrix.m[1][0] = xaxis.y; ViewMatrix.m[1][1] = yaxis.y; ViewMatrix.m[1][2] = 0; ViewMatrix.m[1][3] = 0;
+	//ViewMatrix.m[2][0] = xaxis.z; ViewMatrix.m[2][1] = yaxis.z; ViewMatrix.m[2][2] = zaxis.z; ViewMatrix.m[2][3] = 0;
+	ViewMatrix.m[2][0] = 0; ViewMatrix.m[2][1] = 0; ViewMatrix.m[2][2] = 0; ViewMatrix.m[2][3] = 0;
 	ViewMatrix.m[3][0] = -position.Dot(xaxis); ViewMatrix.m[3][1] = -position.Dot(yaxis); ViewMatrix.m[3][2] = -position.Dot(zaxis); ViewMatrix.m[3][3] = 1;
 }
 void Camera::SetPerSpectiveMatrix()
@@ -77,53 +72,13 @@ void Camera::MoveToRight(float deltaTime)
 	target -= deltaMove;
 	
 }
-void Camera::RotationAroundX(float deltaTime)
-{
-	Matrix view = ViewMatrix;
-	float angle = deltaTime * m_rotationSpeed;
-	view.SetRotationX(angle);
-	Vector4 localTarget = Vector4(0, 0, -(position - target).Length(), 1);
-	Vector4 localNewTarget = localTarget * view;
-	Vector4 worldNewTarget = localNewTarget * WorldMatrix;
-	target = Vector3(worldNewTarget.x, worldNewTarget.y, worldNewTarget.z);
+void Camera::MoveUp(float deltaTime) {
+	Vector3 deltaMove = up.Normalize() * deltaTime * m_cameraSpeed;
+	position -= deltaMove;
+	target -= deltaMove;
 }
-void Camera::RotationAroundY(float deltaTime)
-{
-	Vector4 rotationAxis = Vector4(0, 1, 0, 0) * ViewMatrix;
-	Matrix rotation;
-	rotation.SetIdentity();
-	float angle = deltaTime * m_rotationSpeed;
-	rotation.SetRotationAngleAxis(angle, rotationAxis.x, rotationAxis.y, rotationAxis.z);
-	Vector4 localTarget = Vector4(0, 0, -(position - target).Length(), 1);
-	Vector4 localNewTarget = localTarget * rotation;
-	Vector4 worldNewTarget = localNewTarget * WorldMatrix;
-	target = Vector3(worldNewTarget.x, worldNewTarget.y, worldNewTarget.z);
-}
-void Camera::RotationAroundZ(float deltaTime)
-{
-	Matrix view = ViewMatrix;
-	float angle = deltaTime * m_rotationSpeed;
-	view.SetRotationZ(angle);
-	Vector4 localTarget = Vector4(0, 0, -(position - target).Length(), 1);
-	Vector4 localNewTarget = localTarget * view;
-	Vector4 worldNewTarget = localNewTarget * WorldMatrix;
-	target = Vector3(worldNewTarget.x, worldNewTarget.y, worldNewTarget.z);
-}
-void Camera::RotationUp(float deltaTime)
-{
-	RotationAroundX(deltaTime);
-}
-void Camera::RotationDown(float deltaTime)
-{
-	RotationAroundX(-deltaTime);
-}
-void Camera::RotationLeft(float deltaTime)
-{
-	RotationAroundY(deltaTime);
-}
-void Camera::RotationRight(float deltaTime)
-{
-	RotationAroundY(-deltaTime);
+void Camera::MoveDown(float deltaTime) {
+	MoveUp(-deltaTime);
 }
 void Camera::Update(float deltaTime)
 {

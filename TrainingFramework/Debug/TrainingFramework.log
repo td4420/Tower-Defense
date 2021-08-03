@@ -1,1 +1,15 @@
-﻿
+﻿cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  Model.cpp
+F:\Dao_3DFrameworkTraining\TrainingFramework\Model.cpp(10,15): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+F:\Dao_3DFrameworkTraining\TrainingFramework\Model.cpp(13,2): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+F:\Dao_3DFrameworkTraining\TrainingFramework\Model.cpp(25,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+F:\Dao_3DFrameworkTraining\TrainingFramework\Model.cpp(26,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+F:\Dao_3DFrameworkTraining\TrainingFramework\Model.cpp(27,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+F:\Dao_3DFrameworkTraining\TrainingFramework\Model.cpp(28,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+F:\Dao_3DFrameworkTraining\TrainingFramework\Model.cpp(29,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+F:\Dao_3DFrameworkTraining\TrainingFramework\Model.cpp(30,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+F:\Dao_3DFrameworkTraining\TrainingFramework\Model.cpp(52,2): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+F:\Dao_3DFrameworkTraining\TrainingFramework\Model.cpp(63,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+F:\Dao_3DFrameworkTraining\TrainingFramework\Model.cpp(64,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+F:\Dao_3DFrameworkTraining\TrainingFramework\Model.cpp(78,2): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  TrainingFramework.vcxproj -> F:\Dao_3DFrameworkTraining\BIN\TrainingFramework.exe

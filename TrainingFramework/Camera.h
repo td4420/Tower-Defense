@@ -20,14 +20,9 @@ public:
 	void MoveBackward(float deltaTime);
 	void MoveToLeft(float deltaTime);
 	void MoveToRight(float deltaTime);
-	void RotationAroundX(float deltaTime);
-	void RotationAroundY(float deltaTime);
-	void RotationAroundZ(float deltaTime);
-	void RotationUp(float deltaTime);
-	void RotationDown(float deltaTime);
-	void RotationLeft(float deltaTime);
-	void RotationRight(float deltaTime);
-	void SetRotation();
+	void MoveUp(float deltaTime);
+	void MoveDown(float deltaTime);
+
 	void SetTranslation();
 	void SetWorldMatrix();
 	void SetViewMatrix();

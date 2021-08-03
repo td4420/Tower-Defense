@@ -1,23 +1,11 @@
-#Models: 3
+#Models: 1
 ID 0
-FILE ../ResourcesPacket/Models/Woman1.nfg
-ID 1
-FILE ../ResourcesPacket/Models/Woman2.nfg
-ID 2
-FILE ../ResourcesPacket/Models/fire.nfg
+FILE ../ResourcesPacket/Models/cube.nfg
 
-#2D Textures: 3
+#2D Textures: 1
 ID 0
-FILE ../ResourcesPacket/Textures/Woman1.tga
+FILE ../ResourcesPacket/Textures/grass_tile.tga
 WRAP REPEAT
-FILTER LINEAR LINEAR
-ID 1
-FILE ../ResourcesPacket/Textures/Woman2.tga
-WRAP REPEAT
-FILTER LINEAR LINEAR
-ID 2
-FILE ../ResourcesPacket/Textures/fire3.tga
-WRAP CLAMP
 FILTER LINEAR LINEAR
 
 #Cube Textures: 0
