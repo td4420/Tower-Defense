@@ -11,6 +11,7 @@ void Model::Init()
 	
 	int numberOfVertices;
 	fscanf(file, "NrVertices: %d\n", &numberOfVertices);
+	//std::cout << numberOfVertices << std::endl;
 	if (numberOfVertices <= 0) return;
 	Vertex *vertices = new Vertex[numberOfVertices];
 	for (int i = 0; i < numberOfVertices; ++i)
@@ -29,9 +30,11 @@ void Model::Init()
 		fscanf(file, "tgt:[%f, %f, %f]; ", &tgtX, &tgtY, &tgtZ);
 		fscanf(file, "uv:[%f, %f];\n ", &uvX, &uvY);
 
-		(vertices + i)->pos.x = posX; (vertices + i)->pos.y = posY - 1; (vertices + i)->pos.z = posZ;
+		(vertices + i)->pos.x = posX; (vertices + i)->pos.y = posY; (vertices + i)->pos.z = posZ;
 		(vertices + i)->coords.x = uvX; (vertices + i)->coords.y = uvY;
 
+		std::cout << "x: " << (vertices + i)->pos.x << " y: " << (vertices + i)->pos.y << " z: " << (vertices + i)->pos.z << std::endl;
+		std::cout << "uvX: " << uvX << " uvY: " << uvY << std::endl;
 	}
 	glGenBuffers(1, &this->mVBO);
 	glBindBuffer(GL_ARRAY_BUFFER, this->mVBO);
@@ -40,6 +43,7 @@ void Model::Init()
 
 	int numberOfIndices;
 	fscanf(file, "NrIndices: %d\n", &numberOfIndices);
+	//std::cout << numberOfIndices << std::endl;
 	if (numberOfIndices <= 0)
 	{
 		glDeleteBuffers(1, &mVBO);

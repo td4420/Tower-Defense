@@ -15,11 +15,12 @@ SceneManager::SceneManager()
 
 SceneManager::~SceneManager()
 {
-	/*for (int i = 0; i < numberOfObject; i++)
+	for (int i = 0; i < numberOfObject; i++)
 	{
 		s_ListObject.at(i)->~Object();
 	}
-	this->s_ListObject.clear();*/
+	this->s_ListObject.clear();
+	delete this->camera;
 }
 
 SceneManager* SceneManager::GetInstance(char* file)

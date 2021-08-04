@@ -22,7 +22,7 @@ Object::Object(Model model, vector<Texture> texture, Shaders shaders,int id)
 }
 Object::Object()
 {
-	o_Id = 0;
+	//o_Id = 0;
 }
 Object::~Object()
 {
@@ -42,10 +42,13 @@ void Object::setMVPMatrix(Matrix v, Matrix p)
 }
 void Object::InitObject()
 {
-	Translation.SetTranslation(o_position);
-	Scale.SetScale(o_scale);
-	SetRotation();
-	SetWorldMatrix();
+	Translation.SetIdentity();
+	Scale.SetIdentity();
+	Rotation.SetIdentity();
+	//SetWorldMatrix();
+	
+	o_Model.Init();
+	o_Texture.at(0).Init();
 	for (int i = 0; i < numberOfTexture; i++)
 	{
 		o_Texture.at(i).Init();
@@ -72,10 +75,35 @@ void Object::DrawObject()
 		glEnableVertexAttribArray(o_shaders.uvAttribute);
 		glVertexAttribPointer(o_shaders.uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(2*sizeof(Vector3)));
 	}
+
+	MVP = Scale * Rotation * Translation;
 	glUniformMatrix4fv(o_shaders.u_MVP, 1, GL_FALSE, *MVP.m);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, o_Model.mIBO);
 	glDrawElements(GL_TRIANGLES, o_Model.mNumberOfIndices, GL_UNSIGNED_INT, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
+Object::Object(Object* o)
+{
+	o_Model = o->o_Model;
+	o_Texture = o->o_Texture;
+	o_shaders = o->o_shaders;
+	o_Id = o->o_Id;
+
+	o_position = o->o_position;
+	o_rotation = o->o_rotation;
+	o_scale = o->o_scale;
+	Scale = o->Scale;
+	Rotation = o->Rotation;
+	Translation = o->Translation;
+
+	Rx = o->Rx;
+	Ry = o->Ry;
+	Rz = o->Rz;
+
+	Translation.SetTranslation(o->o_position);
+	Rotation.SetIdentity();
+	Scale.SetScale(o->o_scale);
 }

@@ -7,6 +7,10 @@
 #include <iostream>
 #include "SceneManager.h"
 #include "ResourceManager.h"
+#include "Tile.h"
+#include "PlayField.h"
+#include "Enemies.h"
+
 #define MOVE_FORWARD 1
 #define MOVE_BACKWARD 1 << 1
 #define MOVE_LEFT 1 << 2
@@ -18,25 +22,56 @@
 
 
 int keyPressed = 0;
-SceneManager* scenemanager = SceneManager::GetInstance("../ResourcesPacket/SM.txt");
+//SceneManager* scenemanager = SceneManager::GetInstance("../ResourcesPacket/SM.txt");
 Shaders myShaders;
 Camera* camera;
+
+PlayField pf = PlayField();
+Enemies e = Enemies(myShaders, 60, 0.3f, 3);
+//Tile t = Tile(0, 1, 1, -1.0f, 1.0f, myShaders);
+
 int Init(ESContext* esContext)
 {
-
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
-	scenemanager->Init();
-	camera = scenemanager->camera;
+
+	
+	myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
+	pf.Init(myShaders);
+
+	//t.myShaders = myShaders;//must have
+	//t.tileTexture.Init();
+	//t.Bind();
+
+	e.o_shaders = myShaders;//must have
+	e.InitObject();
+	
+	//e.o_Texture.at(0).Init();
+	//e.enemyShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
+	//e.enemyTexture.Init();
+	//e.Bind();
+
+	//scenemanager->Init();
+	//camera = scenemanager->camera;
+
+	
 	//creation of shaders and program 
-	myShaders = scenemanager->s_ListObject.at(0)->o_shaders;
-	return myShaders.Init(myShaders.fileVS,myShaders.fileFS);
+	//myShaders = scenemanager->s_ListObject.at(0)->o_shaders;
+	//return myShaders.Init(myShaders.fileVS,myShaders.fileFS);
+	return myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
+	
 }
 
 void Draw(ESContext* esContext)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	scenemanager->Draw();
+	//glUseProgram(myShaders.program);
+	pf.Draw();
+	e.DrawObject();
+	
+	//e.Draw();
+	//scenemanager->Draw();
+	
 	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
 }
 
@@ -51,11 +86,11 @@ void Update(ESContext* esContext, float deltaTime)
 	}
 
 	if (keyPressed & MOVE_LEFT) {
-		camera->MoveToLeft(deltaTime);
+		camera->MoveToLeft(0.01f);
 	}
 
 	if (keyPressed & MOVE_RIGHT) {
-		camera->MoveToRight(deltaTime);
+		camera->MoveToRight(0.01f);
 	}
 	if (keyPressed & ROTATE_UP) {
 		camera->RotationUp(deltaTime);
@@ -65,12 +100,13 @@ void Update(ESContext* esContext, float deltaTime)
 		camera->RotationDown(deltaTime);
 	}
 	if (keyPressed & ROTATE_LEFT) {
-		camera->RotationLeft(deltaTime);
+		camera->RotationLeft(0.01f);
 	}
 	if (keyPressed & ROTATE_RIGHT) {
-		camera->RotationRight(deltaTime);
+		camera->RotationRight(0.01f);
 	}
-	scenemanager->Update(deltaTime);
+	//scenemanager->Update(deltaTime);
+	e.Update();
 }
 
 void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
@@ -168,10 +204,11 @@ void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 
 void CleanUp()
 {
-	for (int i = 0; i < scenemanager->numberOfObject; i++)
+
+	/*for (int i = 0; i < scenemanager->numberOfObject; i++)
 	{
 		scenemanager->s_ListObject.at(i)->~Object();
-	}
+	}*/
 }
 
 int _tmain(int argc, TCHAR* argv[])

@@ -18,7 +18,9 @@ public:
 	Matrix Scale, Rotation, Translation;
 	Matrix WorldMatrix, MVP;
 	Object(Model model, vector<Texture> texture, Shaders shaders, int id = 0);
+	//Object(Model model, vector<Texture> texture);
 	Object();
+	Object(Object* o);
 	~Object();
 	void InitObject();
 	void DrawObject();

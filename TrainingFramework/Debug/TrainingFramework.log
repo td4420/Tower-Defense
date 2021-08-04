@@ -1,1 +1,5 @@
-﻿
+﻿cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  TrainingFramework.cpp
+  Enemies.cpp
+  Generating Code...
+  TrainingFramework.vcxproj -> C:\Users\LaptopAZ.vn\Source\Repos\Dao_3DFrameworkTraining\BIN\TrainingFramework.exe
