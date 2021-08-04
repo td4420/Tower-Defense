@@ -1,5 +1,5 @@
 ﻿cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
   TrainingFramework.cpp
-  Enemies.cpp
-  Generating Code...
+  LINK : C:\Users\LaptopAZ.vn\Source\Repos\Dao_3DFrameworkTraining\\BIN\TrainingFramework.exe not found or not built by the last incremental link; performing full link
+Camera.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
   TrainingFramework.vcxproj -> C:\Users\LaptopAZ.vn\Source\Repos\Dao_3DFrameworkTraining\BIN\TrainingFramework.exe

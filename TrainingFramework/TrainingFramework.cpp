@@ -27,7 +27,7 @@ Shaders myShaders;
 Camera* camera;
 
 PlayField pf = PlayField();
-Enemies e = Enemies(myShaders, 60, 0.3f, 3);
+Enemies e = Enemies(myShaders, 60, 0.001f, 3);
 //Tile t = Tile(0, 1, 1, -1.0f, 1.0f, myShaders);
 
 int Init(ESContext* esContext)

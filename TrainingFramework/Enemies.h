@@ -20,7 +20,7 @@ public:
 	int maxHP = 60;
 	int currentHP = 60;
 
-	float movementSpeed = 0.1f;
+	float movementSpeed = 0.001f;
 	int reward = 3;
 
 	//Tile spawnTile;
@@ -47,5 +47,6 @@ public:
 	void SetSpawner(Tile spawner);
 	void Draw();
 	void Update();
+	void Kill();
 };
 

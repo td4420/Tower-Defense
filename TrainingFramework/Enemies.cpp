@@ -19,7 +19,7 @@ Enemies::Enemies(int type)
 	{
 		maxHP = 60;
 		currentHP = maxHP;
-		movementSpeed = 0.005f;
+		movementSpeed = 0.001f;
 		reward = 10;
 	}
 
@@ -27,7 +27,7 @@ Enemies::Enemies(int type)
 	{
 		maxHP = 30;
 		currentHP = maxHP;
-		movementSpeed = 0.01f;
+		movementSpeed = 0.002f;
 		reward = 12;
 	}
 
@@ -35,7 +35,7 @@ Enemies::Enemies(int type)
 	{
 		maxHP = 100;
 		currentHP = maxHP;
-		movementSpeed = 0.005f;
+		movementSpeed = 0.0005f;
 		reward = 20;
 	}
 }
@@ -70,9 +70,13 @@ Enemies::Enemies(Shaders shader, int maxHP, float speed, int reward)
 	this->reward = reward;
 
 	o_Model = Model("../Resources/model.nfg");
-	o_Texture.push_back(Texture("../Resources/enemy.tga"));
+	o_Texture.push_back(Texture("../Resources/enemyFacingRight.tga"));
 	Scale.SetIdentity();
-	Rotation.SetRotationX(3.14f);
+	//Rx.SetRotationX(3.14f);
+	//Ry.SetRotationY(0);
+	//Rz.SetRotationZ(0);
+	//Rotation = Rz * Rx * Ry;
+	Rotation.SetIdentity();
 	Translation.SetIdentity();
 	MVP = Scale * Rotation * Translation;
 
@@ -165,7 +169,7 @@ void Enemies::Draw()
 
 	}
 
-	GLushort indices[]{ 0,1,2 };
+	GLushort indices[]{ 0,2,3 };
 	GLushort in[]{ 0,2,3 };
 
 	glUniformMatrix4fv(o_shaders.u_MVP, 1, GL_FALSE, *MVP.m);
@@ -180,10 +184,18 @@ void Enemies::Draw()
 
 void Enemies::Update() 
 {
-	Scale.SetIdentity();
-	Rotation.SetRotationX(3.14f);
-	Translation.SetIdentity();
+	o_position.x += movementSpeed;
+	o_position.y = 0;
+	o_position.z = 0;
+	Translation.SetTranslation(o_position);
 	MVP = Scale * Rotation * Translation;
 
 	DrawObject();
+}
+
+void Enemies::Kill()
+{
+	if (reachedExit == true);
+
+	//if (currentHP <= 0) ~Object();
 }
