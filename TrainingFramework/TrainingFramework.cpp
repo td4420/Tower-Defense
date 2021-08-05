@@ -7,9 +7,9 @@
 #include <iostream>
 #include "SceneManager.h"
 #include "ResourceManager.h"
-#include "Tile.h"
-#include "PlayField.h"
-#include "Enemies.h"
+#include"Text.h"
+
+
 
 #define MOVE_FORWARD 1
 #define MOVE_BACKWARD 1 << 1
@@ -22,56 +22,35 @@
 
 
 int keyPressed = 0;
-//SceneManager* scenemanager = SceneManager::GetInstance("../ResourcesPacket/SM.txt");
+SceneManager* scenemanager = SceneManager::GetInstance("../ResourcesPacket/SM.txt");
 Shaders myShaders;
+Shaders textShader;
 Camera* camera;
-
-PlayField pf = PlayField();
-Enemies e = Enemies(myShaders, 60, 0.001f, 3);
-//Tile t = Tile(0, 1, 1, -1.0f, 1.0f, myShaders);
-
+//Button* myButton = new Button();
+Text* myText = new Text("NEW GAME", Globals::screenWidth / 2 - 50, 500);
+Vector4 color(0.0f, 0.3f, 0.3f, 0.8f);
 int Init(ESContext* esContext)
 {
+
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
-
-	
-	myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
-	pf.Init(myShaders);
-
-	//t.myShaders = myShaders;//must have
-	//t.tileTexture.Init();
-	//t.Bind();
-
-	e.o_shaders = myShaders;//must have
-	e.InitObject();
-	
-	//e.o_Texture.at(0).Init();
-	//e.enemyShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
-	//e.enemyTexture.Init();
-	//e.Bind();
-
-	//scenemanager->Init();
-	//camera = scenemanager->camera;
-
-	
+	scenemanager->Init();
+	camera = scenemanager->camera;
 	//creation of shaders and program 
-	//myShaders = scenemanager->s_ListObject.at(0)->o_shaders;
-	//return myShaders.Init(myShaders.fileVS,myShaders.fileFS);
-	return myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
-	
-}
+	//myButton->init();
+	myText->init("../Font/Olympus Mount.ttf");
+	myShaders = scenemanager->s_ListObject.at(0)->o_shaders;
+	myShaders.Init(myShaders.fileVS, myShaders.fileFS);
+	return textShader.Init("../Resources/Shaders/Text.vs", "../Resources/Shaders/Text.fs");
 
+}
 void Draw(ESContext* esContext)
 {
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	//glUseProgram(myShaders.program);
-	pf.Draw();
-	e.DrawObject();
-	
-	//e.Draw();
 	//scenemanager->Draw();
-	
+	//myButton->Draw(myShaders);
+	myText->RenderText(textShader, color, 1, 1);
 	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
 }
 
@@ -86,11 +65,11 @@ void Update(ESContext* esContext, float deltaTime)
 	}
 
 	if (keyPressed & MOVE_LEFT) {
-		camera->MoveToLeft(0.01f);
+		camera->MoveToLeft(deltaTime);
 	}
 
 	if (keyPressed & MOVE_RIGHT) {
-		camera->MoveToRight(0.01f);
+		camera->MoveToRight(deltaTime);
 	}
 	if (keyPressed & ROTATE_UP) {
 		camera->RotationUp(deltaTime);
@@ -100,13 +79,12 @@ void Update(ESContext* esContext, float deltaTime)
 		camera->RotationDown(deltaTime);
 	}
 	if (keyPressed & ROTATE_LEFT) {
-		camera->RotationLeft(0.01f);
+		camera->RotationLeft(deltaTime);
 	}
 	if (keyPressed & ROTATE_RIGHT) {
-		camera->RotationRight(0.01f);
+		camera->RotationRight(deltaTime);
 	}
-	//scenemanager->Update(deltaTime);
-	e.Update();
+	scenemanager->Update(deltaTime);
 }
 
 void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
@@ -204,15 +182,14 @@ void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 
 void CleanUp()
 {
-
-	/*for (int i = 0; i < scenemanager->numberOfObject; i++)
+	for (int i = 0; i < scenemanager->numberOfObject; i++)
 	{
 		scenemanager->s_ListObject.at(i)->~Object();
-	}*/
+	}
 }
-
 int _tmain(int argc, TCHAR* argv[])
 {
+	glViewport(0, 0, Globals::screenWidth, Globals::screenHeight);
 	ESContext esContext;
 
 	esInitContext(&esContext);
