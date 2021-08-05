@@ -65,7 +65,8 @@ void Model::Init()
 }
 Model::Model(char* modelFile,int modelID)
 {
-	strcpy(mModelFile,modelFile);
+	//strcpy(mModelFile,modelFile);
+	mModelFile = strdup(modelFile);
 	ID = modelID;
 }
 Model::Model()

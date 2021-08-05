@@ -7,7 +7,7 @@ class Model
 {
 public:
 	int ID;
-	char mModelFile[50];
+	char* mModelFile;
 	GLuint mVBO;
 	GLuint mIBO;
 	int mNumberOfIndices;

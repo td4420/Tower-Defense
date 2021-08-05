@@ -6,10 +6,11 @@ class Texture
 public:
 	int ID;
 	char* mTgaFilePath;
-	GLenum mTiling, fTilling1, fTilling2;
+	GLint mTiling, fTilling1, fTilling2;
 	void ConfigTexture();
 	GLuint mTextureId;
 	void Init();
-	Texture(const char* tgaFilePath, int id = 0, GLenum tiling = GL_REPEAT, GLenum fTilling1 = GL_LINEAR, GLenum fTilling2 = GL_LINEAR);
+	Texture(const char* tgaFilePath, int id, GLint tiling = GL_REPEAT, GLint fTilling1 = GL_LINEAR, GLint fTilling2 = GL_LINEAR);
+	Texture();
 	~Texture();
 };

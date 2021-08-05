@@ -7,6 +7,11 @@
 #include <iostream>
 #include "SceneManager.h"
 #include "ResourceManager.h"
+#include"Button.h"
+#include"Text.h"
+
+
+
 #define MOVE_FORWARD 1
 #define MOVE_BACKWARD 1 << 1
 #define MOVE_LEFT 1 << 2
@@ -20,7 +25,11 @@
 int keyPressed = 0;
 SceneManager* scenemanager = SceneManager::GetInstance("../ResourcesPacket/SM.txt");
 Shaders myShaders;
+Shaders textShader;
 Camera* camera;
+//Button* myButton = new Button();
+Text* myText = new Text("NEW GAME", Globals::screenWidth / 2 - 50, 500);
+Vector4 color(0.0f, 0.3f, 0.3f, 0.8f);
 int Init(ESContext* esContext)
 {
 
@@ -29,14 +38,20 @@ int Init(ESContext* esContext)
 	scenemanager->Init();
 	camera = scenemanager->camera;
 	//creation of shaders and program 
+	//myButton->init();
+	myText->init("../Font/Olympus Mount.ttf");
 	myShaders = scenemanager->s_ListObject.at(0)->o_shaders;
-	return myShaders.Init(myShaders.fileVS,myShaders.fileFS);
+	myShaders.Init(myShaders.fileVS,myShaders.fileFS);
+	return textShader.Init("../Resources/Shaders/Text.vs", "../Resources/Shaders/Text.fs");
+	
 }
-// test push
 void Draw(ESContext* esContext)
 {
+	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	scenemanager->Draw();
+	//scenemanager->Draw();
+	//myButton->Draw(myShaders);
+	myText->RenderText(textShader, color, 1, 1);
 	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
 }
 
@@ -173,9 +188,9 @@ void CleanUp()
 		scenemanager->s_ListObject.at(i)->~Object();
 	}
 }
-
 int _tmain(int argc, TCHAR* argv[])
 {
+	glViewport(0, 0, Globals::screenWidth, Globals::screenHeight);
 	ESContext esContext;
 
 	esInitContext(&esContext);

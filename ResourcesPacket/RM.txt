@@ -1,12 +1,13 @@
-#Models: 3
+#Models: 4
 ID 0
 FILE ../ResourcesPacket/Models/Woman1.nfg
 ID 1
 FILE ../ResourcesPacket/Models/Woman2.nfg
 ID 2
 FILE ../ResourcesPacket/Models/fire.nfg
-
-#2D Textures: 3
+ID 3
+FILE ../ResourcesPacket/Models/Button.nfg
+#2D Textures: 4
 ID 0
 FILE ../ResourcesPacket/Textures/Woman1.tga
 WRAP REPEAT
@@ -18,6 +19,10 @@ FILTER LINEAR LINEAR
 ID 2
 FILE ../ResourcesPacket/Textures/fire3.tga
 WRAP CLAMP
+FILTER LINEAR LINEAR
+ID 3
+FILE ../ResourcesPacket/Textures/Newgame.tga
+WRAP REPEAT
 FILTER LINEAR LINEAR
 
 #Cube Textures: 0
