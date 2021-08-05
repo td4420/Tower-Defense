@@ -10,6 +10,7 @@
 #include "Tile.h"
 #include "PlayField.h"
 #include "Enemies.h"
+#include "Tower.h"
 
 #define MOVE_FORWARD 1
 #define MOVE_BACKWARD 1 << 1
@@ -28,6 +29,7 @@ Camera* camera;
 
 PlayField pf = PlayField();
 Enemies e = Enemies(myShaders, 60, 0.001f, 3);
+Tower t = Tower();
 //Tile t = Tile(0, 1, 1, -1.0f, 1.0f, myShaders);
 
 int Init(ESContext* esContext)
@@ -41,6 +43,11 @@ int Init(ESContext* esContext)
 
 	e.o_shaders = myShaders;//must have
 	e.InitObject();
+
+	t.o_shaders = myShaders;//must have
+	t.InitObject();
+	//t.enemiesInRange.push_back(&e);//1 buffer leak
+	//t.enemiesInRange.erase(t.enemiesInRange.begin());
 	return myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
 	
 }
@@ -49,9 +56,12 @@ void Draw(ESContext* esContext)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//glUseProgram(myShaders.program);
+	//cout << t.enemiesInRange.at(0)->locationX << " " << t.enemiesInRange.at(0)->locationY << endl;
+
 	pf.Draw();
 	e.DrawObject();
 	
+	t.DrawObject();
 	//e.Draw();
 	//scenemanager->Draw();
 	
@@ -90,6 +100,11 @@ void Update(ESContext* esContext, float deltaTime)
 	}
 	//scenemanager->Update(deltaTime);
 	e.Update();
+	
+	
+	if (t.CaculateDistanceToEnemies(&e) <= t.range) {//white screen if not pointer
+		cout << "In range!" << endl;
+	}
 }
 
 void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
@@ -192,6 +207,7 @@ void CleanUp()
 	{
 		scenemanager->s_ListObject.at(i)->~Object();
 	}*/
+	//delete t.enemiesInRange.at(0);//bad pointer deletion
 }
 
 int _tmain(int argc, TCHAR* argv[])

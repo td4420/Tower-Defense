@@ -240,6 +240,7 @@ void Enemies::MoveEnemies()
 
 void Enemies::Update() 
 {
+	//cout << "X: " << (o_position.x + 0.075f) << " Y: " << (o_position.y - 0.1f) << endl;
 	MoveEnemies();
 }
 

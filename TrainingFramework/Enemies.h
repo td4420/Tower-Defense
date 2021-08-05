@@ -16,6 +16,8 @@ public:
 	Texture enemyTexture = Texture("../Resources/enemy.tga");
 	Shaders enemyShaders;
 	Vertex enemyVertices[4];
+
+	Vector2 enemyPos;
 	int locationX = 0, locationY = 0;
 	int lastLocationX = 0, lastLocationY = 0;
 	int maxHP = 60;
@@ -39,7 +41,7 @@ public:
 
 	Enemies();
 	Enemies(int type);
-	Enemies(Enemies* e);
+	Enemies(Enemies *e);
 	Enemies(Shaders myShaders, int maxHP, float speed, int reward);
 	Enemies(Shaders myShaders, int maxHP, float speed, int reward, Tile spawner);
 	
