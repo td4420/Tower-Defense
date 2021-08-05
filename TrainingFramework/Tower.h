@@ -21,7 +21,7 @@ public:
     void Build(int x, int y);
     void Shoot();
     float CaculateDistanceToEnemies(Enemies *e);
-    void AddEnemiesInRange(std::vector <Enemies> EnemyWave);
+    void AddEnemiesInRange(std::vector <Enemies*> EnemyWave);
     void RemoveEnemiesOutOfRange();
     void SetTarget();
     //void 

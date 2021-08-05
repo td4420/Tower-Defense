@@ -43,25 +43,31 @@ float Tower::CaculateDistanceToEnemies(Enemies *e)//must Enemies* or White Scree
 	//return 0;
 }
 
-void Tower::AddEnemiesInRange(vector <Enemies> enemyWave)
+void Tower::AddEnemiesInRange(vector <Enemies*> enemyWave)
 {
 	for (int i = 0; i < enemyWave.size(); i++)
 	{
-		float distance = CaculateDistanceToEnemies(&enemyWave.at(i));
+		float distance = CaculateDistanceToEnemies(enemyWave.at(i));
 
-		if (distance <= range) enemiesInRange.push_back(&enemyWave.at(i));
+		if (distance <= range) {
+			enemiesInRange.push_back(enemyWave.at(i));
+			cout << "In!" << endl;
+		}
 	}
 }
 
 void Tower::RemoveEnemiesOutOfRange()
 {
-	if (!enemiesInRange.empty())
+	if (enemiesInRange.size()!=0)
 	{
 		for (int i = 0; i < enemiesInRange.size(); i++)
 		{
 			float distance = CaculateDistanceToEnemies(enemiesInRange.at(i));
 
-			if (distance > range) enemiesInRange.erase(enemiesInRange.begin() + i);
+			if (distance > range) {
+				enemiesInRange.erase(enemiesInRange.begin() + i);
+				cout << "Out!" << endl;
+			}
 		}
 	}
 }

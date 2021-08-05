@@ -1,5 +1,5 @@
 ﻿cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
   Tower.cpp
 C:\Users\LaptopAZ.vn\source\repos\TD\TrainingFramework\Tower.cpp(48,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\LaptopAZ.vn\source\repos\TD\TrainingFramework\Tower.cpp(60,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\LaptopAZ.vn\source\repos\TD\TrainingFramework\Tower.cpp(63,21): warning C4018: '<': signed/unsigned mismatch
   TrainingFramework.vcxproj -> C:\Users\LaptopAZ.vn\source\repos\TD\BIN\TrainingFramework.exe

@@ -5,6 +5,7 @@
 #include "Globals.h"
 #include <conio.h>
 #include <iostream>
+#include <vector>
 #include "SceneManager.h"
 #include "ResourceManager.h"
 #include "Tile.h"
@@ -30,7 +31,7 @@ Camera* camera;
 PlayField pf = PlayField();
 Enemies e = Enemies(myShaders, 60, 0.001f, 3);
 Tower t = Tower();
-//Tile t = Tile(0, 1, 1, -1.0f, 1.0f, myShaders);
+std::vector <Enemies*> wave;//1 buffer
 
 int Init(ESContext* esContext)
 {
@@ -44,6 +45,7 @@ int Init(ESContext* esContext)
 	e.o_shaders = myShaders;//must have
 	e.InitObject();
 
+	wave.push_back(&e);
 	t.o_shaders = myShaders;//must have
 	t.InitObject();
 	//t.enemiesInRange.push_back(&e);//1 buffer leak
@@ -101,10 +103,11 @@ void Update(ESContext* esContext, float deltaTime)
 	//scenemanager->Update(deltaTime);
 	e.Update();
 	
-	
-	if (t.CaculateDistanceToEnemies(&e) <= t.range) {//white screen if not pointer
-		cout << "In range!" << endl;
-	}
+	t.AddEnemiesInRange(wave);
+	t.RemoveEnemiesOutOfRange();
+	//if (t.CaculateDistanceToEnemies(&e) <= t.range) {//white screen if not pointer
+	//	cout << "In range!" << endl;
+	//}
 }
 
 void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
