@@ -39,25 +39,8 @@ int Init(ESContext* esContext)
 	myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
 	pf.Init(myShaders);
 
-	//t.myShaders = myShaders;//must have
-	//t.tileTexture.Init();
-	//t.Bind();
-
 	e.o_shaders = myShaders;//must have
 	e.InitObject();
-	
-	//e.o_Texture.at(0).Init();
-	//e.enemyShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
-	//e.enemyTexture.Init();
-	//e.Bind();
-
-	//scenemanager->Init();
-	//camera = scenemanager->camera;
-
-	
-	//creation of shaders and program 
-	//myShaders = scenemanager->s_ListObject.at(0)->o_shaders;
-	//return myShaders.Init(myShaders.fileVS,myShaders.fileFS);
 	return myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
 	
 }

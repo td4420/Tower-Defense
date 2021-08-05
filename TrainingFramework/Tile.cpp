@@ -34,11 +34,6 @@ Tile::Tile(int type, int numX, int numY, float x, float y, Shaders shaders)
 	tileVertices[1].coords.x = 1.0f;	tileVertices[1].coords.y = 0.0f;
 	tileVertices[2].coords.x = 1.0f;	tileVertices[2].coords.y = 1.0f;
 	tileVertices[3].coords.x = 0.0f;	tileVertices[3].coords.y = 1.0f;
-
-	/*std::cout << "Tile " << tileNum.x << " " << tileNum.y << " type: " << tileType << std::endl;
-	for (int i = 0; i < 4; i++) {
-		std::cout << tileVertices[i].pos.x << " " << tileVertices[i].pos.y << std::endl;
-	}*/
 }
 
 void Tile::Bind()

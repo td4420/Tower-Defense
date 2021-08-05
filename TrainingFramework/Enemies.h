@@ -16,7 +16,8 @@ public:
 	Texture enemyTexture = Texture("../Resources/enemy.tga");
 	Shaders enemyShaders;
 	Vertex enemyVertices[4];
-
+	int locationX = 0, locationY = 0;
+	int lastLocationX = 0, lastLocationY = 0;
 	int maxHP = 60;
 	int currentHP = 60;
 
@@ -45,6 +46,11 @@ public:
 	void Bind();
 	void SetShaders(Shaders myShaders);
 	void SetSpawner(Tile spawner);
+	void MoveEnemies();
+	void MoveToLeft();
+	void MoveToRight();
+	void MoveUp();
+	void MoveDown();
 	void Draw();
 	void Update();
 	void Kill();

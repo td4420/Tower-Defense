@@ -68,60 +68,14 @@ Enemies::Enemies(Shaders shader, int maxHP, float speed, int reward)
 	this->currentHP = this->maxHP;
 	this->movementSpeed = speed;
 	this->reward = reward;
-
 	o_Model = Model("../Resources/model.nfg");
-	o_Texture.push_back(Texture("../Resources/enemyFacingRight.tga"));
+	o_Texture.push_back(Texture("../Resources/enemy.tga"));
 	Scale.SetIdentity();
-	//Rx.SetRotationX(3.14f);
-	//Ry.SetRotationY(0);
-	//Rz.SetRotationZ(0);
-	//Rotation = Rz * Rx * Ry;
 	Rotation.SetIdentity();
 	Translation.SetIdentity();
 	MVP = Scale * Rotation * Translation;
 
-	/*enemyVertices[0].pos.x = -1.0f;  enemyVertices[0].pos.y = 1.0f; enemyVertices[0].pos.z = -0.1f;
-	enemyVertices[1].pos.x = -0.85f; enemyVertices[1].pos.y = 1.0f; enemyVertices[1].pos.z = -0.1f;
-	enemyVertices[2].pos.x = -0.85f; enemyVertices[2].pos.y = 0.8f; enemyVertices[2].pos.z = -0.1f;
-	enemyVertices[3].pos.x = -1.0f;  enemyVertices[3].pos.y = 0.8f; enemyVertices[3].pos.z = -0.1f;
-
-	enemyVertices[0].coords.x = 0.0f;	enemyVertices[0].coords.y = 0.0f;
-	enemyVertices[1].coords.x = 1.0f;	enemyVertices[1].coords.y = 0.0f;
-	enemyVertices[2].coords.x = 1.0f;	enemyVertices[2].coords.y = 1.0f;
-	enemyVertices[3].coords.x = 0.0f;	enemyVertices[3].coords.y = 1.0f;*/
-
-	/*for (int i = 0; i < 4; i++) {
-
-		cout << enemyVertices[i].pos.x << " " << enemyVertices[i].pos.y << " " << enemyVertices[i].pos.z << endl;
-		cout << enemyVertices[i].coords.x << " " << enemyVertices[i].coords.y << endl;
-	}*/
 }
-
-//Enemies::Enemies(Shaders shader,int maxHP, float speed, int reward, Tile spawner)
-//{
-//	enemyShaders = shader;
-//
-//	this->maxHP = maxHP;
-//	this->currentHP = this->maxHP;
-//	this->movementSpeed = speed;
-//	this->reward = reward;
-//
-//	//spawnTile = spawner;
-//	//enemyTexture = Texture("../Resources/enemy.tga");
-//	//this->enemyTexture.Init();
-//
-//	for (int i = 0; i < 4; i++) {
-//		enemyVertices[i].pos.x = spawner.tileVertices[i].pos.x;
-//		enemyVertices[i].pos.y = spawner.tileVertices[i].pos.y;
-//		enemyVertices[i].pos.z = spawner.tileVertices[i].pos.z;
-//
-//		enemyVertices[i].coords.x = spawner.tileVertices[i].coords.x;
-//		enemyVertices[i].coords.y = spawner.tileVertices[i].coords.y;
-//
-//		std::cout << enemyVertices[i].pos.x << " " << enemyVertices[i].pos.y << " " << enemyVertices[i].pos.z << std::endl;
-//	}
-//
-//}
 
 void Enemies::SetShaders(Shaders shader)
 {
@@ -182,15 +136,111 @@ void Enemies::Draw()
 	//std::cout << enemyVertices[0].pos.x << " " << enemyVertices[0].pos.y << " " << enemyVertices[0].pos.z << std::endl;
 }
 
-void Enemies::Update() 
+void Enemies::MoveToLeft()
 {
-	o_position.x += movementSpeed;
-	o_position.y = 0;
-	o_position.z = 0;
+	float deltaX = o_position.x - locationX * 0.15;
+	if (deltaX <= -0.15)
+	{
+		lastLocationX = locationX;
+		lastLocationY = locationY;
+		locationX--;
+		return;
+	}
+	o_position.x -= movementSpeed;
 	Translation.SetTranslation(o_position);
 	MVP = Scale * Rotation * Translation;
 
-	DrawObject();
+}
+void Enemies::MoveToRight()
+{
+	
+	float deltaX = o_position.x - locationX*0.15;
+	if (deltaX >= 0.15)
+	{
+		lastLocationX = locationX;
+		lastLocationY = locationY;
+		locationX++;
+		return;
+	}
+	o_position.x += movementSpeed;
+	Translation.SetTranslation(o_position);
+	MVP = Scale * Rotation * Translation;
+
+}
+
+void Enemies::MoveDown()
+{
+	float deltaY = -o_position.y - locationY * 0.2;
+	if (deltaY >= 0.2)
+	{
+		lastLocationX = locationX;
+		lastLocationY = locationY;
+		locationY++;
+		return;
+	}
+	o_position.y -= movementSpeed;
+	Translation.SetTranslation(o_position);
+	MVP = Scale * Rotation * Translation;
+
+}
+
+void Enemies::MoveUp()
+{
+	float deltaY = -o_position.y - locationY * 0.2;
+	if (deltaY <= -0.2)
+	{
+		lastLocationX = locationX;
+		lastLocationY = locationY;
+		locationY--;
+		return;
+	}
+	o_position.y += movementSpeed;
+	Translation.SetTranslation(o_position);
+	MVP = Scale * Rotation * Translation;
+	
+}
+
+void Enemies::MoveEnemies()
+{
+	int NumMap[7][8] =
+	{
+		1,1,0,0,0,0,0,0,
+		0,1,1,0,0,0,0,0,
+		0,0,1,1,1,1,1,0,
+		0,0,0,0,0,0,1,0,
+		0,0,0,1,1,1,1,0,
+		0,0,0,1,0,0,0,0,
+		0,0,0,1,1,1,1,1
+	};
+	if ((locationX - 1 != lastLocationX) && // To not move back
+		locationX > 0 && NumMap[locationY][locationX-1] == 1)  // Check if can move
+	{
+		MoveToLeft();
+		return;
+	}
+	if ((locationX + 1 != lastLocationX) &&  //To not move back
+		locationX < 6 && NumMap[locationY][locationX+1] == 1) // Check if can move
+	{
+		MoveToRight();
+		return;
+	}
+	if ((locationY - 1 != lastLocationY) && // To not move back
+		locationY > 0 && NumMap[locationY-1][locationX] == 1)  // Check if can move
+	{
+		MoveUp();
+		return;
+	}
+	if ((locationY + 1 != lastLocationY) && // To not move back
+		locationY < 7 && NumMap[locationY+1][locationX] == 1)  // Check if can move
+	{
+		MoveDown();
+		return;
+	}
+}
+
+void Enemies::Update() 
+{
+	MoveEnemies();
 }
 
 void Enemies::Kill()
