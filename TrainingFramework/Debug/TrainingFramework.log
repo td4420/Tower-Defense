@@ -1,1 +1,15 @@
-﻿
+﻿cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  TrainingFramework.cpp
+  Enemies.cpp
+C:\Users\trong\Desktop\Dao_3DFrameworkTraining\TrainingFramework\Enemies.cpp(75,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\trong\Desktop\Dao_3DFrameworkTraining\TrainingFramework\Enemies.cpp(79,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\trong\Desktop\Dao_3DFrameworkTraining\TrainingFramework\Enemies.cpp(143,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\trong\Desktop\Dao_3DFrameworkTraining\TrainingFramework\Enemies.cpp(159,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\trong\Desktop\Dao_3DFrameworkTraining\TrainingFramework\Enemies.cpp(174,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\trong\Desktop\Dao_3DFrameworkTraining\TrainingFramework\Enemies.cpp(190,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\trong\Desktop\Dao_3DFrameworkTraining\TrainingFramework\Enemies.cpp(257,26): warning C4390: ';': empty controlled statement found; is this the intent?
+  Animation.cpp
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  Tower.cpp
+  TrainingFramework.vcxproj -> C:\Users\trong\Desktop\Dao_3DFrameworkTraining\BIN\TrainingFramework.exe

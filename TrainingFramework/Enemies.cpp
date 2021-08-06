@@ -7,7 +7,6 @@ Enemies::Enemies()
 {
 	o_Model = Model("../Resources/model.txt");
 	o_Texture.push_back(Texture("../Resources/enemy.tga"));
-
 	Scale.SetIdentity();
 	Translation.SetIdentity();
 	Rotation.SetIdentity();
@@ -54,13 +53,12 @@ Enemies::Enemies(Enemies* e)
 
 		enemyVertices[i].coords.x = e->enemyVertices[i].coords.x;
 		enemyVertices[i].coords.y = e->enemyVertices[i].coords.y;
-
-		std::cout << enemyVertices[i].pos.x << " " << enemyVertices[i].pos.y << " " << enemyVertices[i].pos.z << std::endl;
 	}
 }
 
 Enemies::Enemies(Shaders shader, int maxHP, float speed, int reward)
 {
+	animation.InitEnemies();
 	enemyShaders = shader;
 	o_shaders = shader;
 
@@ -69,12 +67,19 @@ Enemies::Enemies(Shaders shader, int maxHP, float speed, int reward)
 	this->movementSpeed = speed;
 	this->reward = reward;
 	o_Model = Model("../Resources/model.nfg");
-	o_Texture.push_back(Texture("../Resources/enemy.tga"));
+	o_Texture.push_back(Texture("../ResourcesPacket/AnimationMove/Left/2_enemies_1_walk_001.tga"));
 	Scale.SetIdentity();
 	Rotation.SetIdentity();
 	Translation.SetIdentity();
 	MVP = Scale * Rotation * Translation;
-
+	for (int i = 0; i < animation.animationMoveLeft.size(); i++)
+	{
+		o_Texture.push_back(animation.animationMoveLeft.at(i));
+	}
+	for (int j = 0; j < animation.animationMoveRight.size(); j++)
+	{
+		o_Texture.push_back(animation.animationMoveRight.at(j));
+	}
 }
 
 void Enemies::SetShaders(Shaders shader)
@@ -100,7 +105,6 @@ void Enemies::Bind() {
 	glBufferData(GL_ARRAY_BUFFER, sizeof(enemyVertices), enemyVertices, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	//cout << "Binded" << endl;
 }
 
 void Enemies::Draw()
@@ -132,8 +136,6 @@ void Enemies::Draw()
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);
-
-	//std::cout << enemyVertices[0].pos.x << " " << enemyVertices[0].pos.y << " " << enemyVertices[0].pos.z << std::endl;
 }
 
 void Enemies::MoveToLeft()
@@ -165,7 +167,6 @@ void Enemies::MoveToRight()
 	o_position.x += movementSpeed;
 	Translation.SetTranslation(o_position);
 	MVP = Scale * Rotation * Translation;
-
 }
 
 void Enemies::MoveDown()
@@ -215,24 +216,32 @@ void Enemies::MoveEnemies()
 	if ((locationX - 1 != lastLocationX) && // To not move back
 		locationX > 0 && NumMap[locationY][locationX-1] == 1)  // Check if can move
 	{
+		o_Texture.at(0) = o_Texture.at(animation.GetAnimationMoveLeft() + 1);
+		toLeft = true;
 		MoveToLeft();
 		return;
 	}
 	if ((locationX + 1 != lastLocationX) &&  //To not move back
-		locationX < 6 && NumMap[locationY][locationX+1] == 1) // Check if can move
+		locationX < 7 && NumMap[locationY][locationX+1] == 1) // Check if can move
 	{
+		o_Texture.at(0) = o_Texture.at(animation.GetAnimationMoveRight() + animation.animationMoveLeft.size() + 1);
+		toLeft = false;
 		MoveToRight();
 		return;
 	}
 	if ((locationY - 1 != lastLocationY) && // To not move back
 		locationY > 0 && NumMap[locationY-1][locationX] == 1)  // Check if can move
 	{
+		if(!toLeft) o_Texture.at(0) = o_Texture.at(animation.GetAnimationMoveRight() + animation.animationMoveLeft.size() + 1);
+		else o_Texture.at(0) = o_Texture.at(animation.GetAnimationMoveLeft() + 1);
 		MoveUp();
 		return;
 	}
 	if ((locationY + 1 != lastLocationY) && // To not move back
-		locationY < 7 && NumMap[locationY+1][locationX] == 1)  // Check if can move
+		locationY < 6 && NumMap[locationY+1][locationX] == 1)  // Check if can move
 	{
+		if (!toLeft) o_Texture.at(0) = o_Texture.at(animation.GetAnimationMoveRight() + animation.animationMoveLeft.size() + 1);
+		else o_Texture.at(0) = o_Texture.at(animation.GetAnimationMoveLeft() + 1);
 		MoveDown();
 		return;
 	}

@@ -15,7 +15,6 @@ void Texture::Init()
 	int iHeight = 0;
 	int iBpp = 0;
 	const char* imageData = LoadTGA(mTgaFilePath, &iWidth, &iHeight, &iBpp);
-
 	GLenum format = (iBpp == 24 ? GL_RGB : GL_RGBA);
 
 	glGenTextures(1, &mTextureId);

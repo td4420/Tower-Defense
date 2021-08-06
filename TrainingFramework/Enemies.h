@@ -4,6 +4,7 @@
 #include "Texture.h"
 #include "Shaders.h"
 #include "Vertex.h"
+#include "Animation.h"
 class Enemies :
     public Object
 {
@@ -36,6 +37,9 @@ public:
 
 	GLuint enemyVBO;
 	//GLuint enemyIBO;
+
+	bool toLeft = false; //Check the last step is go to left or right
+	Animation animation;
 
 	Enemies();
 	Enemies(int type);
