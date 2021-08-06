@@ -48,6 +48,9 @@ public:
    void (ESCALLBACK *drawFunc) ( ESContext * );
    void (ESCALLBACK *keyFunc) ( ESContext *, unsigned char, bool );
    void (ESCALLBACK *updateFunc) ( ESContext *, float deltaTime );
+   void (ESCALLBACK* mouseDownFunc) (ESContext*, int, int);
+   void (ESCALLBACK* mouseUpFunc) (ESContext*, int, int);
+   void (ESCALLBACK* mouseMoveFunc) (ESContext*, int, int);
 };
 
 
@@ -101,6 +104,16 @@ void ESUTIL_API esRegisterUpdateFunc ( ESContext *esContext, void (ESCALLBACK *u
 //
 void ESUTIL_API esRegisterKeyFunc ( ESContext *esContext, 
                                     void (ESCALLBACK *drawFunc) ( ESContext*, unsigned char, bool ) );
+
+void ESUTIL_API esRegisterMouseDownFunc(ESContext* esContext,
+    void (ESCALLBACK* mouseDownFunc) (ESContext*, int, int));
+
+void ESUTIL_API esRegisterMouseUpFunc(ESContext* esContext,
+    void (ESCALLBACK* mouseUpFunc) (ESContext*, int, int));
+
+
+void ESUTIL_API esRegisterMouseMoveFunc(ESContext* esContext,
+    void (ESCALLBACK* mouseMoveFunc) (ESContext*, int, int));
 //
 /// \brief Log a message to the debug output for the platform
 /// \param formatStr Format string for error log.  

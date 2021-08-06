@@ -184,7 +184,23 @@ void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 		}
 	}
 }
+void TouchActionDown(ESContext* esContext, int x, int y)
+{
+	printf("\n: mouse down at: %d, %d", x, y);
+}
 
+void TouchActionUp(ESContext* esContext, int x, int y)
+{
+	printf("\n: mouse up at: %d, %d", x, y);
+}
+
+void TouchActionMove(ESContext* esContext, int x, int y)
+{
+	// Mouse move
+	printf("\n: mouse move at: %d, %d", x, y);
+
+
+}
 void CleanUp()
 {
 
@@ -208,6 +224,9 @@ int _tmain(int argc, TCHAR* argv[])
 	esRegisterDrawFunc(&esContext, Draw);
 	esRegisterUpdateFunc(&esContext, Update);
 	esRegisterKeyFunc(&esContext, Key);
+	esRegisterMouseDownFunc(&esContext, TouchActionDown);
+	esRegisterMouseUpFunc(&esContext, TouchActionUp);
+	esRegisterMouseMoveFunc(&esContext, TouchActionMove);
 
 	esMainLoop(&esContext);
 
