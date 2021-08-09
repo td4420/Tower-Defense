@@ -50,6 +50,7 @@ public:
    void (ESCALLBACK *updateFunc) ( ESContext *, float deltaTime );
    void (ESCALLBACK* mouseDownFunc) (ESContext*, int, int);
    void (ESCALLBACK* mouseUpFunc) (ESContext*, int, int);
+   void (ESCALLBACK* mouseDragFunc) (ESContext*, int, int);
    void (ESCALLBACK* mouseMoveFunc) (ESContext*, int, int);
 };
 
@@ -112,6 +113,8 @@ void ESUTIL_API esRegisterMouseUpFunc(ESContext* esContext,
     void (ESCALLBACK* mouseUpFunc) (ESContext*, int, int));
 
 
+void ESUTIL_API esRegisterMouseDragFunc(ESContext* esContext,
+    void (ESCALLBACK* mouseDragFunc) (ESContext*, int, int));
 void ESUTIL_API esRegisterMouseMoveFunc(ESContext* esContext,
     void (ESCALLBACK* mouseMoveFunc) (ESContext*, int, int));
 //

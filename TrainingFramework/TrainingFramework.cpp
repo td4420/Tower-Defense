@@ -194,6 +194,10 @@ void TouchActionUp(ESContext* esContext, int x, int y)
 	printf("\n: mouse up at: %d, %d", x, y);
 }
 
+void TouchActionDrag(ESContext* esCotext, int x, int y) {
+	//move drag
+	printf("\n mouse when drag: %d, %d", x, y);
+}
 void TouchActionMove(ESContext* esContext, int x, int y)
 {
 	// Mouse move
@@ -227,6 +231,7 @@ int _tmain(int argc, TCHAR* argv[])
 	esRegisterMouseDownFunc(&esContext, TouchActionDown);
 	esRegisterMouseUpFunc(&esContext, TouchActionUp);
 	esRegisterMouseMoveFunc(&esContext, TouchActionMove);
+	esRegisterMouseDragFunc(&esContext, TouchActionDrag);
 
 	esMainLoop(&esContext);
 

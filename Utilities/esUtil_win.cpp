@@ -57,16 +57,29 @@ LRESULT WINAPI ESWindowProc ( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
       }
       break;
       case WM_MOUSEMOVE:
-          if (wParam & MK_LBUTTON)
-          {
-              POINTS      point;
-              ESContext* esContext = (ESContext*)(LONG_PTR)GetWindowLongPtr(hWnd, GWL_USERDATA);
+      {
+        if (wParam & MK_LBUTTON)
+        {
+            POINTS      point;
+            ESContext* esContext = (ESContext*)(LONG_PTR)GetWindowLongPtr(hWnd, GWL_USERDATA);
 
-              point = MAKEPOINTS(lParam);
-              if (esContext && esContext->mouseMoveFunc)
-                  esContext->mouseMoveFunc(esContext, (int)point.x, (int)point.y);
-          }
+            point = MAKEPOINTS(lParam);
+            if (esContext && esContext->mouseDragFunc)
+                esContext->mouseDragFunc(esContext, (int)point.x, (int)point.y);
+        }
+        else {
+            POINTS      point;
+            ESContext* esContext = (ESContext*)(LONG_PTR)GetWindowLongPtr(hWnd, GWL_USERDATA);
+
+            point = MAKEPOINTS(lParam);
+            if (esContext && esContext->mouseMoveFunc)
+                esContext->mouseMoveFunc(esContext, (int)point.x, (int)point.y);
+        }
+        
+      }
+          
           break;
+      
       case WM_LBUTTONUP:
       {
           POINTS     point;

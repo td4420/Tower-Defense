@@ -183,6 +183,11 @@ void ESUTIL_API esRegisterMouseUpFunc(ESContext* esContext,
 {
     esContext->mouseUpFunc = mouseUpFunc;
 }
+void ESUTIL_API esRegisterMouseDragFunc(ESContext* esContext,
+    void (ESCALLBACK* mouseDragFunc) (ESContext*, int, int))
+{
+    esContext->mouseDragFunc = mouseDragFunc;
+}
 
 void ESUTIL_API esRegisterMouseMoveFunc(ESContext* esContext,
     void (ESCALLBACK* mouseMoveFunc) (ESContext*, int, int))
