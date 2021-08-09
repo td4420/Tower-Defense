@@ -1,7 +1,8 @@
 #include"stdafx.h"
 #include"Text.h"
 #include"Globals.h"
-void Text::init(char* fileFont) {
+#include<iostream>
+void Text::init() {
 	if (FT_Init_FreeType(&m_ft))
 	{
 		printf("Could not init freetype library\n");
@@ -13,7 +14,20 @@ void Text::init(char* fileFont) {
 	}
 	FT_Set_Pixel_Sizes(m_face, 0, 48);
 	m_glyphSlot = m_face->glyph;
-
+	for (const char* p = text; *p; p++)
+	{
+		if (FT_Load_Char(m_face, *p, FT_LOAD_RENDER))
+		{
+			continue;
+		}
+		float sx = 1.0f / Globals::screenWidth * scaleX;
+		float sy = 1.0f / Globals::screenHeight * scaleY;
+		float w = m_glyphSlot->bitmap.width * sx;
+		float h = m_glyphSlot->bitmap.rows * sy;
+		widthText += w/2*Globals::screenWidth;
+		heightText = h/2*Globals::screenHeight;
+	}
+	widthText += 14.5;
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
 	glGenBuffers(1, &textVBO);
@@ -29,7 +43,7 @@ void Text::init(char* fileFont) {
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void Text::RenderText(Shaders shader, Vector4 color, float scaleX, float scaleY) {
+void Text::RenderText(Shaders shader) {
 	// use glProgram, bind texture & pass color uniform here
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -70,8 +84,6 @@ void Text::RenderText(Shaders shader, Vector4 color, float scaleX, float scaleY)
 		float y2 = y + m_glyphSlot->bitmap_top * sy;
 		float w = m_glyphSlot->bitmap.width * sx;
 		float h = m_glyphSlot->bitmap.rows * sy;
-		widthText += w;
-		heightText += h;
 		GLfloat box[4][4] = {
 		{x2, y2 , 0, 0},
 		{x2 + w, y2 , 1, 0},
@@ -91,14 +103,20 @@ void Text::RenderText(Shaders shader, Vector4 color, float scaleX, float scaleY)
 	}
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);
+	glBlendFunc(GL_ONE, GL_ZERO);
+	glDisable(GL_BLEND);
 
 }
-Text::Text(char* s, float x, float y) {
-	this->text = s;
+Text::Text(const char* s, float x, float y, const char* fileFont, float scaleX, float scaleY, Vector4 color) {
+	text = strdup(s);
 	this->posX = x;
 	this->posY = y;
 	this->heightText = 0;
 	this->widthText = 0;
+	this->color = color;
+	this->fileFont = strdup(fileFont);
+	this->scaleX = scaleX;
+	this->scaleY = scaleY;
 }
 Text::~Text() {
 
