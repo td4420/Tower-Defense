@@ -29,8 +29,8 @@ Shaders myShaders;
 Camera* camera;
 
 PlayField pf = PlayField();
-Enemies e = Enemies(myShaders, 60, 0.002f, 3);
-Tower t = Tower();
+Enemies e = Enemies(myShaders, 60, 0.004f, 3);
+Tower t = Tower(0);
 //Projectile bullet = Projectile(0, t.towerPos.x, t.towerPos.y);
 std::vector <Enemies*> wave;
 
@@ -50,7 +50,7 @@ int Init(ESContext* esContext)
 	wave.push_back(&e);//1 buffer
 	t.o_shaders = myShaders;//must have
 	t.InitObject();
-	t.Build(5, 3);
+	t.Build(3, 3);
 	
 	return myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
 	
@@ -116,11 +116,11 @@ void Update(ESContext* esContext, float deltaTime)
 	t.AddEnemiesInRange(wave);//2 buffers
 	t.RemoveEnemiesOutOfRange();
 
-	//cout << t.projectileOnScreen.size() << endl;
+	cout << t.projectileOnScreen.size() << endl;
 	if (t.projectileOnScreen.size() != 0) {
-		//cout << t.projectileOnScreen.size();
 		for (int i = 0; i < t.projectileOnScreen.size(); i++) {
-			t.projectileOnScreen.at(i)->Move(t.projectileOnScreen.at(i)->GetAngleToEnemies());
+			float angle = t.projectileOnScreen.at(i)->GetAngleToEnemies();
+			t.projectileOnScreen.at(i)->Move(angle);
 		}
 	}
 }

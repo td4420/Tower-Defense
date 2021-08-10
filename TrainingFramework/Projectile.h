@@ -20,7 +20,7 @@ public:
     bool moving = false;// so projectile doesnt change course on flight
 
     float CalculateDistanceToEnemies(Enemies *e);
-    void SetFiringLocation(float initX, float initY);//Projectile spawn on tower location
+    void SetFiringLocation(float initX, float initY);//Projectile spawns on tower location
     void CheckReachedTarget();
     float GetAngleToEnemies();
     void Move(float angle);

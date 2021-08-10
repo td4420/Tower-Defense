@@ -23,6 +23,7 @@ Projectile::Projectile(int type, Shaders shaders)
 	movementSpeed = 0.01f;
 	Scale.SetIdentity();
 	Rotation.SetIdentity();
+
 	//o_position.x = initX;
 	//o_position.y = initY;
 	//o_position.z = 0.2;
@@ -64,15 +65,14 @@ void Projectile::CheckReachedTarget()
 	{
 		reachedTarget = true;
 		target->currentHP -= damage;
-		cout << "true" << endl;
 	}
 }
 
 float Projectile::GetAngleToEnemies()
 {
-	float deltaX = o_position.x - target->o_position.x;
-	float deltaY = o_position.y - target->o_position.y;
-	float angle = atanf(deltaX / deltaY) * 180 / 3.14f;
+	float deltaX = target->o_position.x - o_position.x;
+	float deltaY = target->o_position.y - o_position.y;
+	float angle = atan2f(deltaY, deltaX);
 	
 	return angle;
 }
