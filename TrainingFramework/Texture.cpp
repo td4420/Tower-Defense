@@ -30,7 +30,7 @@ void Texture::Init()
 	}
 	else
 	{
-		std::cout << "Fail to load texture" << std::endl;
+		std::cout << "Fail to load texture path: " << mTgaFilePath << std::endl;
 	}
 	ConfigTexture();
 	glBindTexture(GL_TEXTURE_2D, 0);

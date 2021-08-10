@@ -29,15 +29,17 @@ Shaders myShaders;
 Camera* camera;
 
 PlayField pf = PlayField();
-Enemies e = Enemies(myShaders, 60, 0.001f, 3);
+Enemies e = Enemies(myShaders, 60, 0.002f, 3);
 Tower t = Tower();
-std::vector <Enemies*> wave;//1 buffer
+//Projectile bullet = Projectile(0, t.towerPos.x, t.towerPos.y);
+std::vector <Enemies*> wave;
 
 int Init(ESContext* esContext)
 {
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
-
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	
 	myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
 	pf.Init(myShaders);
@@ -45,11 +47,11 @@ int Init(ESContext* esContext)
 	e.o_shaders = myShaders;//must have
 	e.InitObject();
 
-	wave.push_back(&e);
+	wave.push_back(&e);//1 buffer
 	t.o_shaders = myShaders;//must have
 	t.InitObject();
-	//t.enemiesInRange.push_back(&e);//1 buffer leak
-	//t.enemiesInRange.erase(t.enemiesInRange.begin());
+	t.Build(5, 3);
+	
 	return myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
 	
 }
@@ -59,13 +61,21 @@ void Draw(ESContext* esContext)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//glUseProgram(myShaders.program);
 	//cout << t.enemiesInRange.at(0)->locationX << " " << t.enemiesInRange.at(0)->locationY << endl;
+	//cout << t.towerPos.x << " " << t.towerPos.y << endl;
 
 	pf.Draw();
 	e.DrawObject();
 	
 	t.DrawObject();
-	//e.Draw();
+	
 	//scenemanager->Draw();
+	t.Shoot();
+	/*if (!t.projectileOnScreen.size() != 0) {
+		for (int i = 0; i < t.projectileOnScreen.size(); i++) {
+			t.projectileOnScreen.at(i)->InitObject();
+			t.projectileOnScreen.at(i)->DrawObject();
+		}
+	}*/
 	
 	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
 }
@@ -102,12 +112,17 @@ void Update(ESContext* esContext, float deltaTime)
 	}
 	//scenemanager->Update(deltaTime);
 	e.Update();
-	
-	t.AddEnemiesInRange(wave);
+
+	t.AddEnemiesInRange(wave);//2 buffers
 	t.RemoveEnemiesOutOfRange();
-	//if (t.CaculateDistanceToEnemies(&e) <= t.range) {//white screen if not pointer
-	//	cout << "In range!" << endl;
-	//}
+
+	//cout << t.projectileOnScreen.size() << endl;
+	if (t.projectileOnScreen.size() != 0) {
+		//cout << t.projectileOnScreen.size();
+		for (int i = 0; i < t.projectileOnScreen.size(); i++) {
+			t.projectileOnScreen.at(i)->Move(t.projectileOnScreen.at(i)->GetAngleToEnemies());
+		}
+	}
 }
 
 void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
@@ -205,7 +220,11 @@ void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 
 void CleanUp()
 {
-
+	for (int i = 0; i < t.projectileOnScreen.size(); i++) {
+		//t.projectileOnScreen.at(i)->~Projectile();
+		delete t.projectileOnScreen.at(i);
+	}
+	
 	/*for (int i = 0; i < scenemanager->numberOfObject; i++)
 	{
 		scenemanager->s_ListObject.at(i)->~Object();

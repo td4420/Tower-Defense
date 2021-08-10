@@ -49,14 +49,14 @@ void Object::InitObject()
 	
 	o_Model.Init();
 	o_Texture.at(0).Init();
-	for (int i = 0; i < numberOfTexture; i++)
+	/*for (int i = 0; i < numberOfTexture; i++)
 	{
 		o_Texture.at(i).Init();
-	}
-	for (int i = 0; i < numberOfCube; i++)
+	}*/
+	/*for (int i = 0; i < numberOfCube; i++)
 	{
 		o_Cube.at(i).Init();
-	}
+	}*/
 }
 
 void Object::DrawObject()
