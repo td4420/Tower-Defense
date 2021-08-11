@@ -11,8 +11,10 @@ public:
 	float scaleX, scaleY;
 	float posX, posY;
 	float widthText, heightText;
-	char* text;
+	char const* text;
 	char* fileFont;
+	int size;
+	bool isChoose = false;
 	FT_Library m_ft;
 	FT_Face m_face;
 	FT_GlyphSlot m_glyphSlot;
@@ -21,6 +23,8 @@ public:
 	GLuint textVAO;
 	void init();
 	void RenderText(Shaders shader);
-	Text(const char* s, float x, float y, const char* fileFont, float scaleX, float scaleY, Vector4 color);
+	bool checkChoose(int x, int y);
+	void highLight();
+	Text(const char* s, float x, float y, const char* fileFont, float scaleX, float scaleY, Vector4 color, int size);
 	~Text();
 };

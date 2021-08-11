@@ -33,8 +33,6 @@ void Model::Init()
 		(vertices + i)->pos.x = posX; (vertices + i)->pos.y = posY; (vertices + i)->pos.z = posZ;
 		(vertices + i)->coords.x = uvX; (vertices + i)->coords.y = uvY;
 
-		std::cout << "x: " << (vertices + i)->pos.x << " y: " << (vertices + i)->pos.y << " z: " << (vertices + i)->pos.z << std::endl;
-		std::cout << "uvX: " << uvX << " uvY: " << uvY << std::endl;
 	}
 	glGenBuffers(1, &this->mVBO);
 	glBindBuffer(GL_ARRAY_BUFFER, this->mVBO);

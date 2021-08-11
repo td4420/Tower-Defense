@@ -12,7 +12,7 @@ void Text::init() {
 		printf("Could not open font Olympus Mount.ttf\n");
 		return;
 	}
-	FT_Set_Pixel_Sizes(m_face, 0, 48);
+	FT_Set_Pixel_Sizes(m_face, 0, size);
 	m_glyphSlot = m_face->glyph;
 	for (const char* p = text; *p; p++)
 	{
@@ -63,12 +63,14 @@ void Text::RenderText(Shaders shader) {
 	float y = posY;
 	x = -1.0f + 2.0f * x / Globals::screenWidth;
 	y = -1.0f + 2.0f * y / Globals::screenHeight;
+	FT_Set_Pixel_Sizes(m_face, 0, size);
 	for (const char* p = text; *p; p++)
 	{
 		if (FT_Load_Char(m_face, *p, FT_LOAD_RENDER))
 		{
 			continue;
 		}
+		
 		glTexImage2D(
 			GL_TEXTURE_2D,
 			0,
@@ -107,7 +109,22 @@ void Text::RenderText(Shaders shader) {
 	glDisable(GL_BLEND);
 
 }
-Text::Text(const char* s, float x, float y, const char* fileFont, float scaleX, float scaleY, Vector4 color) {
+bool Text::checkChoose(int x, int y) {
+	float subY = Globals::screenHeight - posY;
+	if (x >= posX && x <= posX + widthText && y >= subY - heightText && y <= subY) {
+		isChoose = true;
+		return true;
+	}
+	else isChoose = false;
+	return false;
+}
+void Text::highLight() {
+	if (isChoose) {
+		color = Vector4(0.6,1,0.4,1);
+	}
+	if (isChoose==false) color = Vector4(0.5,0.5,0.5,0.5); 
+}
+Text::Text(const char* s, float x, float y, const char* fileFont, float scaleX, float scaleY, Vector4 color, int size) {
 	text = strdup(s);
 	this->posX = x;
 	this->posY = y;
@@ -117,6 +134,7 @@ Text::Text(const char* s, float x, float y, const char* fileFont, float scaleX, 
 	this->fileFont = strdup(fileFont);
 	this->scaleX = scaleX;
 	this->scaleY = scaleY;
+	this->size = size;
 }
 Text::~Text() {
 

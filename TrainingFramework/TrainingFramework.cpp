@@ -8,8 +8,11 @@
 #include "SceneManager.h"
 #include "ResourceManager.h"
 #include"Text.h"
-
-
+#include"StateMenu.h"
+#include"StateBase.h"
+#include"StateWelcome.h"
+#include"Game.h"
+using namespace std;
 
 #define MOVE_FORWARD 1
 #define MOVE_BACKWARD 1 << 1
@@ -27,8 +30,10 @@ Shaders myShaders;
 Shaders textShader;
 Camera* camera;
 //Button* myButton = new Button();
-Text* myText = new Text("NEW GAME", Globals::screenWidth / 2 - 50, 500);
-Vector4 color(0.0f, 0.3f, 0.3f, 0.8f);
+Vector4 color(0.0, 0.3, 0.3, 0.8);
+//StateMenu* myStateMenu = new StateMenu();
+//StateWelcome* myStateWelcome = new StateWelcome();
+Game* myGame = new Game();
 int Init(ESContext* esContext)
 {
 
@@ -38,9 +43,12 @@ int Init(ESContext* esContext)
 	camera = scenemanager->camera;
 	//creation of shaders and program 
 	//myButton->init();
-	myText->init("../Font/Olympus Mount.ttf");
+	//myStateMenu->init();
+	//myStateWelcome->init();
+	myGame->init();
+	
 	myShaders = scenemanager->s_ListObject.at(0)->o_shaders;
-	myShaders.Init(myShaders.fileVS, myShaders.fileFS);
+	//myShaders.Init(myShaders.fileVS, myShaders.fileFS);
 	return textShader.Init("../Resources/Shaders/Text.vs", "../Resources/Shaders/Text.fs");
 
 }
@@ -50,7 +58,12 @@ void Draw(ESContext* esContext)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//scenemanager->Draw();
 	//myButton->Draw(myShaders);
-	myText->RenderText(textShader, color, 1, 1);
+	//myStateMenu->Draw(textShader);
+	//myStateWelcome->Draw(myShaders);
+	//myStateWelcome->Drawtext(textShader);
+	//myStateWelcome->Draw(myShaders);
+	//myStateMenu->DrawLogo(myShaders);
+	myGame->Draw(textShader);
 	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
 }
 
@@ -85,6 +98,8 @@ void Update(ESContext* esContext, float deltaTime)
 		camera->RotationRight(deltaTime);
 	}
 	scenemanager->Update(deltaTime);
+	//myStateMenu->Update(deltaTime);
+	myGame->Update(deltaTime);
 }
 
 void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
@@ -180,6 +195,26 @@ void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 	}
 }
 
+void TouchActionDown(ESContext* esContext, int x, int y)
+{
+	
+	
+}
+
+void TouchActionUp(ESContext* esContext, int x, int y)
+{
+	printf("\n: mouse up at: %d, %d", x, y);
+}
+void TouchActionDrag(ESContext* esCotext, int x, int y) {
+	//move drag
+	printf("\n mouse when drag: %d, %d", x, y);
+}
+
+void TouchActionMove(ESContext* esContext, int x, int y)
+{
+	
+
+}
 void CleanUp()
 {
 	for (int i = 0; i < scenemanager->numberOfObject; i++)
@@ -202,7 +237,10 @@ int _tmain(int argc, TCHAR* argv[])
 	esRegisterDrawFunc(&esContext, Draw);
 	esRegisterUpdateFunc(&esContext, Update);
 	esRegisterKeyFunc(&esContext, Key);
-
+	esRegisterMouseDownFunc(&esContext, TouchActionDown);
+	esRegisterMouseUpFunc(&esContext, TouchActionUp);
+	esRegisterMouseMoveFunc(&esContext, TouchActionMove);
+	esRegisterMouseDragFunc(&esContext, TouchActionDrag);
 	esMainLoop(&esContext);
 
 	//releasing OpenGL resources
