@@ -16,17 +16,19 @@ Tower::Tower(int type)
 	if (towerType == 0)
 	{
 		o_Model = Model("../Resources/model.nfg");
-		o_Texture.push_back(Texture("../ResourcesPacket/Textures/machineGunTower.tga"));
+		o_Texture.push_back(Texture("../ResourcesPacket/Textures/archerTower.tga"));
 		damage = 5;
 		range = 0.3f;
+		reloadTime = 0;
 	}
 
 	if (towerType == 1)
 	{
 		o_Model = Model("../Resources/model.nfg");
-		o_Texture.push_back(Texture("../ResourcesPacket/Textures/nen.tga"));
+		o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTower.tga"));
 		damage = 20;
 		range = 0.5f;
+		reloadTime = 100000000;
 	}
 }
 
@@ -39,8 +41,27 @@ void Tower::Build(int x, int y)//Set Tower Texture position based on Tile Num
 	towerPos.x = x * 0.15f;
 	towerPos.y = y * -0.2f;
 
+	Scale.SetIdentity();
+	Rotation.SetIdentity();
 	Translation.SetTranslation(o_position);
 	MVP = Scale * Rotation * Translation;
+}
+
+void Tower::Upgrade()
+{
+	if (towerType==0){}
+
+	if (towerType == 1) {
+		if (upgrade == 0)
+		{
+			o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTower2.tga"));
+			upgrade++;
+		}
+		if (upgrade == 1) {
+			o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTower3.tga"));
+			upgrade++;
+		}
+	}
 }
 
 void Tower::Update()
@@ -84,7 +105,7 @@ void Tower::RemoveEnemiesOutOfRange()//Remove enemies moved out of range and upd
 		{
 			float distance = CalculateDistanceToEnemies(enemiesInRange.at(i));
 
-			if (distance > range) {
+			if (distance > range || !enemiesInRange.at(i)->alive) {
 				enemiesInRange.erase(enemiesInRange.begin() + i);
 				//cout << "Out!" << endl;
 			}
@@ -104,15 +125,15 @@ void Tower::Shoot()//leak here
 		projectileOnScreen.clear();
 	}
 
-	if (enemiesInRange.size() != 0) {
-		//for (int i = reloadTime; i >= 0; i--) {
-		//	
-		//}
+	if (enemiesInRange.size() != 0 && currentTarget!=nullptr) {
+		/*for (int i = reloadTime; i >= 0; i--) {
+			
+		}*/
 		//cout << currentTarget.o_position.x << endl;
 
 		if (projectileOnScreen.size() == 0) {
 			Projectile *p = new Projectile(towerType, o_shaders);//5 leaks if pointer// bug if not pointer
-			p->target = &currentTarget;
+			p->target = currentTarget;
 			p->InitObject();
 			p->SetFiringLocation(o_position.x, o_position.y);
 			projectileOnScreen.push_back(p);
@@ -121,10 +142,12 @@ void Tower::Shoot()//leak here
 		
 		for (int i = 0; i < projectileOnScreen.size(); i++) {
 			if (projectileOnScreen.at(i)->reachedTarget == true) {
-				projectileOnScreen.at(i)->~Projectile();//must have or a lots of leak :V
+				currentTarget->currentHP -= damage;
+				projectileOnScreen.at(i)->~Projectile();//must have or lots of leak :V
 				projectileOnScreen.clear();
 				//projectileOnScreen.erase(projectileOnScreen.begin()+i);// without this line causes null pointer deletion?
 			}
+			//cout << currentTarget->currentHP << endl;
 
 			if (projectileOnScreen.size() != 0) {
 				if (projectileOnScreen.at(i)->reachedTarget == false) {
@@ -139,9 +162,11 @@ void Tower::Shoot()//leak here
 void Tower::SetTarget()
 {
 	if (!enemiesInRange.empty()) {
-		currentTarget = *enemiesInRange.front();
+		currentTarget = enemiesInRange.front();
 		//cout << "Atk ";
 	}
 
-	if (!currentTarget.alive && !enemiesInRange.empty()) currentTarget = *enemiesInRange.front();
+	if (currentTarget!=nullptr && !currentTarget->alive && !enemiesInRange.empty()) currentTarget = enemiesInRange.front();
+
+	if (currentTarget != nullptr && enemiesInRange.empty()) currentTarget = nullptr;
 }

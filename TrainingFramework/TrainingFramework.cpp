@@ -29,10 +29,15 @@ Shaders myShaders;
 Camera* camera;
 
 PlayField pf = PlayField();
-Enemies e = Enemies(myShaders, 60, 0.004f, 3);
+Enemies e = Enemies(1);
+Enemies f = Enemies(2);
+Enemies tank = Enemies(3);
+
 Tower t = Tower(0);
-//Projectile bullet = Projectile(0, t.towerPos.x, t.towerPos.y);
+Tower gun = Tower(1);
+
 std::vector <Enemies*> wave;
+std::vector <Tower*> towerList;
 
 int Init(ESContext* esContext)
 {
@@ -43,14 +48,32 @@ int Init(ESContext* esContext)
 	
 	myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
 	pf.Init(myShaders);
-
-	e.o_shaders = myShaders;//must have
-	e.InitObject();
+	
 
 	wave.push_back(&e);//1 buffer
-	t.o_shaders = myShaders;//must have
-	t.InitObject();
+	wave.push_back(&f);
+	wave.push_back(&tank);
+	for (int i = 0; i < wave.size(); i++) {
+		wave.at(i)->o_shaders = myShaders;
+		wave.at(i)->InitObject();
+	}
+
+	//t.o_shaders = myShaders;//
+	//t.InitObject();
 	t.Build(3, 3);
+
+	//gun.o_shaders = myShaders;
+	//gun.InitObject();
+	gun.Build(5, 3);
+	//gun.Upgrade();//bug af
+
+	towerList.push_back(&t);
+	towerList.push_back(&gun);
+	for (int i = 0; i < towerList.size(); i++) {//fix InitObject MVP.SetIdentity, move that to build
+		towerList.at(i)->o_shaders = myShaders;
+		towerList.at(i)->InitObject();
+	}
+
 	
 	return myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
 	
@@ -60,22 +83,24 @@ void Draw(ESContext* esContext)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//glUseProgram(myShaders.program);
-	//cout << t.enemiesInRange.at(0)->locationX << " " << t.enemiesInRange.at(0)->locationY << endl;
-	//cout << t.towerPos.x << " " << t.towerPos.y << endl;
 
 	pf.Draw();
-	e.DrawObject();
 	
-	t.DrawObject();
-	
-	//scenemanager->Draw();
-	t.Shoot();
-	/*if (!t.projectileOnScreen.size() != 0) {
-		for (int i = 0; i < t.projectileOnScreen.size(); i++) {
-			t.projectileOnScreen.at(i)->InitObject();
-			t.projectileOnScreen.at(i)->DrawObject();
+	if (wave.size() != 0) {
+		for (int i = 0; i < wave.size(); i++) {
+			wave.at(i)->DrawObject();
 		}
-	}*/
+	}
+	
+	/*t.DrawObject();
+	gun.DrawObject();
+	t.Shoot();
+	gun.Shoot();*/
+
+	for (int i = 0; i < towerList.size(); i++) {
+		towerList.at(i)->DrawObject();
+		towerList.at(i)->Shoot();
+	}
 	
 	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
 }
@@ -111,18 +136,45 @@ void Update(ESContext* esContext, float deltaTime)
 		camera->RotationRight(0.01f);
 	}
 	//scenemanager->Update(deltaTime);
-	e.Update();
-
-	t.AddEnemiesInRange(wave);//2 buffers
-	t.RemoveEnemiesOutOfRange();
-
-	cout << t.projectileOnScreen.size() << endl;
-	if (t.projectileOnScreen.size() != 0) {
-		for (int i = 0; i < t.projectileOnScreen.size(); i++) {
-			float angle = t.projectileOnScreen.at(i)->GetAngleToEnemies();
-			t.projectileOnScreen.at(i)->Move(angle);
+	for (int i = 0; i < wave.size(); i++) {
+		if (wave.at(i)->alive) wave.at(i)->Update();
+		else
+		{
+			wave.erase(wave.begin() + i);
 		}
 	}
+	
+	//t.AddEnemiesInRange(wave);//2 buffers
+	//t.RemoveEnemiesOutOfRange();
+
+	//gun.AddEnemiesInRange(wave);//2 buffers
+	//gun.RemoveEnemiesOutOfRange();
+
+	////cout << t.projectileOnScreen.size() << endl;
+	//if (t.projectileOnScreen.size() != 0) {
+	//	for (int i = 0; i < t.projectileOnScreen.size(); i++) {
+	//		t.projectileOnScreen.at(i)->Move(t.projectileOnScreen.at(i)->GetAngleToEnemies());
+	//	}
+	//}
+
+	//if (gun.projectileOnScreen.size() != 0) {
+	//	for (int i = 0; i < gun.projectileOnScreen.size(); i++) {
+	//		gun.projectileOnScreen.at(i)->Move(gun.projectileOnScreen.at(i)->GetAngleToEnemies());
+	//	}
+	//}
+
+	for (int i = 0; i < towerList.size(); i++) {
+		towerList.at(i)->AddEnemiesInRange(wave);
+		towerList.at(i)->RemoveEnemiesOutOfRange();
+
+		if (towerList.at(i)->projectileOnScreen.size() != 0) {
+			for (int j = 0; j < towerList.at(i)->projectileOnScreen.size(); j++) {
+				towerList.at(i)->projectileOnScreen.at(j)->Move(towerList.at(i)->projectileOnScreen.at(j)->GetAngleToEnemies());
+			}
+		}
+	}
+
+	//cout << wave.at(0)->currentHP << endl;
 }
 
 void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
@@ -224,6 +276,14 @@ void CleanUp()
 		//t.projectileOnScreen.at(i)->~Projectile();
 		delete t.projectileOnScreen.at(i);
 	}
+
+	/*for (int i = 0; i < wave.size(); i++) {
+		wave.at(i)->~Enemies();
+		delete wave.at(i);
+	}*/
+	/*for (int i = 0; i < towerList.size(); i++) {//null pointer deletion?
+		delete towerList.at(i);
+	}*/
 	
 	/*for (int i = 0; i < scenemanager->numberOfObject; i++)
 	{
@@ -238,7 +298,7 @@ int _tmain(int argc, TCHAR* argv[])
 
 	esInitContext(&esContext);
 
-	esCreateWindow(&esContext, "Hello Triangle", Globals::screenWidth, Globals::screenHeight, ES_WINDOW_RGB | ES_WINDOW_DEPTH);
+	esCreateWindow(&esContext, "Giant TD", Globals::screenWidth, Globals::screenHeight, ES_WINDOW_RGB | ES_WINDOW_DEPTH);
 
 	if (Init(&esContext) != 0)
 		return 0;

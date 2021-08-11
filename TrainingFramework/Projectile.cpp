@@ -16,19 +16,14 @@ Projectile::Projectile(Projectile* p)
 
 Projectile::Projectile(int type, Shaders shaders)
 {
+	projectileType = type;
 	o_Model = Model("../Resources/modelProjectile.nfg");
-	o_Texture.push_back(Texture("../ResourcesPacket/Textures/machineGunTowerProjectile.tga"));
+	o_Texture.push_back(Texture("../ResourcesPacket/Textures/bullet.tga"));
 	o_shaders = shaders;
 
 	movementSpeed = 0.01f;
 	Scale.SetIdentity();
 	Rotation.SetIdentity();
-
-	//o_position.x = initX;
-	//o_position.y = initY;
-	//o_position.z = 0.2;
-
-	//target = *e;
 }
 
 Projectile::~Projectile()
@@ -63,8 +58,9 @@ void Projectile::CheckReachedTarget()
 {
 	if (CalculateDistanceToEnemies(target) <= 0.1f)
 	{
+		//cout << "Hit!" << endl;
 		reachedTarget = true;
-		target->currentHP -= damage;
+		//target->currentHP = target->currentHP - damage;
 	}
 }
 

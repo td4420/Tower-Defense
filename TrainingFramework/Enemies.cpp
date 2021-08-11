@@ -15,27 +15,36 @@ Enemies::Enemies()
 
 Enemies::Enemies(int type)
 {
+	o_Model = Model("../Resources/model.nfg");
+	Scale.SetIdentity();
+	Rotation.SetIdentity();
+	Translation.SetIdentity();
+	MVP = Scale * Rotation * Translation;
+
 	if (type == 1)
 	{
+		o_Texture.push_back(Texture("../Resources/enemy.tga"));
 		maxHP = 60;
 		currentHP = maxHP;
-		movementSpeed = 0.001f;
+		movementSpeed = 0.003f;
 		reward = 10;
 	}
 
 	if (type == 2)
 	{
+		o_Texture.push_back(Texture("../ResourcesPacket/Textures/fastEnemy.tga"));
 		maxHP = 30;
 		currentHP = maxHP;
-		movementSpeed = 0.002f;
+		movementSpeed = 0.005f;
 		reward = 12;
 	}
 
 	if (type == 3)
 	{
-		maxHP = 100;
+		o_Texture.push_back(Texture("../ResourcesPacket/Textures/tanker.tga"));
+		maxHP = 300;
 		currentHP = maxHP;
-		movementSpeed = 0.0005f;
+		movementSpeed = 0.001f;
 		reward = 20;
 	}
 }
@@ -65,7 +74,7 @@ Enemies::Enemies(Shaders shader, int maxHP, float speed, int reward)
 	o_shaders = shader;
 
 	this->maxHP = maxHP;
-	this->currentHP = this->maxHP;
+	this->currentHP = maxHP;
 	this->movementSpeed = speed;
 	this->reward = reward;
 	o_Model = Model("../Resources/model.nfg");
@@ -75,6 +84,15 @@ Enemies::Enemies(Shaders shader, int maxHP, float speed, int reward)
 	Translation.SetIdentity();
 	MVP = Scale * Rotation * Translation;
 
+}
+
+Enemies::~Enemies()
+{
+	o_Model.~Model();
+	for (int i = 0; i < o_Texture.size(); i++)
+	{
+		o_Texture.at(i).~Texture();
+	}
 }
 
 void Enemies::SetShaders(Shaders shader)
@@ -242,6 +260,10 @@ void Enemies::Update()
 {
 	//cout << "X: " << (o_position.x + 0.075f) << " Y: " << (o_position.y - 0.1f) << endl;
 	MoveEnemies();
+	if (currentHP <= 0)
+	{
+		alive = false;
+	}
 }
 
 void Enemies::Kill()

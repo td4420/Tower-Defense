@@ -44,6 +44,7 @@ public:
 	Enemies(Enemies *e);
 	Enemies(Shaders myShaders, int maxHP, float speed, int reward);
 	Enemies(Shaders myShaders, int maxHP, float speed, int reward, Tile spawner);
+	~Enemies();
 	
 	void Bind();
 	void SetShaders(Shaders myShaders);
