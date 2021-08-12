@@ -38,6 +38,19 @@ Tower gun = Tower(1);
 
 std::vector <Enemies*> wave;
 std::vector <Tower*> towerList;
+std::vector <Object*> towerButtonList;
+
+int selectMenuOption = -1;
+int NumMap[7][8] =
+{
+	1,1,0,0,0,0,0,0,
+	0,1,1,0,0,0,0,0,
+	0,0,1,1,1,1,1,0,
+	0,0,0,0,0,0,1,0,
+	0,0,0,1,1,1,1,0,
+	0,0,0,1,0,0,0,0,
+	0,0,0,1,1,1,1,1
+};
 
 int Init(ESContext* esContext)
 {
@@ -74,7 +87,27 @@ int Init(ESContext* esContext)
 		towerList.at(i)->InitObject();
 	}
 
-	
+	//add Button Tower 
+	Object* tower1 = new Object();
+	tower1->o_Model = Model("../Resources/model.nfg");
+	tower1->o_Texture.push_back(Texture("../ResourcesPacket/Textures/archerTower.tga"));
+	tower1->Build(10*0.15f, 1*-0.2f);
+
+	Object* tower2 = new Object();
+	tower2->o_Model = Model("../Resources/model.nfg");
+	tower2->o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTower.tga"));
+	tower2->Build(10 * 0.15f, 3 * -0.2f);
+
+	towerButtonList.push_back(tower1);
+	towerButtonList.push_back(tower2);
+
+	for (int i = 0; i < towerButtonList.size(); i++) {
+		Shaders x = Shaders();
+		x.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
+		towerButtonList.at(i)->o_shaders = x;
+		towerButtonList.at(i)->InitObject();
+	}
+
 	return myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
 	
 }
@@ -100,6 +133,10 @@ void Draw(ESContext* esContext)
 	for (int i = 0; i < towerList.size(); i++) {
 		towerList.at(i)->DrawObject();
 		towerList.at(i)->Shoot();
+	}
+
+	for (int i = 0; i < towerButtonList.size(); i++) {
+		towerButtonList.at(i)->DrawObject();
 	}
 	
 	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
@@ -270,6 +307,74 @@ void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 	}
 }
 
+bool checkTowerButton(int x, int y) {
+	//convert to coordinate of object
+	/*float xPos = (2*x- Globals::screenWidth )/(Globals::screenWidth);
+	float yPos = (Globals::screenHeight -2 *y) / (Globals::screenHeight);*/
+	float xPos = x * 1.0f / 247 * 0.45f;
+	float yPos = y * 1.0f / 251 * -0.6f;
+	for (int i = 0; i < towerButtonList.size(); i++) {
+		float x_tower = towerButtonList.at(i)->o_position.x;
+		float y_tower = towerButtonList.at(i)->o_position.y;
+		if ( x_tower - 0.15f <= xPos && xPos <= x_tower + 0.15f && y_tower -0.2f  <= yPos && yPos <= y_tower + 0.2f) {
+			selectMenuOption = i;
+			printf("\ntower selection is: %d", i);
+			return true;
+		}
+	}
+}
+void TouchActionDown(ESContext* esContext, int x, int y)
+{
+}
+
+bool IsBuildable(int xPos, int yPos) {
+	for (int i = 0; i < towerList.size(); i++) {
+		Vector3 o_position = towerList.at(i)->o_position;
+		if (xPos * 0.15f == o_position.x && yPos * -0.2f == o_position.y) {
+			printf("\n has avaiable tower in here");
+			return false;
+		}
+	}
+	return true;
+}
+void TouchActionUp(ESContext* esContext, int x, int y)
+{
+
+	if (selectMenuOption == -1) {
+		checkTowerButton(x, y);
+	}
+	if (selectMenuOption > -1 && selectMenuOption < towerButtonList.size()) {
+		int xPos = static_cast<int>(std::round(x  / 70 ));
+		int yPos =  static_cast<int>(std::round(y / 70 ));
+		printf("\nxPos, yPos: %d, %d", xPos, yPos);
+		printf("\nxMouse, yMouse: %d, %d", x, y);
+		if (-1 < xPos && xPos < 8 && -1 < yPos && yPos < 7) {
+			if (NumMap[yPos][xPos] == 0 && IsBuildable(xPos, yPos)) {
+				Tower t = Tower(selectMenuOption);
+
+				Shaders s = Shaders();
+				s.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
+				t.o_shaders = s;
+				t.Build(xPos, yPos);
+				t.InitObject();
+				towerList.push_back(&t);
+			}		
+				selectMenuOption = -1;
+		}
+		else {
+			if (!checkTowerButton(x, y)) selectMenuOption = -1;
+		}
+		
+	}
+}
+
+void TouchActionDrag(ESContext* esCotext, int x, int y) {
+	//move drag
+}
+void TouchActionMove(ESContext* esContext, int x, int y)
+{
+	
+}
 void CleanUp()
 {
 	for (int i = 0; i < t.projectileOnScreen.size(); i++) {
@@ -306,7 +411,10 @@ int _tmain(int argc, TCHAR* argv[])
 	esRegisterDrawFunc(&esContext, Draw);
 	esRegisterUpdateFunc(&esContext, Update);
 	esRegisterKeyFunc(&esContext, Key);
-
+	esRegisterMouseDownFunc(&esContext, TouchActionDown);
+	esRegisterMouseUpFunc(&esContext, TouchActionUp);
+	esRegisterMouseMoveFunc(&esContext, TouchActionMove);
+	esRegisterMouseDragFunc(&esContext, TouchActionDrag);
 	esMainLoop(&esContext);
 
 	//releasing OpenGL resources

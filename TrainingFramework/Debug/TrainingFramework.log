@@ -1,11 +1,17 @@
 ﻿cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
   TrainingFramework.cpp
-C:\Users\LaptopAZ.vn\source\repos\TD\TrainingFramework\TrainingFramework.cpp(56,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\LaptopAZ.vn\source\repos\TD\TrainingFramework\TrainingFramework.cpp(72,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\LaptopAZ.vn\source\repos\TD\TrainingFramework\TrainingFramework.cpp(90,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\LaptopAZ.vn\source\repos\TD\TrainingFramework\TrainingFramework.cpp(100,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\LaptopAZ.vn\source\repos\TD\TrainingFramework\TrainingFramework.cpp(139,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\LaptopAZ.vn\source\repos\TD\TrainingFramework\TrainingFramework.cpp(166,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\LaptopAZ.vn\source\repos\TD\TrainingFramework\TrainingFramework.cpp(171,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\LaptopAZ.vn\source\repos\TD\TrainingFramework\TrainingFramework.cpp(275,20): warning C4018: '<': signed/unsigned mismatch
-  TrainingFramework.vcxproj -> C:\Users\LaptopAZ.vn\source\repos\TD\BIN\TrainingFramework.exe
+F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(69,20): warning C4018: '<': signed/unsigned mismatch
+F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(85,20): warning C4018: '<': signed/unsigned mismatch
+F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(104,20): warning C4018: '<': signed/unsigned mismatch
+F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(123,21): warning C4018: '<': signed/unsigned mismatch
+F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(133,20): warning C4018: '<': signed/unsigned mismatch
+F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(138,20): warning C4018: '<': signed/unsigned mismatch
+F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(176,20): warning C4018: '<': signed/unsigned mismatch
+F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(203,20): warning C4018: '<': signed/unsigned mismatch
+F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(208,22): warning C4018: '<': signed/unsigned mismatch
+F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(316,20): warning C4018: '<': signed/unsigned mismatch
+F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(331,20): warning C4018: '<': signed/unsigned mismatch
+F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(346,48): warning C4018: '<': signed/unsigned mismatch
+F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(380,20): warning C4018: '<': signed/unsigned mismatch
+F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(325): warning C4715: 'checkTowerButton': not all control paths return a value
+  TrainingFramework.vcxproj -> F:\Dao_3DFrameworkTraining\BIN\TrainingFramework.exe

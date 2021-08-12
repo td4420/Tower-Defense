@@ -27,4 +27,5 @@ public:
 	void SetRotation();
 	void SetWorldMatrix();
 	void setMVPMatrix(Matrix v, Matrix p);
+	void Build(float x, float y);
 };

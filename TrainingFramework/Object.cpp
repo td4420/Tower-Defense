@@ -58,7 +58,16 @@ void Object::InitObject()
 		o_Cube.at(i).Init();
 	}*/
 }
+void Object::Build(float x, float y) {
+	o_position.x = x ;
+	o_position.y = y ;
+	o_position.z = 0;
 
+	Scale.SetIdentity();
+	Rotation.SetIdentity();
+	Translation.SetTranslation(o_position);
+	MVP = Scale * Rotation * Translation;
+}
 void Object::DrawObject()
 {
 	glUseProgram(o_shaders.program);
