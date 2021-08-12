@@ -87,19 +87,26 @@ int Init(ESContext* esContext)
 		towerList.at(i)->InitObject();
 	}
 
+	//cout << t.o_Texture.size() << endl;
+	t.Upgrade();//Second upgrade cause wrong Texture despite right file path
+
+	gun.Upgrade();
+	//gun.Upgrade();
+	
+
 	//add Button Tower 
-	Object* tower1 = new Object();
-	tower1->o_Model = Model("../Resources/model.nfg");
-	tower1->o_Texture.push_back(Texture("../ResourcesPacket/Textures/archerTower.tga"));
-	tower1->Build(10*0.15f, 1*-0.2f);
+	Object* archerTowerButton = new Object();
+	archerTowerButton->o_Model = Model("../Resources/model.nfg");
+	archerTowerButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/archerTower.tga"));
+	archerTowerButton->Build(10*0.15f, 1*-0.2f);
 
-	Object* tower2 = new Object();
-	tower2->o_Model = Model("../Resources/model.nfg");
-	tower2->o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTower.tga"));
-	tower2->Build(10 * 0.15f, 3 * -0.2f);
+	Object* mortarTowerButton = new Object();
+	mortarTowerButton->o_Model = Model("../Resources/model.nfg");
+	mortarTowerButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTower.tga"));
+	mortarTowerButton->Build(10 * 0.15f, 3 * -0.2f);
 
-	towerButtonList.push_back(tower1);
-	towerButtonList.push_back(tower2);
+	towerButtonList.push_back(archerTowerButton);
+	towerButtonList.push_back(mortarTowerButton);
 
 	for (int i = 0; i < towerButtonList.size(); i++) {
 		Shaders x = Shaders();
@@ -350,14 +357,14 @@ void TouchActionUp(ESContext* esContext, int x, int y)
 		printf("\nxMouse, yMouse: %d, %d", x, y);
 		if (-1 < xPos && xPos < 8 && -1 < yPos && yPos < 7) {
 			if (NumMap[yPos][xPos] == 0 && IsBuildable(xPos, yPos)) {
-				Tower t = Tower(selectMenuOption);
+				Tower *t = new Tower(selectMenuOption);//super leak :V
 
 				Shaders s = Shaders();
 				s.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
-				t.o_shaders = s;
-				t.Build(xPos, yPos);
-				t.InitObject();
-				towerList.push_back(&t);
+				t->o_shaders = s;
+				t->Build(xPos, yPos);
+				t->InitObject();
+				towerList.push_back(t);
 			}		
 				selectMenuOption = -1;
 		}
@@ -408,6 +415,7 @@ int _tmain(int argc, TCHAR* argv[])
 	if (Init(&esContext) != 0)
 		return 0;
 
+
 	esRegisterDrawFunc(&esContext, Draw);
 	esRegisterUpdateFunc(&esContext, Update);
 	esRegisterKeyFunc(&esContext, Key);
@@ -415,6 +423,7 @@ int _tmain(int argc, TCHAR* argv[])
 	esRegisterMouseUpFunc(&esContext, TouchActionUp);
 	esRegisterMouseMoveFunc(&esContext, TouchActionMove);
 	esRegisterMouseDragFunc(&esContext, TouchActionDrag);
+
 	esMainLoop(&esContext);
 
 	//releasing OpenGL resources

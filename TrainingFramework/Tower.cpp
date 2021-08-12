@@ -13,10 +13,13 @@ Tower::Tower()
 Tower::Tower(int type)
 {
 	towerType = type;
+	o_Model = Model("../Resources/model.nfg");
 	if (towerType == 0)
 	{
 		o_Model = Model("../Resources/model.nfg");
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/archerTower.tga"));
+		o_Texture.push_back(Texture("../ResourcesPacket/Textures/archerTower2.tga"));
+		o_Texture.push_back(Texture("../ResourcesPacket/Textures/archerTower3.tga"));
 		damage = 5;
 		range = 0.3f;
 		reloadTime = 0;
@@ -26,11 +29,21 @@ Tower::Tower(int type)
 	{
 		o_Model = Model("../Resources/model.nfg");
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTower.tga"));
+		o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTower2.tga"));
+		o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTower3.tga"));
 		damage = 20;
 		range = 0.5f;
-		reloadTime = 100000000;
+		reloadTime = 0;
 	}
 }
+
+//Tower::~Tower()
+//{
+//	o_Model.~Model();
+//	for (int i = 0; i < o_Texture.size(); i++) {
+//		o_Texture.at(i).~Texture();
+//	}
+//}
 
 void Tower::Build(int x, int y)//Set Tower Texture position based on Tile Num
 {
@@ -47,21 +60,27 @@ void Tower::Build(int x, int y)//Set Tower Texture position based on Tile Num
 	MVP = Scale * Rotation * Translation;
 }
 
-void Tower::Upgrade()
-{
-	if (towerType==0){}
+void Tower::Upgrade()//Upgrade price = 1/2 cost, each upgrade increases cost by half of its original value
+{ 
+	if (upgrade < 2) {
+		cost += cost / 2;
+		upgrade++;
 
-	if (towerType == 1) {
-		if (upgrade == 0)
+		if (towerType == 0)
 		{
-			o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTower2.tga"));
-			upgrade++;
+			o_Texture.erase(o_Texture.begin());
+			damage += 5;
+			range += 0;
 		}
-		if (upgrade == 1) {
-			o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTower3.tga"));
-			upgrade++;
+
+		if (towerType == 1)
+		{
+			o_Texture.erase(o_Texture.begin());
+			damage += 10;
 		}
 	}
+	else { cout << "Max Upgrade!" << endl; }
+
 }
 
 void Tower::Update()
@@ -126,13 +145,9 @@ void Tower::Shoot()//leak here
 	}
 
 	if (enemiesInRange.size() != 0 && currentTarget!=nullptr) {
-		/*for (int i = reloadTime; i >= 0; i--) {
-			
-		}*/
-		//cout << currentTarget.o_position.x << endl;
-
+		
 		if (projectileOnScreen.size() == 0) {
-			Projectile *p = new Projectile(towerType, o_shaders);//5 leaks if pointer// bug if not pointer
+			Projectile *p = new Projectile(towerType, o_shaders);//1 leak per shot
 			p->target = currentTarget;
 			p->InitObject();
 			p->SetFiringLocation(o_position.x, o_position.y);
@@ -166,7 +181,7 @@ void Tower::SetTarget()
 		//cout << "Atk ";
 	}
 
-	if (currentTarget!=nullptr && !currentTarget->alive && !enemiesInRange.empty()) currentTarget = enemiesInRange.front();
+	//if (currentTarget!=nullptr && !currentTarget->alive && !enemiesInRange.empty()) currentTarget = enemiesInRange.front();
 
 	if (currentTarget != nullptr && enemiesInRange.empty()) currentTarget = nullptr;
 }

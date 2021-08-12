@@ -46,21 +46,21 @@ void Projectile::SetFiringLocation(float x, float y)
 	MVP = Scale * Rotation * Translation;
 }
 
-float Projectile::CalculateDistanceToEnemies(Enemies* e)
+float Projectile::CalculateDistanceToTarget()
 {
-	float deltaX = o_position.x - e->o_position.x;
-	float deltaY = o_position.y - e->o_position.y;
+	float deltaX = o_position.x - target->o_position.x;
+	float deltaY = o_position.y - target->o_position.y;
 	float distance = sqrtf(powf(deltaX, 2.0f) + powf(deltaY, 2.0f));
 	return distance;
 }
 
 void Projectile::CheckReachedTarget()
 {
-	if (CalculateDistanceToEnemies(target) <= 0.1f)
+	if (CalculateDistanceToTarget() <= 0.1f)
 	{
 		//cout << "Hit!" << endl;
 		reachedTarget = true;
-		//target->currentHP = target->currentHP - damage;
+		
 	}
 }
 
