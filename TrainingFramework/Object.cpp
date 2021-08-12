@@ -48,7 +48,7 @@ void Object::InitObject()
 	//SetWorldMatrix();
 	
 	o_Model.Init();
-	o_Texture.at(0).Init();
+	//o_Texture.at(0).Init();
 	for (int i = 0; i < o_Texture.size(); i++)
 	{
 		o_Texture.at(i).Init();

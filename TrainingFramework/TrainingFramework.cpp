@@ -88,10 +88,10 @@ int Init(ESContext* esContext)
 	}
 
 	//cout << t.o_Texture.size() << endl;
-	t.Upgrade();//Second upgrade cause wrong Texture despite right file path
-
+	t.Upgrade();
+	t.Upgrade();
 	gun.Upgrade();
-	//gun.Upgrade();
+	gun.Upgrade();
 	
 
 	//add Button Tower 

@@ -1,17 +1,1 @@
-﻿cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-  TrainingFramework.cpp
-C:\Users\LaptopAZ.vn\source\repos\TEMPTD\TrainingFramework\TrainingFramework.cpp(69,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\LaptopAZ.vn\source\repos\TEMPTD\TrainingFramework\TrainingFramework.cpp(85,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\LaptopAZ.vn\source\repos\TEMPTD\TrainingFramework\TrainingFramework.cpp(111,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\LaptopAZ.vn\source\repos\TEMPTD\TrainingFramework\TrainingFramework.cpp(130,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\LaptopAZ.vn\source\repos\TEMPTD\TrainingFramework\TrainingFramework.cpp(140,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\LaptopAZ.vn\source\repos\TEMPTD\TrainingFramework\TrainingFramework.cpp(145,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\LaptopAZ.vn\source\repos\TEMPTD\TrainingFramework\TrainingFramework.cpp(183,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\LaptopAZ.vn\source\repos\TEMPTD\TrainingFramework\TrainingFramework.cpp(210,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\LaptopAZ.vn\source\repos\TEMPTD\TrainingFramework\TrainingFramework.cpp(215,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\LaptopAZ.vn\source\repos\TEMPTD\TrainingFramework\TrainingFramework.cpp(323,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\LaptopAZ.vn\source\repos\TEMPTD\TrainingFramework\TrainingFramework.cpp(338,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\LaptopAZ.vn\source\repos\TEMPTD\TrainingFramework\TrainingFramework.cpp(353,48): warning C4018: '<': signed/unsigned mismatch
-C:\Users\LaptopAZ.vn\source\repos\TEMPTD\TrainingFramework\TrainingFramework.cpp(387,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\LaptopAZ.vn\source\repos\TEMPTD\TrainingFramework\TrainingFramework.cpp(332): warning C4715: 'checkTowerButton': not all control paths return a value
-  TrainingFramework.vcxproj -> C:\Users\LaptopAZ.vn\source\repos\TEMPTD\BIN\TrainingFramework.exe
+﻿
