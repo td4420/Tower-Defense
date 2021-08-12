@@ -64,7 +64,6 @@ void Tower::Build(int x, int y)//Set Tower Texture position based on Tile Num
 void Tower::Upgrade()//Upgrade price = 1/2 cost, each upgrade increases cost by half of its original value
 { 
 	if (upgrade == 0) {
-		upgrade = 1;
 		o_Texture.at(0) = o_Texture.at(1);
 		cost += cost / 2;
 		if (towerType == 0)
@@ -80,7 +79,6 @@ void Tower::Upgrade()//Upgrade price = 1/2 cost, each upgrade increases cost by 
 	}
 
 	if (upgrade == 1) {
-		upgrade = 2;
 		o_Texture.at(0) = o_Texture.at(2);
 		cost += cost / 2;
 		if (towerType == 0)
@@ -95,10 +93,12 @@ void Tower::Upgrade()//Upgrade price = 1/2 cost, each upgrade increases cost by 
 		}
 	}
 
+	if (upgrade <=1) upgrade++;
+
+	cout << upgrade << endl;
 	if (upgrade>=2) { //cout << "Max Upgrade!" << endl;
 		return;
 	}
-	//cout << upgrade << endl;
 }
 
 void Tower::Update()

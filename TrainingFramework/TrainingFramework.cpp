@@ -90,6 +90,7 @@ int Init(ESContext* esContext)
 	//cout << t.o_Texture.size() << endl;
 	t.Upgrade();
 	t.Upgrade();
+	t.Upgrade();
 	gun.Upgrade();
 	gun.Upgrade();
 	
@@ -97,12 +98,12 @@ int Init(ESContext* esContext)
 	//add Button Tower 
 	Object* archerTowerButton = new Object();
 	archerTowerButton->o_Model = Model("../Resources/model.nfg");
-	archerTowerButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/archerTower.tga"));
+	archerTowerButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/archerTowerButton.tga"));
 	archerTowerButton->Build(10*0.15f, 1*-0.2f);
 
 	Object* mortarTowerButton = new Object();
 	mortarTowerButton->o_Model = Model("../Resources/model.nfg");
-	mortarTowerButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTower.tga"));
+	mortarTowerButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTowerButton.tga"));
 	mortarTowerButton->Build(10 * 0.15f, 3 * -0.2f);
 
 	towerButtonList.push_back(archerTowerButton);
