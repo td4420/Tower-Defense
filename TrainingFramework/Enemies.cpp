@@ -24,19 +24,21 @@ Enemies::Enemies(int type)
 	if (type == 1)
 	{
 		o_Texture.push_back(Texture("../Resources/enemy.tga"));
-		maxHP = 60;
+		maxHP = 70;
 		currentHP = maxHP;
 		movementSpeed = 0.003f;
+		fixedSpeed = movementSpeed;
 		reward = 10;
 	}
 
 	if (type == 2)
 	{
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/fastEnemy.tga"));
-		maxHP = 30;
+		maxHP = 50;
 		currentHP = maxHP;
 		movementSpeed = 0.005f;
-		reward = 12;
+		fixedSpeed = movementSpeed;
+		reward = 8;
 	}
 
 	if (type == 3)
@@ -45,6 +47,7 @@ Enemies::Enemies(int type)
 		maxHP = 300;
 		currentHP = maxHP;
 		movementSpeed = 0.001f;
+		fixedSpeed = movementSpeed;
 		reward = 20;
 	}
 }
@@ -259,6 +262,7 @@ void Enemies::MoveEnemies()
 void Enemies::Update() 
 {
 	//cout << "X: " << (o_position.x + 0.075f) << " Y: " << (o_position.y - 0.1f) << endl;
+	CheckSlowed();
 	MoveEnemies();
 	if (currentHP <= 0)
 	{
@@ -271,4 +275,21 @@ void Enemies::Kill()
 	if (reachedExit == true);
 
 	//if (currentHP <= 0) ~Object();
+}
+
+void Enemies::CheckSlowed()
+{
+	if (slowTime > 0.0f)
+	{
+		slowTime -= 0.1f;
+		movementSpeed = 0.9f * movementSpeed;
+	}
+
+	if (!slowed && slowTime == 0.0f) movementSpeed = fixedSpeed;
+
+	if (slowed && slowTime == 0.0f)
+	{
+		slowTime = 2.0f;
+		slowed = false;
+	}
 }

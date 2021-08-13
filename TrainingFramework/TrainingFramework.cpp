@@ -35,6 +35,7 @@ Enemies tank = Enemies(3);
 
 Tower t = Tower(0);
 Tower gun = Tower(1);
+Tower m = Tower(2);
 
 std::vector <Enemies*> wave;
 std::vector <Tower*> towerList;
@@ -58,7 +59,9 @@ int Init(ESContext* esContext)
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
+	glEnable(GL_SAMPLE_ALPHA_TO_COVERAGE);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	
 	
 	myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
 	pf.Init(myShaders);
@@ -79,22 +82,17 @@ int Init(ESContext* esContext)
 	//gun.o_shaders = myShaders;
 	//gun.InitObject();
 	gun.Build(5, 3);
-	//gun.Upgrade();//bug af
+	m.Build(5, 3);
+	towerList.push_back(&m);
 
-	towerList.push_back(&t);
-	towerList.push_back(&gun);
+	//towerList.push_back(&t);
+	//towerList.push_back(&gun);
 	for (int i = 0; i < towerList.size(); i++) {//fix InitObject MVP.SetIdentity, move that to build
 		towerList.at(i)->o_shaders = myShaders;
 		towerList.at(i)->InitObject();
 	}
 
-	//cout << t.o_Texture.size() << endl;
-	t.Upgrade();
-	t.Upgrade();
-	t.Upgrade();
-	gun.Upgrade();
-	gun.Upgrade();
-	
+	//cout << t.o_Texture.size() << endl;	
 
 	//add Button Tower 
 	Object* archerTowerButton = new Object();
@@ -110,6 +108,8 @@ int Init(ESContext* esContext)
 	towerButtonList.push_back(archerTowerButton);
 	towerButtonList.push_back(mortarTowerButton);
 
+	
+
 	for (int i = 0; i < towerButtonList.size(); i++) {
 		towerButtonList.at(i)->o_shaders = myShaders;
 		towerButtonList.at(i)->InitObject();
@@ -119,8 +119,9 @@ int Init(ESContext* esContext)
 	upgradeButton = new Object();
 	upgradeButton->o_Model = Model("../Resources/model.nfg");
 	upgradeButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/upgrade_button.tga"));
-	upgradeButton->o_shaders = myShaders;
 	upgradeButton->Build(12 * 0.15f, 1 * -0.2f);
+	//towerButtonList.push_back(upgradeButton);
+	upgradeButton->o_shaders = myShaders;
 	upgradeButton->InitObject();
 
 	return myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
@@ -331,7 +332,7 @@ bool CheckSelectionOption(int x, int y) {
 		float y_tower = towerButtonList.at(i)->o_position.y / -0.2f * 70;
 		if (x_tower <= x && x <= x_tower + 70 && y_tower <= y && y <= y_tower + 70) {
 			selectMenuOption = i;
-			printf("\ntower selection is: %d", i);
+			//printf("\ntower selection is: %d", i);
 			return true;
 		}
 	}
@@ -340,7 +341,7 @@ bool CheckSelectionOption(int x, int y) {
 	if (x_upgrade_button <= x && x <= x_upgrade_button + 70
 		&& y_upgrade_button <= y && y <= y_upgrade_button + 70) {
 		selectMenuOption = towerButtonList.size();
-		printf("\nupgrade button is selected ");
+		//printf("\nupgrade button is selected ");
 		return true;
 	}
 	return false;
@@ -353,7 +354,7 @@ bool IsBuildable(int xPos, int yPos) {
 	for (int i = 0; i < towerList.size(); i++) {
 		Vector3 o_position = towerList.at(i)->o_position;
 		if (xPos * 0.15f == o_position.x && yPos * -0.2f == o_position.y) {
-			printf("\n has avaiable tower in here");
+			//printf("\n has avaiable tower in here");
 			return false;
 		}
 	}
@@ -398,7 +399,7 @@ void TouchActionUp(ESContext* esContext, int x, int y)
 			for (int i = 0; i < towerList.size(); i++) {
 				Vector3 o_positon = towerList.at(i)->o_position;
 				if (xPos * 0.15f == o_positon.x && yPos * -0.2f == o_positon.y) {
-					printf("\ntower at: %d, %d upgrade", xPos, yPos);
+					//printf("\ntower at: %d, %d upgrade", xPos, yPos);
 					towerList.at(i)->Upgrade();
 					selectMenuOption = -1;
 					break;
@@ -423,6 +424,10 @@ void CleanUp()
 		delete t.projectileOnScreen.at(i);
 	}
 
+	for (int i = 0; i < towerButtonList.size(); i++) {
+		delete towerButtonList.at(i);
+	}
+	delete upgradeButton;
 	/*for (int i = 0; i < wave.size(); i++) {
 		wave.at(i)->~Enemies();
 		delete wave.at(i);

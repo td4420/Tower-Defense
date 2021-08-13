@@ -24,16 +24,13 @@ public:
 	int currentHP = 60;
 
 	float movementSpeed = 0.001f;
+	float fixedSpeed = movementSpeed;
 	int reward = 3;
 
-	//Tile spawnTile;
-	//EnemyType type;
-
-	//float xPos;
-	//float yPos;
-	//Vector2 movingDirection;// x, y direction
+	float slowTime = 0.0f;
 
 	bool alive = true;
+	bool slowed = false;
 	bool reachedExit = false;
 
 	GLuint enemyVBO;
@@ -57,5 +54,6 @@ public:
 	void Draw();
 	void Update();
 	void Kill();
+	void CheckSlowed();
 };
 

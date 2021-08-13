@@ -14,37 +14,54 @@ Tower::Tower(int type)
 {
 	towerType = type;
 	o_Model = Model("../Resources/model.nfg");
+	reloadSpeed = 0.1f;
 	upgrade = 0;
+
 	if (towerType == 0)
 	{
 		o_Model = Model("../Resources/model.nfg");
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/archerTower.tga"));
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/archerTower2.tga"));
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/archerTower3.tga"));
-		damage = 5;
+		damage = 3;
 		range = 0.3f;
-		reloadTime = 0;
+		reloadTime = 5.0f;
+		reloadSpeed = 0.1f;
+		timeSinceLastShot = reloadTime;
 	}
 
 	if (towerType == 1)
 	{
 		o_Model = Model("../Resources/model.nfg");
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTower.tga"));
-		o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTower2.tga"));
-		o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTower3.tga"));
-		damage = 20;
+		o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTower2temp.tga"));
+		o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTower3temp.tga"));
+		damage = 30;
 		range = 0.5f;
-		reloadTime = 0;
+		reloadTime = 10.0f;
+		reloadSpeed = 0.1f;
+		timeSinceLastShot = 10.0f;
+	}
+
+	if (towerType == 2)
+	{
+		o_Texture.push_back("../ResourcesPacket/Textures/slowTower.tga");
+		o_Texture.push_back("../ResourcesPacket/Textures/slowTower2.tga");
+		o_Texture.push_back("../ResourcesPacket/Textures/slowTower3.tga");
+		damage = 8;
+		range = 0.3f;
+		reloadTime = 6.0f;
+		timeSinceLastShot = reloadTime;
 	}
 }
 
-//Tower::~Tower()
-//{
-//	o_Model.~Model();
-//	for (int i = 0; i < o_Texture.size(); i++) {
-//		o_Texture.at(i).~Texture();
-//	}
-//}
+Tower::~Tower()
+{
+	o_Model.~Model();
+	for (int i = 0; i < o_Texture.size(); i++) {
+		o_Texture.at(i).~Texture();
+	}
+}
 
 void Tower::Build(int x, int y)//Set Tower Texture position based on Tile Num
 {
@@ -115,8 +132,6 @@ float Tower::CalculateDistanceToEnemies(Enemies *e)//must Enemies* or White Scre
 
 	float distance = sqrtf(powf(deltaX, 2.0f) + powf(deltaY, 2.0f));
 	return distance;
-
-	//return 0;
 }
 
 void Tower::AddEnemiesInRange(vector <Enemies*> enemyWave)//check if enemies in firing range then add them to enemiesInRange
@@ -127,11 +142,8 @@ void Tower::AddEnemiesInRange(vector <Enemies*> enemyWave)//check if enemies in 
 		if (distance <= range) {
 			enemiesInRange.push_back(enemyWave.at(i));
 			//cout << enemiesInRange.at(i)->o_position.x << endl;
-			canAttack = true;
 		}
-		//cout << distance << endl;
 	}
-	//SetTarget();
 }
 
 void Tower::RemoveEnemiesOutOfRange()//Remove enemies moved out of range and update target
@@ -150,21 +162,18 @@ void Tower::RemoveEnemiesOutOfRange()//Remove enemies moved out of range and upd
 	}
 
 	SetTarget();
-
-	//if (enemiesInRange.size() == 0) canAttack = false;
 }
 
 void Tower::Shoot()//leak here
 {
-	if (projectileOnScreen.size() != 0 && enemiesInRange.size() == 0)
+	/*if (projectileOnScreen.size() != 0 && enemiesInRange.size() == 0)
 	{
 		projectileOnScreen.at(0)->~Projectile();
 		projectileOnScreen.clear();
-	}
+	}*/
 
-	if (enemiesInRange.size() != 0 && currentTarget!=nullptr) {
-		
-		if (projectileOnScreen.size() == 0) {
+	if (enemiesInRange.size() != 0 && currentTarget!=nullptr) {		
+		if (CheckReload()) {
 			Projectile *p = new Projectile(towerType, o_shaders);//1 leak per shot
 			p->target = currentTarget;
 			p->InitObject();
@@ -176,11 +185,12 @@ void Tower::Shoot()//leak here
 		for (int i = 0; i < projectileOnScreen.size(); i++) {
 			if (projectileOnScreen.at(i)->reachedTarget == true) {
 				currentTarget->currentHP -= damage;
+				if (towerType == 2) currentTarget->slowed = true;
 				projectileOnScreen.at(i)->~Projectile();//must have or lots of leak :V
 				projectileOnScreen.clear();
 				//projectileOnScreen.erase(projectileOnScreen.begin()+i);// without this line causes null pointer deletion?
 			}
-			//cout << currentTarget->currentHP << endl;
+			
 
 			if (projectileOnScreen.size() != 0) {
 				if (projectileOnScreen.at(i)->reachedTarget == false) {
@@ -202,4 +212,14 @@ void Tower::SetTarget()
 	//if (currentTarget!=nullptr && !currentTarget->alive && !enemiesInRange.empty()) currentTarget = enemiesInRange.front();
 
 	if (currentTarget != nullptr && enemiesInRange.empty()) currentTarget = nullptr;
+}
+
+bool Tower::CheckReload()
+{
+	timeSinceLastShot += reloadSpeed;
+	if (timeSinceLastShot >= reloadTime) { 
+		timeSinceLastShot = 0.0f;
+		return true; 
+	}
+	else return false;
 }

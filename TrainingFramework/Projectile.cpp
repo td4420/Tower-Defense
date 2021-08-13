@@ -75,15 +75,11 @@ float Projectile::GetAngleToEnemies()
 
 void Projectile::Move(float angle)
 {
-	if (!moving) {
-		firingAngle = angle;
-	}
-
-	moving = true;
+	firingAngle = angle;
+	
 	o_position.x += movementSpeed * cosf(firingAngle);
 	o_position.y += movementSpeed * sinf(firingAngle);
 	o_position.z = 0.0f;
-	//cout << o_position.x << " " << o_position.y << endl;
 
 	Scale.SetIdentity();
 	Rotation.SetIdentity();

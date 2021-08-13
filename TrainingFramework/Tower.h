@@ -14,13 +14,15 @@ public:
     int upgrade = 0;
     int damage = 0;
     float range = 0.1f;
-    long long reloadTime = 1000;
+    float reloadTime = 3.0f;
+    float reloadSpeed = 0.1f;
+    float timeSinceLastShot = reloadTime;
     int cost = 0;
-    bool canAttack;
+    
 
     std::vector <Enemies*> enemiesInRange;
     std::vector <Projectile*> projectileOnScreen;
-    Enemies *currentTarget;//switch to pointer?
+    Enemies *currentTarget;
 
     void Build(int x, int y);
     void Upgrade();
@@ -30,8 +32,9 @@ public:
     void RemoveEnemiesOutOfRange();
     void SetTarget();
     void Update();
-    //void 
+    bool CheckReload();
 
     Tower();
     Tower(int towerType);
+    ~Tower();
 };
