@@ -39,6 +39,7 @@ Tower gun = Tower(1);
 std::vector <Enemies*> wave;
 std::vector <Tower*> towerList;
 std::vector <Object*> towerButtonList;
+Object* upgradeButton;
 
 int selectMenuOption = -1;
 int NumMap[7][8] =
@@ -110,11 +111,17 @@ int Init(ESContext* esContext)
 	towerButtonList.push_back(mortarTowerButton);
 
 	for (int i = 0; i < towerButtonList.size(); i++) {
-		Shaders x = Shaders();
-		x.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
-		towerButtonList.at(i)->o_shaders = x;
+		towerButtonList.at(i)->o_shaders = myShaders;
 		towerButtonList.at(i)->InitObject();
 	}
+
+	// init upgrade button
+	upgradeButton = new Object();
+	upgradeButton->o_Model = Model("../Resources/model.nfg");
+	upgradeButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/upgrade_button.tga"));
+	upgradeButton->o_shaders = myShaders;
+	upgradeButton->Build(12 * 0.15f, 1 * -0.2f);
+	upgradeButton->InitObject();
 
 	return myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
 	
@@ -147,6 +154,9 @@ void Draw(ESContext* esContext)
 		towerButtonList.at(i)->DrawObject();
 	}
 	
+	//draw upGrage Button
+	upgradeButton->DrawObject();
+
 	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
 }
 
@@ -315,21 +325,25 @@ void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 	}
 }
 
-bool checkTowerButton(int x, int y) {
-	//convert to coordinate of object
-	/*float xPos = (2*x- Globals::screenWidth )/(Globals::screenWidth);
-	float yPos = (Globals::screenHeight -2 *y) / (Globals::screenHeight);*/
-	float xPos = x * 1.0f / 247 * 0.45f;
-	float yPos = y * 1.0f / 251 * -0.6f;
+bool CheckSelectionOption(int x, int y) {
 	for (int i = 0; i < towerButtonList.size(); i++) {
-		float x_tower = towerButtonList.at(i)->o_position.x;
-		float y_tower = towerButtonList.at(i)->o_position.y;
-		if ( x_tower - 0.15f <= xPos && xPos <= x_tower + 0.15f && y_tower -0.2f  <= yPos && yPos <= y_tower + 0.2f) {
+		float x_tower = towerButtonList.at(i)->o_position.x / 0.15f * 70;
+		float y_tower = towerButtonList.at(i)->o_position.y / -0.2f * 70;
+		if (x_tower <= x && x <= x_tower + 70 && y_tower <= y && y <= y_tower + 70) {
 			selectMenuOption = i;
 			printf("\ntower selection is: %d", i);
 			return true;
 		}
 	}
+	float x_upgrade_button = upgradeButton->o_position.x / 0.15f * 70;
+	float y_upgrade_button = upgradeButton->o_position.y / -0.2f * 70;
+	if (x_upgrade_button <= x && x <= x_upgrade_button + 70
+		&& y_upgrade_button <= y && y <= y_upgrade_button + 70) {
+		selectMenuOption = towerButtonList.size();
+		printf("\nupgrade button is selected ");
+		return true;
+	}
+	return false;
 }
 void TouchActionDown(ESContext* esContext, int x, int y)
 {
@@ -345,37 +359,56 @@ bool IsBuildable(int xPos, int yPos) {
 	}
 	return true;
 }
+
 void TouchActionUp(ESContext* esContext, int x, int y)
 {
 
 	if (selectMenuOption == -1) {
-		checkTowerButton(x, y);
+		CheckSelectionOption(x, y);
 	}
-	if (selectMenuOption > -1 && selectMenuOption < towerButtonList.size()) {
-		int xPos = static_cast<int>(std::round(x  / 70 ));
-		int yPos =  static_cast<int>(std::round(y / 70 ));
-		printf("\nxPos, yPos: %d, %d", xPos, yPos);
-		printf("\nxMouse, yMouse: %d, %d", x, y);
-		if (-1 < xPos && xPos < 8 && -1 < yPos && yPos < 7) {
-			if (NumMap[yPos][xPos] == 0 && IsBuildable(xPos, yPos)) {
-				Tower *t = new Tower(selectMenuOption);//super leak :V
 
-				Shaders s = Shaders();
-				s.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
-				t->o_shaders = s;
-				t->Build(xPos, yPos);
-				t->InitObject();
-				towerList.push_back(t);
-			}		
+	//upgrade or build tower
+	if (selectMenuOption != -1) {
+		//build Tower
+		if (selectMenuOption > -1 && selectMenuOption < towerButtonList.size()) {
+			int xPos = static_cast<int>(std::round(x / 70));
+			int yPos = static_cast<int>(std::round(y / 70));
+			if (-1 < xPos && xPos < 8 && -1 < yPos && yPos < 7) {
+				if (NumMap[yPos][xPos] == 0 && IsBuildable(xPos, yPos)) {
+					Tower* t = new Tower(selectMenuOption);//super leak :V
+
+					Shaders s = Shaders();
+					s.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
+					t->o_shaders = s;
+					t->Build(xPos, yPos);
+					t->InitObject();
+					towerList.push_back(t);
+				}
 				selectMenuOption = -1;
+			}
+			else if (!CheckSelectionOption(x, y)) selectMenuOption = -1;
+
 		}
-		else {
-			if (!checkTowerButton(x, y)) selectMenuOption = -1;
+		else if (selectMenuOption == towerButtonList.size()) {
+			//upgrade Button
+			int xPos = static_cast<int>(std::round(x / 70));
+			int yPos = static_cast<int>(std::round(y / 70));
+
+			//get tower upgrade
+			for (int i = 0; i < towerList.size(); i++) {
+				Vector3 o_positon = towerList.at(i)->o_position;
+				if (xPos * 0.15f == o_positon.x && yPos * -0.2f == o_positon.y) {
+					printf("\ntower at: %d, %d upgrade", xPos, yPos);
+					towerList.at(i)->Upgrade();
+					selectMenuOption = -1;
+					break;
+				}
+			}
+			if (!CheckSelectionOption(x, y)) selectMenuOption = -1;
+
 		}
-		
 	}
 }
-
 void TouchActionDrag(ESContext* esCotext, int x, int y) {
 	//move drag
 }

@@ -1,1 +1,17 @@
-﻿
+﻿cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  TrainingFramework.cpp
+E:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(70,20): warning C4018: '<': signed/unsigned mismatch
+E:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(86,20): warning C4018: '<': signed/unsigned mismatch
+E:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(113,20): warning C4018: '<': signed/unsigned mismatch
+E:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(138,21): warning C4018: '<': signed/unsigned mismatch
+E:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(148,20): warning C4018: '<': signed/unsigned mismatch
+E:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(153,20): warning C4018: '<': signed/unsigned mismatch
+E:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(194,20): warning C4018: '<': signed/unsigned mismatch
+E:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(221,20): warning C4018: '<': signed/unsigned mismatch
+E:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(226,22): warning C4018: '<': signed/unsigned mismatch
+E:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(329,20): warning C4018: '<': signed/unsigned mismatch
+E:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(353,20): warning C4018: '<': signed/unsigned mismatch
+E:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(373,49): warning C4018: '<': signed/unsigned mismatch
+E:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(398,22): warning C4018: '<': signed/unsigned mismatch
+E:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(421,20): warning C4018: '<': signed/unsigned mismatch
+  TrainingFramework.vcxproj -> E:\Dao_3DFrameworkTraining\BIN\TrainingFramework.exe
