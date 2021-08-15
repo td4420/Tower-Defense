@@ -36,6 +36,7 @@ Enemies tank = Enemies(3);
 Tower t = Tower(0);
 Tower gun = Tower(1);
 Tower m = Tower(2);
+Tower* s = new Tower(3);
 
 std::vector <Enemies*> wave;
 std::vector <Tower*> towerList;
@@ -75,19 +76,17 @@ int Init(ESContext* esContext)
 		wave.at(i)->InitObject();
 	}
 
-	//t.o_shaders = myShaders;//
-	//t.InitObject();
-	t.Build(3, 3);
-
-	//gun.o_shaders = myShaders;
-	//gun.InitObject();
-	gun.Build(5, 3);
-	m.Build(5, 3);
-	towerList.push_back(&m);
+	
+	//t.Build(3, 3);
+	//gun.Build(5, 3);
+	//m.Build(5, 3);
+	//s->Build(4, 3);
+	//towerList.push_back(&m);
+	//towerList.push_back(s);
 
 	//towerList.push_back(&t);
 	//towerList.push_back(&gun);
-	for (int i = 0; i < towerList.size(); i++) {//fix InitObject MVP.SetIdentity, move that to build
+	for (int i = 0; i < towerList.size(); i++) {
 		towerList.at(i)->o_shaders = myShaders;
 		towerList.at(i)->InitObject();
 	}
@@ -107,8 +106,6 @@ int Init(ESContext* esContext)
 
 	towerButtonList.push_back(archerTowerButton);
 	towerButtonList.push_back(mortarTowerButton);
-
-	
 
 	for (int i = 0; i < towerButtonList.size(); i++) {
 		towerButtonList.at(i)->o_shaders = myShaders;
@@ -140,11 +137,6 @@ void Draw(ESContext* esContext)
 			wave.at(i)->DrawObject();
 		}
 	}
-	
-	/*t.DrawObject();
-	gun.DrawObject();
-	t.Shoot();
-	gun.Shoot();*/
 
 	for (int i = 0; i < towerList.size(); i++) {
 		towerList.at(i)->DrawObject();
@@ -199,25 +191,6 @@ void Update(ESContext* esContext, float deltaTime)
 			wave.erase(wave.begin() + i);
 		}
 	}
-	
-	//t.AddEnemiesInRange(wave);//2 buffers
-	//t.RemoveEnemiesOutOfRange();
-
-	//gun.AddEnemiesInRange(wave);//2 buffers
-	//gun.RemoveEnemiesOutOfRange();
-
-	////cout << t.projectileOnScreen.size() << endl;
-	//if (t.projectileOnScreen.size() != 0) {
-	//	for (int i = 0; i < t.projectileOnScreen.size(); i++) {
-	//		t.projectileOnScreen.at(i)->Move(t.projectileOnScreen.at(i)->GetAngleToEnemies());
-	//	}
-	//}
-
-	//if (gun.projectileOnScreen.size() != 0) {
-	//	for (int i = 0; i < gun.projectileOnScreen.size(); i++) {
-	//		gun.projectileOnScreen.at(i)->Move(gun.projectileOnScreen.at(i)->GetAngleToEnemies());
-	//	}
-	//}
 
 	for (int i = 0; i < towerList.size(); i++) {
 		towerList.at(i)->AddEnemiesInRange(wave);
@@ -230,7 +203,6 @@ void Update(ESContext* esContext, float deltaTime)
 		}
 	}
 
-	//cout << wave.at(0)->currentHP << endl;
 }
 
 void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
@@ -419,9 +391,8 @@ void TouchActionMove(ESContext* esContext, int x, int y)
 }
 void CleanUp()
 {
-	for (int i = 0; i < t.projectileOnScreen.size(); i++) {
-		//t.projectileOnScreen.at(i)->~Projectile();
-		delete t.projectileOnScreen.at(i);
+	for (int i = 0; i < towerList.size(); i++) {
+		delete towerList.at(i);// bad pointer deletion if u set tower thats not pointer
 	}
 
 	for (int i = 0; i < towerButtonList.size(); i++) {
@@ -432,15 +403,7 @@ void CleanUp()
 		wave.at(i)->~Enemies();
 		delete wave.at(i);
 	}*/
-	/*for (int i = 0; i < towerList.size(); i++) {//null pointer deletion?
-		delete towerList.at(i);
-	}*/
-	
-	/*for (int i = 0; i < scenemanager->numberOfObject; i++)
-	{
-		scenemanager->s_ListObject.at(i)->~Object();
-	}*/
-	//delete t.enemiesInRange.at(0);//bad pointer deletion
+
 }
 
 int _tmain(int argc, TCHAR* argv[])

@@ -17,41 +17,52 @@ Tower::Tower(int type)
 	reloadSpeed = 0.1f;
 	upgrade = 0;
 
-	if (towerType == 0)
+	if (towerType == 0)//archer tower: small damage, medium range, fast reload
 	{
-		o_Model = Model("../Resources/model.nfg");
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/archerTower.tga"));
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/archerTower2.tga"));
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/archerTower3.tga"));
-		damage = 3;
+		damage = 8;
 		range = 0.3f;
 		reloadTime = 5.0f;
-		reloadSpeed = 0.1f;
 		timeSinceLastShot = reloadTime;
+		cost = 100;
 	}
 
-	if (towerType == 1)
+	if (towerType == 1)//mortar tower: huge damage, long range, very slow reload
 	{
-		o_Model = Model("../Resources/model.nfg");
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTower.tga"));
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTower2temp.tga"));
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTower3temp.tga"));
-		damage = 30;
+		damage = 70;
 		range = 0.5f;
-		reloadTime = 10.0f;
-		reloadSpeed = 0.1f;
-		timeSinceLastShot = 10.0f;
+		reloadTime = 20.0f;
+		timeSinceLastShot = reloadTime;
+		cost = 500;
 	}
 
-	if (towerType == 2)
+	if (towerType == 2)//slow tower
 	{
 		o_Texture.push_back("../ResourcesPacket/Textures/slowTower.tga");
 		o_Texture.push_back("../ResourcesPacket/Textures/slowTower2.tga");
 		o_Texture.push_back("../ResourcesPacket/Textures/slowTower3.tga");
-		damage = 8;
+		damage = 10;
 		range = 0.3f;
 		reloadTime = 6.0f;
 		timeSinceLastShot = reloadTime;
+		cost = 250;
+	}
+
+	if (towerType == 3)//chance tower: 3%-5% chance for huge damage, 10-20% chance for slow
+	{
+		o_Texture.push_back("../ResourcesPacket/Textures/witchTower.tga");
+		o_Texture.push_back("../ResourcesPacket/Textures/witchTower2.tga");
+		o_Texture.push_back("../ResourcesPacket/Textures/witchTower3.tga");
+		damage = 0;
+		range = 0.7f;
+		reloadTime = 6.0f;
+		timeSinceLastShot = reloadTime;
+		cost = 400;
 	}
 }
 
@@ -86,12 +97,13 @@ void Tower::Upgrade()//Upgrade price = 1/2 cost, each upgrade increases cost by 
 		if (towerType == 0)
 		{
 			damage += 5;
-			range += 0;
+			range += 0.05f;
 		}
 
 		if (towerType == 1)
 		{
 			damage += 10;
+			range += 0.1f;
 		}
 	}
 
@@ -101,18 +113,19 @@ void Tower::Upgrade()//Upgrade price = 1/2 cost, each upgrade increases cost by 
 		if (towerType == 0)
 		{
 			damage += 5;
-			range += 0;
+			range += 0.05f;
 		}
 
 		if (towerType == 1)
 		{
 			damage += 10;
+			range += 0.1f;
 		}
 	}
 
 	if (upgrade <=1) upgrade++;
 
-	cout << upgrade << endl;
+	//cout << upgrade << endl;
 	if (upgrade>=2) { //cout << "Max Upgrade!" << endl;
 		return;
 	}
@@ -174,7 +187,7 @@ void Tower::Shoot()//leak here
 
 	if (enemiesInRange.size() != 0 && currentTarget!=nullptr) {		
 		if (CheckReload()) {
-			Projectile *p = new Projectile(towerType, o_shaders);//1 leak per shot
+			Projectile *p = new Projectile(towerType, o_shaders);//will leak if !bullet->reachedTarget
 			p->target = currentTarget;
 			p->InitObject();
 			p->SetFiringLocation(o_position.x, o_position.y);
@@ -183,17 +196,35 @@ void Tower::Shoot()//leak here
 		
 		
 		for (int i = 0; i < projectileOnScreen.size(); i++) {
+			if (projectileOnScreen.at(i)->target == nullptr) {
+				delete projectileOnScreen.at(i);
+				projectileOnScreen.erase(projectileOnScreen.begin() + i);
+			}
+
 			if (projectileOnScreen.at(i)->reachedTarget == true) {
 				currentTarget->currentHP -= damage;
 				if (towerType == 2) currentTarget->slowed = true;
-				projectileOnScreen.at(i)->~Projectile();//must have or lots of leak :V
-				projectileOnScreen.clear();
-				//projectileOnScreen.erase(projectileOnScreen.begin()+i);// without this line causes null pointer deletion?
+
+				if (towerType == 3) {
+					int range = 100 - 1 + 1;
+					int effect = rand() % range + 1;
+					if (effect >= 97 - upgrade) {
+						currentTarget->currentHP -= 100 * (upgrade + 1);
+						cout << "POW!" << endl;
+					}
+					if (effect >= 1 && effect <= 10 + upgrade * 5) {
+						currentTarget->currentHP -= damage;
+						currentTarget->slowed = true;
+						cout << "SLOW!" << endl;
+					}
+				}
+
+				delete projectileOnScreen.at(i);
+				projectileOnScreen.erase(projectileOnScreen.begin() + i);
 			}
-			
 
 			if (projectileOnScreen.size() != 0) {
-				if (projectileOnScreen.at(i)->reachedTarget == false) {
+				if (projectileOnScreen.at(i)->reachedTarget == false && projectileOnScreen.at(i)->target != nullptr) {
 					projectileOnScreen.at(i)->DrawObject();
 					projectileOnScreen.at(i)->CheckReachedTarget();
 				}
@@ -206,20 +237,33 @@ void Tower::SetTarget()
 {
 	if (!enemiesInRange.empty()) {
 		currentTarget = enemiesInRange.front();
-		//cout << "Atk ";
 	}
-
-	//if (currentTarget!=nullptr && !currentTarget->alive && !enemiesInRange.empty()) currentTarget = enemiesInRange.front();
 
 	if (currentTarget != nullptr && enemiesInRange.empty()) currentTarget = nullptr;
 }
 
 bool Tower::CheckReload()
 {
-	timeSinceLastShot += reloadSpeed;
-	if (timeSinceLastShot >= reloadTime) { 
-		timeSinceLastShot = 0.0f;
-		return true; 
+	if (towerType != 4) {
+		timeSinceLastShot += reloadSpeed;
+		if (timeSinceLastShot >= reloadTime) {
+			timeSinceLastShot = 0.0f;
+			return true;
+		}
+		else return false;
 	}
-	else return false;
+
+	/*if (towerType == 3) {
+		timeSinceLastShot += reloadSpeed;
+		if (timeSinceLastShot >= 6.0f) {
+			timeSinceLastShot = 0.0f;
+			return false;
+		}
+
+		if (timeSinceLastShot >= reloadTime && timeSinceLastShot>=5.0f) {
+			return true;
+		}
+
+		else return false;
+	}*/
 }

@@ -58,9 +58,14 @@ void Projectile::CheckReachedTarget()
 {
 	if (CalculateDistanceToTarget() <= 0.1f)
 	{
-		//cout << "Hit!" << endl;
 		reachedTarget = true;
-		
+	}
+}
+
+void Projectile::Bounce(vector <Enemies*> enemyWave)//later
+{
+	for (int i = 0; i < enemyWave.size(); i++) {
+
 	}
 }
 

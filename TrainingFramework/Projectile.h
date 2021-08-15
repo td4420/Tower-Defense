@@ -22,6 +22,7 @@ public:
     float CalculateDistanceToTarget();
     void SetFiringLocation(float initX, float initY);//Projectile spawns on tower location
     void CheckReachedTarget();
+    void Bounce(vector <Enemies*> enemiesWave);// only for type 4 glaive tower
     float GetAngleToEnemies();
     void Move(float angle);
 

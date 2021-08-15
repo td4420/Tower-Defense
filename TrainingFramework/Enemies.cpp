@@ -20,6 +20,7 @@ Enemies::Enemies(int type)
 	Rotation.SetIdentity();
 	Translation.SetIdentity();
 	MVP = Scale * Rotation * Translation;
+	slowTime = 0.0f;
 
 	if (type == 1)
 	{
@@ -27,7 +28,7 @@ Enemies::Enemies(int type)
 		maxHP = 70;
 		currentHP = maxHP;
 		movementSpeed = 0.003f;
-		fixedSpeed = movementSpeed;
+		fixedSpeed = 0.003f;
 		reward = 10;
 	}
 
@@ -37,7 +38,7 @@ Enemies::Enemies(int type)
 		maxHP = 50;
 		currentHP = maxHP;
 		movementSpeed = 0.005f;
-		fixedSpeed = movementSpeed;
+		fixedSpeed = 0.005f;
 		reward = 8;
 	}
 
@@ -47,7 +48,7 @@ Enemies::Enemies(int type)
 		maxHP = 300;
 		currentHP = maxHP;
 		movementSpeed = 0.001f;
-		fixedSpeed = movementSpeed;
+		fixedSpeed = 0.001f;
 		reward = 20;
 	}
 }
@@ -57,17 +58,12 @@ Enemies::Enemies(Enemies* e)
 	maxHP = e->maxHP;
 	currentHP = maxHP;
 	movementSpeed = e->movementSpeed;
-	reward = this->reward;
+	fixedSpeed = e->fixedSpeed;
+	reward = e->reward;
 
-	for (int i = 0; i < 4; i++) {
-		enemyVertices[i].pos.x = e->enemyVertices[i].pos.x;
-		enemyVertices[i].pos.y = e->enemyVertices[i].pos.y;
-		enemyVertices[i].pos.z = e->enemyVertices[i].pos.z;
-
-		enemyVertices[i].coords.x = e->enemyVertices[i].coords.x;
-		enemyVertices[i].coords.y = e->enemyVertices[i].coords.y;
-
-		std::cout << enemyVertices[i].pos.x << " " << enemyVertices[i].pos.y << " " << enemyVertices[i].pos.z << std::endl;
+	o_Model = e->o_Model;
+	for (int i = 0; i < e->o_Texture.size(); i++) {
+		o_Texture.push_back(e->o_Texture.at(i));
 	}
 }
 
@@ -98,31 +94,14 @@ Enemies::~Enemies()
 	}
 }
 
-void Enemies::SetShaders(Shaders shader)
-{
-	enemyShaders = shader;
-}
-
-void Enemies::SetSpawner(Tile spawner)
-{
-	for (int i = 0; i < 4; i++) {
-		enemyVertices[i].pos.x = spawner.tileVertices[i].pos.x;
-		enemyVertices[i].pos.y = spawner.tileVertices[i].pos.y;
-		enemyVertices[i].pos.z = spawner.tileVertices[i].pos.z;
-
-		enemyVertices[i].coords.x = spawner.tileVertices[i].coords.x;
-		enemyVertices[i].coords.y = spawner.tileVertices[i].coords.y;
-	}
-}
-
-void Enemies::Bind() {
-	glGenBuffers(1, &enemyVBO);
-	glBindBuffer(GL_ARRAY_BUFFER, enemyVBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(enemyVertices), enemyVertices, GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	//cout << "Binded" << endl;
-}
+//void Enemies::Bind() {
+//	glGenBuffers(1, &enemyVBO);
+//	glBindBuffer(GL_ARRAY_BUFFER, enemyVBO);
+//	glBufferData(GL_ARRAY_BUFFER, sizeof(enemyVertices), enemyVertices, GL_STATIC_DRAW);
+//	glBindBuffer(GL_ARRAY_BUFFER, 0);
+//
+//	//cout << "Binded" << endl;
+//}
 
 void Enemies::Draw()
 {
@@ -263,6 +242,7 @@ void Enemies::Update()
 {
 	//cout << "X: " << (o_position.x + 0.075f) << " Y: " << (o_position.y - 0.1f) << endl;
 	CheckSlowed();
+	
 	MoveEnemies();
 	if (currentHP <= 0)
 	{
@@ -279,17 +259,21 @@ void Enemies::Kill()
 
 void Enemies::CheckSlowed()
 {
-	if (slowTime > 0.0f)
-	{
-		slowTime -= 0.1f;
-		movementSpeed = 0.9f * movementSpeed;
-	}
-
-	if (!slowed && slowTime == 0.0f) movementSpeed = fixedSpeed;
-
 	if (slowed && slowTime == 0.0f)
 	{
-		slowTime = 2.0f;
+		slowTime = 6.1f;
+		slowed = false;
+	}
+
+	if (!slowed && slowTime <= 0.1f) {
+		movementSpeed = fixedSpeed;
+	}
+
+	if (slowTime > 0.1f)
+	{
+		//cout << slowTime << " ";
+		slowTime -= 0.1f;
+		movementSpeed = movementSpeed * 0.95f;
 		slowed = false;
 	}
 }

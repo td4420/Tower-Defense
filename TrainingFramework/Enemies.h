@@ -15,7 +15,7 @@ public:
 	int enemyType=1;//1:normal, 2:fast, 3:tank
 	Texture enemyTexture = Texture("../Resources/enemy.tga");
 	Shaders enemyShaders;
-	Vertex enemyVertices[4];
+	//Vertex enemyVertices[4];
 
 	Vector2 enemyPos;
 	int locationX = 0, locationY = 0;
@@ -43,9 +43,7 @@ public:
 	Enemies(Shaders myShaders, int maxHP, float speed, int reward, Tile spawner);
 	~Enemies();
 	
-	void Bind();
-	void SetShaders(Shaders myShaders);
-	void SetSpawner(Tile spawner);
+	//void Bind();
 	void MoveEnemies();
 	void MoveToLeft();
 	void MoveToRight();
