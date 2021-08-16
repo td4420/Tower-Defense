@@ -42,6 +42,7 @@ std::vector <Enemies*> wave;
 std::vector <Tower*> towerList;
 std::vector <Object*> towerButtonList;
 Object* upgradeButton;
+Object* sellButton;
 
 int selectMenuOption = -1;
 int NumMap[7][8] =
@@ -104,8 +105,20 @@ int Init(ESContext* esContext)
 	mortarTowerButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTowerButton.tga"));
 	mortarTowerButton->Build(10 * 0.15f, 3 * -0.2f);
 
+	Object* slowTower = new Object();
+	slowTower->o_Model = Model("../Resources/model.nfg");
+	slowTower->o_Texture.push_back(Texture("../ResourcesPacket/Textures/slowTowerButton.tga"));
+	slowTower->Build(10 * 0.15f, 5 * -0.2f);
+
+	Object* witchTower = new Object();
+	witchTower->o_Model = Model("../Resources/model.nfg");
+	witchTower->o_Texture.push_back(Texture("../ResourcesPacket/Textures/witchTowerButton.tga"));
+	witchTower->Build(10 * 0.15f, 7 * -0.2f);
+
 	towerButtonList.push_back(archerTowerButton);
 	towerButtonList.push_back(mortarTowerButton);
+	towerButtonList.push_back(slowTower);
+	towerButtonList.push_back(witchTower);
 
 	for (int i = 0; i < towerButtonList.size(); i++) {
 		towerButtonList.at(i)->o_shaders = myShaders;
@@ -115,11 +128,20 @@ int Init(ESContext* esContext)
 	// init upgrade button
 	upgradeButton = new Object();
 	upgradeButton->o_Model = Model("../Resources/model.nfg");
-	upgradeButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/upgrade_button.tga"));
-	upgradeButton->Build(12 * 0.15f, 1 * -0.2f);
+	upgradeButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/upgradeButton.tga"));
+	upgradeButton->Build(12 * 0.15f, 0 * -0.2f);
 	//towerButtonList.push_back(upgradeButton);
 	upgradeButton->o_shaders = myShaders;
 	upgradeButton->InitObject();
+	
+	// init sell button
+	sellButton = new Object();
+	sellButton->o_Model = Model("../Resources/model.nfg");
+	sellButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/sellButton.tga"));
+	sellButton->Build(11 * 0.15f, 0 * -0.2f);
+	//towerButtonList.push_back(upgradeButton);
+	sellButton->o_shaders = myShaders;
+	sellButton->InitObject();
 
 	return myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
 	
@@ -153,6 +175,8 @@ void Draw(ESContext* esContext)
 	
 	//draw upGrage Button
 	upgradeButton->DrawObject();
+
+	sellButton->DrawObject();
 
 	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
 }
@@ -336,6 +360,14 @@ bool CheckSelectionOption(int x, int y) {
 		//printf("\nupgrade button is selected ");
 		return true;
 	}
+
+	float x_sell_button = sellButton->o_position.x / 0.15f * 70;
+	float y_sell_button = sellButton->o_position.y / -0.2f * 70;
+	if (x_sell_button <= x && x <= x_sell_button + 70
+		&& y_sell_button <= y && y <= y_sell_button + 70) {
+		selectMenuOption = towerButtonList.size()+1;
+		return true;
+	}
 	return false;
 }
 void TouchActionDown(ESContext* esContext, int x, int y)
@@ -399,6 +431,22 @@ void TouchActionUp(ESContext* esContext, int x, int y)
 			}
 			if (!CheckSelectionOption(x, y)) selectMenuOption = -1;
 
+		}
+		//sell Button
+		else if (selectMenuOption == towerButtonList.size() + 1) {
+			int xPos = static_cast<int>(std::round(x / 70));
+			int yPos = static_cast<int>(std::round(y / 70));
+			//get tower upgrade
+			for (int i = 0; i < towerList.size(); i++) {
+				Vector3 o_positon = towerList.at(i)->o_position;
+				if (xPos * 0.15f == o_positon.x && yPos * -0.2f == o_positon.y) {
+					delete towerList.at(i);
+					towerList.erase(towerList.begin() + i);
+					selectMenuOption = -1;
+					break;
+				}
+			}
+			if (!CheckSelectionOption(x, y)) selectMenuOption = -1;
 		}
 	}
 }
