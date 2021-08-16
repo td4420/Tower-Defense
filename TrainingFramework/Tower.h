@@ -2,10 +2,15 @@
 #include "Object.h"
 #include "Enemies.h"
 #include "Projectile.h"
+#include "SFML/Audio.hpp"
+#include "SoundController.h"
 class Tower :
     public Object
 {
 public:
+    sf::Sound shootSound;
+    sf::Sound placeSound;
+    sf::Sound upgradeSound;
     Model towerModel = Model("../Resources/model.txt");
     Texture towerTexture = Texture("../Resources/nen.txt");
 

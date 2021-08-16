@@ -102,6 +102,8 @@
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="SoundController.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Tower.cpp" />
@@ -124,6 +126,8 @@
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Shaders.h" />
+    <ClInclude Include="Sound.h" />
+    <ClInclude Include="SoundController.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />

@@ -1,20 +1,8 @@
 ﻿cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-  TrainingFramework.cpp
-D:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(81,20): warning C4018: '<': signed/unsigned mismatch
-D:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(96,20): warning C4018: '<': signed/unsigned mismatch
-D:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(129,20): warning C4018: '<': signed/unsigned mismatch
-D:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(163,20): warning C4018: '<': signed/unsigned mismatch
-D:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(174,20): warning C4018: '<': signed/unsigned mismatch
-D:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(179,20): warning C4018: '<': signed/unsigned mismatch
-D:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(239,20): warning C4018: '<': signed/unsigned mismatch
-D:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(244,22): warning C4018: '<': signed/unsigned mismatch
-D:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(353,20): warning C4018: '<': signed/unsigned mismatch
-D:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(385,20): warning C4018: '<': signed/unsigned mismatch
-D:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(405,49): warning C4018: '<': signed/unsigned mismatch
-D:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(430,22): warning C4018: '<': signed/unsigned mismatch
-D:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(447,22): warning C4018: '<': signed/unsigned mismatch
-D:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(469,20): warning C4018: '<': signed/unsigned mismatch
-D:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(473,20): warning C4018: '<': signed/unsigned mismatch
-D:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(478,20): warning C4018: '<': signed/unsigned mismatch
-D:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(479,21): warning C4018: '<': signed/unsigned mismatch
+  Tower.cpp
+D:\Dao_3DFrameworkTraining\TrainingFramework\Tower.cpp(77,20): warning C4018: '<': signed/unsigned mismatch
+D:\Dao_3DFrameworkTraining\TrainingFramework\Tower.cpp(160,20): warning C4018: '<': signed/unsigned mismatch
+D:\Dao_3DFrameworkTraining\TrainingFramework\Tower.cpp(174,21): warning C4018: '<': signed/unsigned mismatch
+D:\Dao_3DFrameworkTraining\TrainingFramework\Tower.cpp(201,21): warning C4018: '<': signed/unsigned mismatch
+D:\Dao_3DFrameworkTraining\TrainingFramework\Tower.cpp(278): warning C4715: 'Tower::CheckReload': not all control paths return a value
   TrainingFramework.vcxproj -> D:\Dao_3DFrameworkTraining\BIN\TrainingFramework.exe

@@ -13,6 +13,7 @@
 #include "Enemies.h"
 #include "Tower.h"
 #include "SFML/Audio.hpp"
+#include "SoundController.h"
 
 #define MOVE_FORWARD 1
 #define MOVE_BACKWARD 1 << 1
@@ -169,6 +170,7 @@ void Draw(ESContext* esContext)
 	for (int i = 0; i < towerList.size(); i++) {
 		towerList.at(i)->DrawObject();
 		towerList.at(i)->Shoot();
+		
 	}
 
 	for (int i = 0; i < towerButtonList.size(); i++) {

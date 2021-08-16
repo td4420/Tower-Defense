@@ -12,6 +12,11 @@ Tower::Tower()
 
 Tower::Tower(int type)
 {
+	//set buffer for sounds
+	upgradeSound.setBuffer(SoundController::GetInstance()->m_SoundBuffers.at(4));
+	shootSound.setBuffer(SoundController::GetInstance()->m_SoundBuffers.at(5));
+	placeSound.setBuffer(SoundController::GetInstance()->m_SoundBuffers.at(6));
+
 	towerType = type;
 	o_Model = Model("../Resources/model.nfg");
 	reloadSpeed = 0.1f;
@@ -76,6 +81,7 @@ Tower::~Tower()
 
 void Tower::Build(int x, int y)//Set Tower Texture position based on Tile Num
 {
+	placeSound.play();
 	o_position.x = x * 0.15f;
 	o_position.y = y * -0.2f;
 	o_position.z = 0;
@@ -92,6 +98,7 @@ void Tower::Build(int x, int y)//Set Tower Texture position based on Tile Num
 void Tower::Upgrade()//Upgrade price = 1/2 cost, each upgrade increases cost by half of its original value
 { 
 	if (upgrade == 0) {
+		upgradeSound.play();
 		o_Texture.at(0) = o_Texture.at(1);
 		cost += cost / 2;
 		if (towerType == 0)
@@ -108,6 +115,7 @@ void Tower::Upgrade()//Upgrade price = 1/2 cost, each upgrade increases cost by 
 	}
 
 	if (upgrade == 1) {
+		upgradeSound.play();
 		o_Texture.at(0) = o_Texture.at(2);
 		cost += cost / 2;
 		if (towerType == 0)
@@ -179,7 +187,7 @@ void Tower::RemoveEnemiesOutOfRange()//Remove enemies moved out of range and upd
 
 void Tower::Shoot()//leak here
 {
-	if (enemiesInRange.size() != 0 && currentTarget!=nullptr) {		
+	if (enemiesInRange.size() != 0 && currentTarget!=nullptr) {	
 		if (CheckReload()) {
 			Projectile *p = new Projectile(towerType, o_shaders);//will leak if !bullet->reachedTarget
 			p->target = currentTarget;
@@ -204,6 +212,7 @@ void Tower::Shoot()//leak here
 			}
 
 			if (projectileOnScreen.at(i)->reachedTarget == true) {
+				shootSound.play();
 				projectileOnScreen.at(i)->nullified = true;
 				currentTarget->currentHP -= damage;
 				if (towerType == 2) currentTarget->slowed = true;
