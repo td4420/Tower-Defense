@@ -12,6 +12,7 @@
 #include "PlayField.h"
 #include "Enemies.h"
 #include "Tower.h"
+#include "SFML/Audio.hpp"
 
 #define MOVE_FORWARD 1
 #define MOVE_BACKWARD 1 << 1
@@ -58,6 +59,7 @@ int NumMap[7][8] =
 
 int Init(ESContext* esContext)
 {
+
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
