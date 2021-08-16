@@ -259,10 +259,10 @@ void Enemies::Kill()
 
 void Enemies::CheckSlowed()
 {
-	if (slowed && slowTime == 0.0f)
+	if (slowed && slowTime <= 0.1f)
 	{
 		slowTime = 6.1f;
-		slowed = false;
+		//slowed = false;
 	}
 
 	if (!slowed && slowTime <= 0.1f) {

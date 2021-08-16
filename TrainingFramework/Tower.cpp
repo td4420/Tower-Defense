@@ -22,8 +22,8 @@ Tower::Tower(int type)
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/archerTower.tga"));
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/archerTower2.tga"));
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/archerTower3.tga"));
-		damage = 8;
-		range = 0.3f;
+		damage = 0;
+		range = 1.0f;
 		reloadTime = 5.0f;
 		timeSinceLastShot = reloadTime;
 		cost = 100;
@@ -48,7 +48,7 @@ Tower::Tower(int type)
 		o_Texture.push_back("../ResourcesPacket/Textures/slowTower3.tga");
 		damage = 10;
 		range = 0.3f;
-		reloadTime = 6.0f;
+		reloadTime = 10.0f;
 		timeSinceLastShot = reloadTime;
 		cost = 250;
 	}
@@ -179,29 +179,32 @@ void Tower::RemoveEnemiesOutOfRange()//Remove enemies moved out of range and upd
 
 void Tower::Shoot()//leak here
 {
-	/*if (projectileOnScreen.size() != 0 && enemiesInRange.size() == 0)
-	{
-		projectileOnScreen.at(0)->~Projectile();
-		projectileOnScreen.clear();
-	}*/
-
 	if (enemiesInRange.size() != 0 && currentTarget!=nullptr) {		
 		if (CheckReload()) {
 			Projectile *p = new Projectile(towerType, o_shaders);//will leak if !bullet->reachedTarget
 			p->target = currentTarget;
 			p->InitObject();
-			p->SetFiringLocation(o_position.x, o_position.y);
+			if (towerType != 2) p->SetFiringLocation(o_position.x, o_position.y);
+			if (towerType == 2) p->SetFiringLocation(currentTarget->o_position.x - 0.05f, currentTarget->o_position.y + 0.15f);
 			projectileOnScreen.push_back(p);
 		}
 		
 		
 		for (int i = 0; i < projectileOnScreen.size(); i++) {
-			if (projectileOnScreen.at(i)->target == nullptr) {
-				delete projectileOnScreen.at(i);
-				projectileOnScreen.erase(projectileOnScreen.begin() + i);
+			if (projectileOnScreen.at(i)->target == nullptr
+				|| projectileOnScreen.at(i)->target->alive == false) {
+				//cout << "nul" << endl;
+				projectileOnScreen.at(i)->nullified = true;
+			}
+
+			if (projectileOnScreen.at(i)->reachedTarget==false && !projectileOnScreen.at(i)->nullified)
+			{
+				projectileOnScreen.at(i)->DrawObject();
+				projectileOnScreen.at(i)->CheckReachedTarget();
 			}
 
 			if (projectileOnScreen.at(i)->reachedTarget == true) {
+				projectileOnScreen.at(i)->nullified = true;
 				currentTarget->currentHP -= damage;
 				if (towerType == 2) currentTarget->slowed = true;
 
@@ -218,16 +221,13 @@ void Tower::Shoot()//leak here
 						cout << "SLOW!" << endl;
 					}
 				}
-
-				delete projectileOnScreen.at(i);
-				projectileOnScreen.erase(projectileOnScreen.begin() + i);
 			}
 
-			if (projectileOnScreen.size() != 0) {
-				if (projectileOnScreen.at(i)->reachedTarget == false && projectileOnScreen.at(i)->target != nullptr) {
-					projectileOnScreen.at(i)->DrawObject();
-					projectileOnScreen.at(i)->CheckReachedTarget();
-				}
+			if (projectileOnScreen.at(i)->nullified==true)
+			{
+				//cout << "Nulled ";
+				delete projectileOnScreen.at(i);
+				projectileOnScreen.erase(projectileOnScreen.begin() + i);
 			}
 		}
 	}

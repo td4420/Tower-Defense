@@ -18,7 +18,13 @@ Projectile::Projectile(int type, Shaders shaders)
 {
 	projectileType = type;
 	o_Model = Model("../Resources/modelProjectile.nfg");
-	o_Texture.push_back(Texture("../ResourcesPacket/Textures/bullet.tga"));
+	nullified = false;
+
+	if (type!=1 && type!=2) o_Texture.push_back(Texture("../ResourcesPacket/Textures/bullet.tga"));
+
+	if (type == 1) o_Texture.push_back("../ResourcesPacket/Textures/mortarBullet.tga");
+	if (type==2)  o_Texture.push_back("../ResourcesPacket/Textures/thunderBullet.tga");
+
 	o_shaders = shaders;
 
 	movementSpeed = 0.01f;

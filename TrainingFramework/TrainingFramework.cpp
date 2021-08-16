@@ -66,11 +66,11 @@ int Init(ESContext* esContext)
 	
 	myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
 	pf.Init(myShaders);
-	
+	//pf.InitEnemyWave(myShaders);
 
-	wave.push_back(&e);//1 buffer
-	wave.push_back(&f);
-	wave.push_back(&tank);
+	//wave.push_back(&e);//1 buffer
+	//wave.push_back(&f);
+	//wave.push_back(&tank);
 	for (int i = 0; i < wave.size(); i++) {
 		wave.at(i)->o_shaders = myShaders;
 		wave.at(i)->InitObject();
@@ -131,12 +131,16 @@ void Draw(ESContext* esContext)
 	//glUseProgram(myShaders.program);
 
 	pf.Draw();
+
+	for (int i = 0; i < pf.enemyWave.size(); i++) {
+		pf.enemyWave.at(i)->DrawObject();
+	}
 	
-	if (wave.size() != 0) {
+	/*if (wave.size() != 0) {
 		for (int i = 0; i < wave.size(); i++) {
 			wave.at(i)->DrawObject();
 		}
-	}
+	}*/
 
 	for (int i = 0; i < towerList.size(); i++) {
 		towerList.at(i)->DrawObject();
@@ -184,21 +188,37 @@ void Update(ESContext* esContext, float deltaTime)
 		camera->RotationRight(0.01f);
 	}
 	//scenemanager->Update(deltaTime);
-	for (int i = 0; i < wave.size(); i++) {
+	pf.Update();
+	/*for (int i = 0; i < pf.enemyWave.size(); i++) {
+		if (pf.enemyWave.at(i)->alive) pf.enemyWave.at(i)->Update();
+		else {
+			delete pf.enemyWave.at(i);
+			pf.enemyWave.erase(pf.enemyWave.begin() + i);
+		}
+	}*/
+
+	/*for (int i = 0; i < wave.size(); i++) {
 		if (wave.at(i)->alive) wave.at(i)->Update();
 		else
 		{
 			wave.erase(wave.begin() + i);
 		}
-	}
+	}*/
 
 	for (int i = 0; i < towerList.size(); i++) {
-		towerList.at(i)->AddEnemiesInRange(wave);
+		towerList.at(i)->AddEnemiesInRange(pf.enemyWave);
 		towerList.at(i)->RemoveEnemiesOutOfRange();
 
 		if (towerList.at(i)->projectileOnScreen.size() != 0) {
 			for (int j = 0; j < towerList.at(i)->projectileOnScreen.size(); j++) {
-				towerList.at(i)->projectileOnScreen.at(j)->Move(towerList.at(i)->projectileOnScreen.at(j)->GetAngleToEnemies());
+				if (towerList.at(i)->projectileOnScreen.at(j)->nullified == false) {
+					towerList.at(i)->projectileOnScreen.at(j)->Move(towerList.at(i)->projectileOnScreen.at(j)->GetAngleToEnemies());
+				}
+
+				if (towerList.at(i)->projectileOnScreen.at(j)->nullified == true) {
+					delete towerList.at(i)->projectileOnScreen.at(j);
+					towerList.at(i)->projectileOnScreen.erase(towerList.at(i)->projectileOnScreen.begin() + j);
+				}
 			}
 		}
 	}
@@ -399,11 +419,19 @@ void CleanUp()
 		delete towerButtonList.at(i);
 	}
 	delete upgradeButton;
+
+	for (int i = 0; i < towerList.size(); i++) {
+		for (int j = 0; j < towerList.at(i)->projectileOnScreen.size(); j++) {
+			delete towerList.at(i)->projectileOnScreen.at(j);
+			towerList.at(i)->projectileOnScreen.clear();
+		}
+	}
+
 	/*for (int i = 0; i < wave.size(); i++) {
 		wave.at(i)->~Enemies();
 		delete wave.at(i);
 	}*/
-
+	pf.CleanUp();
 }
 
 int _tmain(int argc, TCHAR* argv[])
