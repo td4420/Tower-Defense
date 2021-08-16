@@ -23,7 +23,7 @@ Tower::Tower(int type)
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/archerTower2.tga"));
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/archerTower3.tga"));
 		damage = 0;
-		range = 1.0f;
+		range = 0.3f;
 		reloadTime = 5.0f;
 		timeSinceLastShot = reloadTime;
 		cost = 100;
@@ -47,7 +47,7 @@ Tower::Tower(int type)
 		o_Texture.push_back("../ResourcesPacket/Textures/slowTower2.tga");
 		o_Texture.push_back("../ResourcesPacket/Textures/slowTower3.tga");
 		damage = 10;
-		range = 0.3f;
+		range = 0.5f;
 		reloadTime = 10.0f;
 		timeSinceLastShot = reloadTime;
 		cost = 250;
@@ -149,6 +149,7 @@ float Tower::CalculateDistanceToEnemies(Enemies *e)//must Enemies* or White Scre
 
 void Tower::AddEnemiesInRange(vector <Enemies*> enemyWave)//check if enemies in firing range then add them to enemiesInRange
 {
+	enemiesInRange.clear();
 	for (int i = 0; i < enemyWave.size(); i++)
 	{
 		float distance = CalculateDistanceToEnemies(enemyWave.at(i));

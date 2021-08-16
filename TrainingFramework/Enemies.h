@@ -12,11 +12,8 @@ public:
 	{
 		NORMAL, FAST, TANK
 	};*/
-	int enemyType=1;//1:normal, 2:fast, 3:tank
-	Texture enemyTexture = Texture("../Resources/enemy.tga");
-	Shaders enemyShaders;
-	//Vertex enemyVertices[4];
-
+	int enemyType;//1:normal, 2:fast, 3:tank
+	
 	Vector2 enemyPos;
 	int locationX = 0, locationY = 0;
 	int lastLocationX = 0, lastLocationY = 0;

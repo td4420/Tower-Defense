@@ -29,7 +29,7 @@ Enemies::Enemies(int type)
 		currentHP = maxHP;
 		movementSpeed = 0.003f;
 		fixedSpeed = 0.003f;
-		reward = 10;
+		reward = 30;
 	}
 
 	if (type == 2)
@@ -39,7 +39,7 @@ Enemies::Enemies(int type)
 		currentHP = maxHP;
 		movementSpeed = 0.005f;
 		fixedSpeed = 0.005f;
-		reward = 8;
+		reward = 25;
 	}
 
 	if (type == 3)
@@ -49,14 +49,24 @@ Enemies::Enemies(int type)
 		currentHP = maxHP;
 		movementSpeed = 0.001f;
 		fixedSpeed = 0.001f;
-		reward = 20;
+		reward = 100;
+	}
+
+	if (type == 4)
+	{
+		o_Texture.push_back(Texture("../ResourcesPacket/Textures/tanker.tga"));
+		maxHP = 300;
+		currentHP = maxHP;
+		movementSpeed = 0.001f;
+		fixedSpeed = 0.001f;
+		reward = 100;
 	}
 }
 
 Enemies::Enemies(Enemies* e)
 {
 	maxHP = e->maxHP;
-	currentHP = maxHP;
+	currentHP = this->maxHP;
 	movementSpeed = e->movementSpeed;
 	fixedSpeed = e->fixedSpeed;
 	reward = e->reward;
@@ -69,7 +79,6 @@ Enemies::Enemies(Enemies* e)
 
 Enemies::Enemies(Shaders shader, int maxHP, float speed, int reward)
 {
-	enemyShaders = shader;
 	o_shaders = shader;
 
 	this->maxHP = maxHP;
@@ -94,47 +103,7 @@ Enemies::~Enemies()
 	}
 }
 
-//void Enemies::Bind() {
-//	glGenBuffers(1, &enemyVBO);
-//	glBindBuffer(GL_ARRAY_BUFFER, enemyVBO);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(enemyVertices), enemyVertices, GL_STATIC_DRAW);
-//	glBindBuffer(GL_ARRAY_BUFFER, 0);
-//
-//	//cout << "Binded" << endl;
-//}
 
-void Enemies::Draw()
-{
-	glUseProgram(o_shaders.program);
-	glBindTexture(GL_TEXTURE_2D, enemyTexture.mTextureId);
-	glBindBuffer(GL_ARRAY_BUFFER, enemyVBO);
-
-	if (o_shaders.positionAttribute != -1)
-	{
-		glEnableVertexAttribArray(o_shaders.positionAttribute);
-		glVertexAttribPointer(o_shaders.positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
-	}
-
-	if (o_shaders.uvAttribute != -1)
-	{
-		glUniform1i(enemyShaders.uvAttribute, 0);
-		glEnableVertexAttribArray(o_shaders.uvAttribute);
-		glVertexAttribPointer(o_shaders.uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(2 * sizeof(Vector3)));
-
-	}
-
-	GLushort indices[]{ 0,2,3 };
-	GLushort in[]{ 0,2,3 };
-
-	glUniformMatrix4fv(o_shaders.u_MVP, 1, GL_FALSE, *MVP.m);
-	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, &in);
-	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, &indices);
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	//std::cout << enemyVertices[0].pos.x << " " << enemyVertices[0].pos.y << " " << enemyVertices[0].pos.z << std::endl;
-}
 
 void Enemies::MoveToLeft()
 {

@@ -24,8 +24,8 @@ public:
 		1,1,1,1,1,1,0,0,0,0,
 		1,1,1,1,1,1,1,1,1,1,
 		1,2,1,2,1,2,1,2,1,2,
-		1,1,2,2,1,1,2,2,3,1,
-		1,2,2,1,0,3,1,2,1,3,
+		0,0,0,0,5,0,0,0,0,0,
+		1,0,0,1,0,4,0,2,1,4
 	};
 
 	int NumMapNormal[7][8] = {
@@ -49,9 +49,10 @@ public:
 	const int mapWidth = 8;
 	const float spawnTime = 10.0f;
 
+	int countWaveEndInit = 0;
 	bool waveEnd = true;
 	float timeSinceLastSpawn = 10.0f;
-	int waveNum = 0;//save the number of waves in a lv;
+	int waveNum = 4;//save the number of waves in a lv;
 	Shaders myShaders;
 
 	void Init(Shaders myShaders);

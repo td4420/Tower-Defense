@@ -69,15 +69,6 @@ int Init(ESContext* esContext)
 	pf.Init(myShaders);
 	//pf.InitEnemyWave(myShaders);
 
-	//wave.push_back(&e);//1 buffer
-	//wave.push_back(&f);
-	//wave.push_back(&tank);
-	for (int i = 0; i < wave.size(); i++) {
-		wave.at(i)->o_shaders = myShaders;
-		wave.at(i)->InitObject();
-	}
-
-	
 	//t.Build(3, 3);
 	//gun.Build(5, 3);
 	//m.Build(5, 3);
@@ -105,20 +96,20 @@ int Init(ESContext* esContext)
 	mortarTowerButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTowerButton.tga"));
 	mortarTowerButton->Build(10 * 0.15f, 3 * -0.2f);
 
-	Object* slowTower = new Object();
-	slowTower->o_Model = Model("../Resources/model.nfg");
-	slowTower->o_Texture.push_back(Texture("../ResourcesPacket/Textures/slowTowerButton.tga"));
-	slowTower->Build(10 * 0.15f, 5 * -0.2f);
+	Object* slowTowerButton = new Object();
+	slowTowerButton->o_Model = Model("../Resources/model.nfg");
+	slowTowerButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/slowTowerButton.tga"));
+	slowTowerButton->Build(10 * 0.15f, 5 * -0.2f);
 
-	Object* witchTower = new Object();
-	witchTower->o_Model = Model("../Resources/model.nfg");
-	witchTower->o_Texture.push_back(Texture("../ResourcesPacket/Textures/witchTowerButton.tga"));
-	witchTower->Build(10 * 0.15f, 7 * -0.2f);
+	Object* witchTowerButton = new Object();
+	witchTowerButton->o_Model = Model("../Resources/model.nfg");
+	witchTowerButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/witchTowerButton.tga"));
+	witchTowerButton->Build(10 * 0.15f, 7 * -0.2f);
 
 	towerButtonList.push_back(archerTowerButton);
 	towerButtonList.push_back(mortarTowerButton);
-	towerButtonList.push_back(slowTower);
-	towerButtonList.push_back(witchTower);
+	towerButtonList.push_back(slowTowerButton);
+	towerButtonList.push_back(witchTowerButton);
 
 	for (int i = 0; i < towerButtonList.size(); i++) {
 		towerButtonList.at(i)->o_shaders = myShaders;
@@ -150,19 +141,8 @@ int Init(ESContext* esContext)
 void Draw(ESContext* esContext)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	//glUseProgram(myShaders.program);
 
 	pf.Draw();
-
-	for (int i = 0; i < pf.enemyWave.size(); i++) {
-		pf.enemyWave.at(i)->DrawObject();
-	}
-	
-	/*if (wave.size() != 0) {
-		for (int i = 0; i < wave.size(); i++) {
-			wave.at(i)->DrawObject();
-		}
-	}*/
 
 	for (int i = 0; i < towerList.size(); i++) {
 		towerList.at(i)->DrawObject();
@@ -173,7 +153,6 @@ void Draw(ESContext* esContext)
 		towerButtonList.at(i)->DrawObject();
 	}
 	
-	//draw upGrage Button
 	upgradeButton->DrawObject();
 
 	sellButton->DrawObject();
@@ -213,13 +192,6 @@ void Update(ESContext* esContext, float deltaTime)
 	}
 	//scenemanager->Update(deltaTime);
 	pf.Update();
-	/*for (int i = 0; i < pf.enemyWave.size(); i++) {
-		if (pf.enemyWave.at(i)->alive) pf.enemyWave.at(i)->Update();
-		else {
-			delete pf.enemyWave.at(i);
-			pf.enemyWave.erase(pf.enemyWave.begin() + i);
-		}
-	}*/
 
 	/*for (int i = 0; i < wave.size(); i++) {
 		if (wave.at(i)->alive) wave.at(i)->Update();
@@ -467,6 +439,7 @@ void CleanUp()
 		delete towerButtonList.at(i);
 	}
 	delete upgradeButton;
+	delete sellButton;
 
 	for (int i = 0; i < towerList.size(); i++) {
 		for (int j = 0; j < towerList.at(i)->projectileOnScreen.size(); j++) {
