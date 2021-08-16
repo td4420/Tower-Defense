@@ -7,9 +7,13 @@ class Animation
 {
 public:
 	int currentTextureRight = 0 , currentTextureLeft = 0;
-	vector<Texture> animationMoveRight;
-	vector<Texture> animationMoveLeft;
+	vector<Texture> normalMoveRight;
+	vector<Texture> normalMoveLeft;
+	vector<Texture> fastMoveLeft;
+	vector<Texture> fastMoveRight;
+	vector<Texture> tankMoveLeft;
+	vector<Texture> tankMoveRight;
 	void InitEnemies();
-	int GetAnimationMoveRight();
-	int GetAnimationMoveLeft();
+	int GetAnimationMoveRight(int type);
+	int GetAnimationMoveLeft(int type);
 };

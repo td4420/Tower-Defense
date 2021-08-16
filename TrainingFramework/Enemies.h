@@ -13,7 +13,7 @@ public:
 	{
 		NORMAL, FAST, TANK
 	};*/
-	int enemyType=1;//1:normal, 2:fast, 3:tank
+	int enemyType;//1:normal, 2:fast, 3:tank
 	Texture enemyTexture = Texture("../Resources/enemy.tga");
 	Shaders enemyShaders;
 	Vertex enemyVertices[4];

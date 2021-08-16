@@ -61,25 +61,51 @@ Enemies::Enemies(Shaders shader, int maxHP, float speed, int reward)
 	animation.InitEnemies();
 	enemyShaders = shader;
 	o_shaders = shader;
-
+	enemyType = 3;
 	this->maxHP = maxHP;
 	this->currentHP = this->maxHP;
 	this->movementSpeed = speed;
 	this->reward = reward;
 	o_Model = Model("../Resources/model.nfg");
-	o_Texture.push_back(Texture("../ResourcesPacket/AnimationMove/Left/2_enemies_1_walk_001.tga"));
+	o_Texture.push_back(Texture("../ResourcesPacket/AnimationMove/NormalEnemy/Left/2_enemies_1_walk_001.tga"));
 	Scale.SetIdentity();
 	Rotation.SetIdentity();
 	Translation.SetIdentity();
 	MVP = Scale * Rotation * Translation;
-	for (int i = 0; i < animation.animationMoveLeft.size(); i++)
+	if (enemyType == 1)
 	{
-		o_Texture.push_back(animation.animationMoveLeft.at(i));
+		for (int i = 0; i < animation.normalMoveLeft.size(); i++)
+		{
+			o_Texture.push_back(animation.normalMoveLeft.at(i));
+		}
+		for (int j = 0; j < animation.normalMoveRight.size(); j++)
+		{
+			o_Texture.push_back(animation.normalMoveRight.at(j));
+		}
 	}
-	for (int j = 0; j < animation.animationMoveRight.size(); j++)
+	if (enemyType == 2)
 	{
-		o_Texture.push_back(animation.animationMoveRight.at(j));
+		for (int i = 0; i < animation.fastMoveLeft.size(); i++)
+		{
+			o_Texture.push_back(animation.fastMoveLeft.at(i));
+		}
+		for (int j = 0; j < animation.fastMoveRight.size(); j++)
+		{
+			o_Texture.push_back(animation.fastMoveRight.at(j));
+		}
 	}
+	if (enemyType == 3)
+	{
+		for (int i = 0; i < animation.tankMoveLeft.size(); i++)
+		{
+			o_Texture.push_back(animation.tankMoveLeft.at(i));
+		}
+		for (int j = 0; j < animation.tankMoveRight.size(); j++)
+		{
+			o_Texture.push_back(animation.tankMoveRight.at(j));
+		}
+	}
+	
 }
 
 void Enemies::SetShaders(Shaders shader)
@@ -203,6 +229,10 @@ void Enemies::MoveUp()
 
 void Enemies::MoveEnemies()
 {
+	int temp;
+	if (enemyType == 1) temp = animation.normalMoveLeft.size() + 1;
+	if (enemyType == 2) temp = animation.fastMoveLeft.size() + 1;
+	if (enemyType == 3) temp = animation.tankMoveLeft.size() + 1;
 	int NumMap[7][8] =
 	{
 		1,1,0,0,0,0,0,0,
@@ -216,7 +246,7 @@ void Enemies::MoveEnemies()
 	if ((locationX - 1 != lastLocationX) && // To not move back
 		locationX > 0 && NumMap[locationY][locationX-1] == 1)  // Check if can move
 	{
-		o_Texture.at(0) = o_Texture.at(animation.GetAnimationMoveLeft() + 1);
+		o_Texture.at(0) = o_Texture.at(animation.GetAnimationMoveLeft(enemyType) + 1);
 		toLeft = true;
 		MoveToLeft();
 		return;
@@ -224,7 +254,7 @@ void Enemies::MoveEnemies()
 	if ((locationX + 1 != lastLocationX) &&  //To not move back
 		locationX < 7 && NumMap[locationY][locationX+1] == 1) // Check if can move
 	{
-		o_Texture.at(0) = o_Texture.at(animation.GetAnimationMoveRight() + animation.animationMoveLeft.size() + 1);
+		o_Texture.at(0) = o_Texture.at(animation.GetAnimationMoveRight(enemyType) + temp);
 		toLeft = false;
 		MoveToRight();
 		return;
@@ -232,16 +262,16 @@ void Enemies::MoveEnemies()
 	if ((locationY - 1 != lastLocationY) && // To not move back
 		locationY > 0 && NumMap[locationY-1][locationX] == 1)  // Check if can move
 	{
-		if(!toLeft) o_Texture.at(0) = o_Texture.at(animation.GetAnimationMoveRight() + animation.animationMoveLeft.size() + 1);
-		else o_Texture.at(0) = o_Texture.at(animation.GetAnimationMoveLeft() + 1);
+		if(!toLeft) o_Texture.at(0) = o_Texture.at(animation.GetAnimationMoveRight(enemyType) + temp);
+		else o_Texture.at(0) = o_Texture.at(animation.GetAnimationMoveLeft(enemyType) + 1);
 		MoveUp();
 		return;
 	}
 	if ((locationY + 1 != lastLocationY) && // To not move back
 		locationY < 6 && NumMap[locationY+1][locationX] == 1)  // Check if can move
 	{
-		if (!toLeft) o_Texture.at(0) = o_Texture.at(animation.GetAnimationMoveRight() + animation.animationMoveLeft.size() + 1);
-		else o_Texture.at(0) = o_Texture.at(animation.GetAnimationMoveLeft() + 1);
+		if (!toLeft) o_Texture.at(0) = o_Texture.at(animation.GetAnimationMoveRight(enemyType) + temp);
+		else o_Texture.at(0) = o_Texture.at(animation.GetAnimationMoveLeft(enemyType) + 1);
 		MoveDown();
 		return;
 	}
