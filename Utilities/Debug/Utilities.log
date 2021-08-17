@@ -1,9 +1,6 @@
 ﻿cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
   stdafx.cpp
 cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-  esUtil_win.cpp
-  esUtil.cpp
-  esShader.cpp
   TGA.cpp
   MemoryOperators.cpp
   MemoryManager.cpp
@@ -11,5 +8,8 @@ cl : command line warning D9035: option 'Gm' has been deprecated and will be rem
 C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\Utilities\Math.cpp(10,13): warning C4244: 'return': conversion from 'double' to 'GLfloat', possible loss of data
 C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\Utilities\Math.cpp(104,13): warning C4244: 'return': conversion from 'double' to 'GLfloat', possible loss of data
 C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\Utilities\Math.cpp(208,13): warning C4244: 'return': conversion from 'double' to 'GLfloat', possible loss of data
+  esUtil_win.cpp
+  esUtil.cpp
+  esShader.cpp
   Generating Code...
   Utilities.vcxproj -> C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\Debug\Utilities.lib

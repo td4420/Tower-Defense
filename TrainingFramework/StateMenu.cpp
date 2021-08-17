@@ -1,4 +1,4 @@
-#include"stdafx.h"
+﻿#include"stdafx.h"
 #include"StateMenu.h"
 #include<iostream>
 #include"Vertex.h"
@@ -15,10 +15,10 @@ void StateMenu::init() {
 	textureLogo = new Texture();
 	textureLogo->mTgaFilePath = texturefile;
 	textureLogo->Init();
-	play = new	Text("PLAY", 310, 450, "../Font/OlympusMount.ttf", 1, 1, Vector4(0.5, 0.5, 0.5, 0.5), 48);
-	options = new Text("OPTIONS", 310, 400, "../Font/OlympusMount.ttf", 1, 1, Vector4(0.5, 0.5, 0.5, 0.5), 48);
-	helps = new	Text("HELPS", 310, 350, "../Font/OlympusMount.ttf", 1, 1, Vector4(0.5, 0.5, 0.5, 0.5), 48);
-	quit = new	Text("QUIT", 310, 300, "../Font/OlympusMount.ttf", 1, 1, Vector4(0.5, 0.5, 0.5, 0.5), 48);
+	play = new Text("PLAY", 310, 450, "../Font/OceanSummer.ttf", 1, 1, Vector4(0.5, 0.5, 0.5, 0.5), 68);
+	options = new Text("OPTIONS", 310, 400, "../Font/OceanSummer.ttf", 1, 1, Vector4(0.5, 0.5, 0.5, 0.5), 68);
+	helps = new	Text("HELPS", 310, 350, "../Font/OceanSummer.ttf", 1, 1, Vector4(0.5, 0.5, 0.5, 0.5), 68);
+	quit = new	Text("QUIT", 310, 300, "../Font/OceanSummer.ttf", 1, 1, Vector4(0.5, 0.5, 0.5, 0.5), 68);
 	play->init();
 	options->init();
 	helps->init();
@@ -50,38 +50,37 @@ void StateMenu::init() {
 void StateMenu::Update(float deltaTime) {
 
 }
-void StateMenu::DrawLogo(Shaders ss)
-{
-	glUseProgram(ss.program);
+
+void StateMenu::Draw(Shaders textShader, Shaders shapeShader) {
+
+	/*glUseProgram(shapeShader.program);
 
 	glBindTexture(GL_TEXTURE_2D, textureLogo->mTextureId);
 	glBindBuffer(GL_ARRAY_BUFFER, modelLogo->mVBO);
-	if (ss.positionAttribute != -1)
+	if (shapeShader.positionAttribute != -1)
 	{
-		glEnableVertexAttribArray(ss.positionAttribute);
-		glVertexAttribPointer(ss.positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
+		glEnableVertexAttribArray(shapeShader.positionAttribute);
+		glVertexAttribPointer(shapeShader.positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
 	}
-	if (ss.uvAttribute != -1)
+	if (shapeShader.uvAttribute != -1)
 	{
-		glEnableVertexAttribArray(ss.uvAttribute);
-		glVertexAttribPointer(ss.uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(2 * sizeof(Vector3)));
+		glEnableVertexAttribArray(shapeShader.uvAttribute);
+		glVertexAttribPointer(shapeShader.uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(2 * sizeof(Vector3)));
 	}
 	Matrix pos, scale, mvp;
 	scale.SetScale(0.5, 0.5, 0.5);
 	pos.SetTranslation(0, 0, 0);
 	mvp = scale * pos;
-	glUniformMatrix4fv(ss.u_MVP, 1, GL_FALSE, *mvp.m);
+	glUniformMatrix4fv(shapeShader.u_MVP, 1, GL_FALSE, *mvp.m);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, modelLogo->mIBO);
 	glDrawElements(GL_TRIANGLES, modelLogo->mNumberOfIndices, GL_UNSIGNED_INT, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-}
-void StateMenu::Draw(Shaders s) {
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);*/
 	
 	for (int i = 0; i < listText.size(); i++)
 	{
-		listText.at(i)->RenderText(s);
+		listText.at(i)->RenderText(textShader);
 	}
 	
 
@@ -89,7 +88,27 @@ void StateMenu::Draw(Shaders s) {
 void StateMenu::handleEvent() {
 
 }
-
+void StateMenu::OnMouseOver(int x, int y) {
+	for (int i = 0; i < listText.size(); i++)
+	{
+		if (listText.at(i)->checkChoose(x, y) == true) {
+			listText.at(i)->color = Vector4(0.6, 1, 0.4, 1);
+		}
+		if (listText.at(i)->checkChoose(x, y) == false) {
+			listText.at(i)->color = Vector4(0.5, 0.5, 0.5, 0.5);
+		}
+	}
+}
+void StateMenu::OnMouseClick(int x, int y) {
+	for (int i = 0; i < listText.size(); i++) {
+		if (listText.at(i)->checkChoose(x, y) == true) {
+			listText.at(i)->isChoose = true;
+		}
+		if (listText.at(i)->checkChoose(x, y) == false) {
+			listText.at(i)->isChoose = false;
+		}
+	}
+}
 
 StateMenu::StateMenu() {
 

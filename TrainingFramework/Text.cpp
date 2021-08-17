@@ -14,6 +14,8 @@ void Text::init() {
 	}
 	FT_Set_Pixel_Sizes(m_face, 0, size);
 	m_glyphSlot = m_face->glyph;
+
+	
 	for (const char* p = text; *p; p++)
 	{
 		if (FT_Load_Char(m_face, *p, FT_LOAD_RENDER))
@@ -30,32 +32,21 @@ void Text::init() {
 	widthText += 14.5;
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-	glGenBuffers(1, &textVBO);
-	glGenBuffers(1, &textImgTexture);
-	glBindBuffer(GL_ARRAY_BUFFER, textVBO);
-	glBindBuffer(GL_TEXTURE_2D, textImgTexture);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindTexture(GL_TEXTURE_2D, 0);
+	
+	
 }
 
 void Text::RenderText(Shaders shader) {
-	// use glProgram, bind texture & pass color uniform here
+	
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	glUseProgram(shader.program);
 	glUniform4f(glGetUniformLocation(shader.program, "u_color"), color.x, color.y, color.z, color.w);
-
-	//glGenBuffers(1, &textVBO);
-	//glGenBuffers(1, &textImgTexture);
-
+	glGenBuffers(1, &textVBO);
+	glGenTextures(1, &textImgTexture);
 	glBindBuffer(GL_ARRAY_BUFFER, textVBO);
-	glBindBuffer(GL_TEXTURE_2D, textImgTexture);
+	glBindTexture(GL_TEXTURE_2D, textImgTexture);
 
 	float sx = 1.0f / Globals::screenWidth * scaleX;
 	float sy = 1.0f / Globals::screenHeight * scaleY;
@@ -63,14 +54,12 @@ void Text::RenderText(Shaders shader) {
 	float y = posY;
 	x = -1.0f + 2.0f * x / Globals::screenWidth;
 	y = -1.0f + 2.0f * y / Globals::screenHeight;
-	FT_Set_Pixel_Sizes(m_face, 0, size);
 	for (const char* p = text; *p; p++)
 	{
 		if (FT_Load_Char(m_face, *p, FT_LOAD_RENDER))
 		{
 			continue;
 		}
-		
 		glTexImage2D(
 			GL_TEXTURE_2D,
 			0,
@@ -82,6 +71,13 @@ void Text::RenderText(Shaders shader) {
 			GL_UNSIGNED_BYTE,
 			m_glyphSlot->bitmap.buffer
 		);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glGenerateMipmap(GL_TEXTURE_2D);
+		
 		float x2 = x + m_glyphSlot->bitmap_left * sx;
 		float y2 = y + m_glyphSlot->bitmap_top * sy;
 		float w = m_glyphSlot->bitmap.width * sx;
@@ -92,7 +88,7 @@ void Text::RenderText(Shaders shader) {
 		{x2, y2 - h, 0, 1},
 		{x2 + w, y2 - h, 1, 1},
 		};
-		glBufferData(GL_ARRAY_BUFFER, sizeof(box), box, GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(box), box, GL_STATIC_DRAW);
 		if (glGetAttribLocation(shader.program, "a_position") != -1)
 		{
 			glEnableVertexAttribArray(glGetAttribLocation(shader.program, "a_position"));
@@ -104,18 +100,18 @@ void Text::RenderText(Shaders shader) {
 		y += (m_glyphSlot->advance.y >> 6) * sy;
 	}
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	//glBindBuffer(GL_TEXTURE_2D, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);
-	glBlendFunc(GL_ONE, GL_ZERO);
+	//glBlendFunc(GL_ONE, GL_ZERO);
 	glDisable(GL_BLEND);
-
+	//glUseProgram(0);
+	
 }
 bool Text::checkChoose(int x, int y) {
 	float subY = Globals::screenHeight - posY;
 	if (x >= posX && x <= posX + widthText && y >= subY - heightText && y <= subY) {
-		isChoose = true;
 		return true;
 	}
-	else isChoose = false;
 	return false;
 }
 void Text::highLight() {

@@ -39,6 +39,8 @@ int Init(ESContext* esContext)
 
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
+	
+	
 	scenemanager->Init();
 	camera = scenemanager->camera;
 	//creation of shaders and program 
@@ -47,8 +49,8 @@ int Init(ESContext* esContext)
 	//myStateWelcome->init();
 	myGame->init();
 	
-	myShaders = scenemanager->s_ListObject.at(0)->o_shaders;
-	//myShaders.Init(myShaders.fileVS, myShaders.fileFS);
+	//myShaders = scenemanager->s_ListObject.at(0)->o_shaders;
+	myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
 	return textShader.Init("../Resources/Shaders/Text.vs", "../Resources/Shaders/Text.fs");
 
 }
@@ -63,7 +65,7 @@ void Draw(ESContext* esContext)
 	//myStateWelcome->Drawtext(textShader);
 	//myStateWelcome->Draw(myShaders);
 	//myStateMenu->DrawLogo(myShaders);
-	myGame->Draw(textShader);
+	myGame->Draw(textShader,myShaders);
 	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
 }
 
@@ -197,8 +199,8 @@ void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 
 void TouchActionDown(ESContext* esContext, int x, int y)
 {
-	
-	
+	myGame->OnMouseClick(x, y);
+	printf("\n: mouse down at: %d, %d", x, y);
 }
 
 void TouchActionUp(ESContext* esContext, int x, int y)
@@ -212,7 +214,7 @@ void TouchActionDrag(ESContext* esCotext, int x, int y) {
 
 void TouchActionMove(ESContext* esContext, int x, int y)
 {
-	
+	myGame->OnMouseOver(x,y);
 
 }
 void CleanUp()

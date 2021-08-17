@@ -20,9 +20,10 @@ public:
 	char* fileState = "../ResourcesPacket/StateMenu.txt";
 	void init();
 	void Update(float deltaTime);
-	void Draw(Shaders s);
-	void DrawLogo(Shaders ss);
+	void Draw(Shaders textShader, Shaders shapeShader);
 	void handleEvent();
+	void OnMouseOver(int x, int y);
+	void OnMouseClick(int x, int y);
 	StateMenu();
 	~StateMenu();
 };

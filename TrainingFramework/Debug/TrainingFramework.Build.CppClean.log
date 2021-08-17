@@ -4,11 +4,15 @@ c:\users\xuan ngoc\desktop\project\dao_3dframeworktraining\trainingframework\deb
 c:\users\xuan ngoc\desktop\project\dao_3dframeworktraining\trainingframework\debug\stdafx.obj
 c:\users\xuan ngoc\desktop\project\dao_3dframeworktraining\trainingframework\debug\camera.obj
 c:\users\xuan ngoc\desktop\project\dao_3dframeworktraining\trainingframework\debug\enemies.obj
+c:\users\xuan ngoc\desktop\project\dao_3dframeworktraining\trainingframework\debug\game.obj
 c:\users\xuan ngoc\desktop\project\dao_3dframeworktraining\trainingframework\debug\model.obj
 c:\users\xuan ngoc\desktop\project\dao_3dframeworktraining\trainingframework\debug\object.obj
 c:\users\xuan ngoc\desktop\project\dao_3dframeworktraining\trainingframework\debug\playfield.obj
 c:\users\xuan ngoc\desktop\project\dao_3dframeworktraining\trainingframework\debug\resourcemanager.obj
 c:\users\xuan ngoc\desktop\project\dao_3dframeworktraining\trainingframework\debug\scenemanager.obj
+c:\users\xuan ngoc\desktop\project\dao_3dframeworktraining\trainingframework\debug\statehelp.obj
+c:\users\xuan ngoc\desktop\project\dao_3dframeworktraining\trainingframework\debug\statemenu.obj
+c:\users\xuan ngoc\desktop\project\dao_3dframeworktraining\trainingframework\debug\stateoption.obj
 c:\users\xuan ngoc\desktop\project\dao_3dframeworktraining\trainingframework\debug\statewelcome.obj
 c:\users\xuan ngoc\desktop\project\dao_3dframeworktraining\trainingframework\debug\text.obj
 c:\users\xuan ngoc\desktop\project\dao_3dframeworktraining\trainingframework\debug\texture.obj
@@ -16,7 +20,6 @@ c:\users\xuan ngoc\desktop\project\dao_3dframeworktraining\trainingframework\deb
 c:\users\xuan ngoc\desktop\project\dao_3dframeworktraining\trainingframework\debug\tower.obj
 c:\users\xuan ngoc\desktop\project\dao_3dframeworktraining\trainingframework\debug\trainingframework.obj
 c:\users\xuan ngoc\desktop\project\dao_3dframeworktraining\trainingframework\debug\shaders.obj
-c:\users\xuan ngoc\desktop\project\dao_3dframeworktraining\trainingframework\debug\statemenu.obj
 c:\users\xuan ngoc\desktop\project\dao_3dframeworktraining\bin\trainingframework.exe
 c:\users\xuan ngoc\desktop\project\dao_3dframeworktraining\trainingframework\debug\trainingframework.ilk
 c:\users\xuan ngoc\desktop\project\dao_3dframeworktraining\bin\trainingframework.pdb
