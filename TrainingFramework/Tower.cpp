@@ -233,6 +233,7 @@ void Tower::Shoot()//leak here
 			if (projectileOnScreen.at(i)->reachedTarget == true) {
 				projectileOnScreen.at(i)->nullified = true;
 				currentTarget->currentHP -= damage;
+
 				if (towerType == 2) currentTarget->slowed = true;
 
 				if (towerType == 3) {

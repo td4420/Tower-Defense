@@ -20,9 +20,22 @@ Projectile::Projectile(int type, Shaders shaders)
 	o_Model = Model("../Resources/modelProjectile.nfg");
 	nullified = false;
 
-	if (type!=1 && type!=2) o_Texture.push_back(Texture("../ResourcesPacket/Textures/bullet.tga"));
+	if (type == 0) 
+	{
+		//o_Texture.push_back(Texture("../ResourcesPacket/Textures/arrowUp.tga"));//0
+		//o_Texture.push_back(Texture("../ResourcesPacket/Textures/arrowRight.tga"));//1
+		//o_Texture.push_back(Texture("../ResourcesPacket/Textures/arrowDown.tga"));//2
+		//o_Texture.push_back(Texture("../ResourcesPacket/Textures/arrowLeft.tga"));//3
+		//o_Texture.push_back(Texture("../ResourcesPacket/Textures/arrowUp.tga"));//4
 
-	if (type == 1) o_Texture.push_back("../ResourcesPacket/Textures/mortarBullet.tga");
+		o_Texture.push_back("..//ResourcesPacket/Textures/fireBullet.tga");
+	}
+
+	if (type == 1)
+	{
+		o_Texture.push_back("../ResourcesPacket/Textures/mortarBullet.tga");
+		o_Texture.push_back("../ResourcesPacket/Textures/explosion.tga");
+	}
 	if (type==2)  o_Texture.push_back("../ResourcesPacket/Textures/thunderBullet.tga");
 
 	o_shaders = shaders;
@@ -86,6 +99,7 @@ float Projectile::GetAngleToEnemies()
 
 void Projectile::Move(float angle)
 {
+	//cout << angle << endl;
 	firingAngle = angle;
 	
 	o_position.x += movementSpeed * cosf(firingAngle);
