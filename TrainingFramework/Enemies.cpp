@@ -28,7 +28,7 @@ Enemies::Enemies(int type)
 		maxHP = 70;
 		currentHP = maxHP;
 		movementSpeed = 0.003f;
-		fixedSpeed = 0.003f;
+		fixedSpeed = 0.002f;
 		reward = 30;
 	}
 
@@ -177,9 +177,9 @@ void Enemies::MoveEnemies()
 		0,1,1,0,0,0,0,0,
 		0,0,1,1,1,1,1,0,
 		0,0,0,0,0,0,1,0,
-		0,0,0,1,1,1,1,0,
-		0,0,0,1,0,0,0,0,
-		0,0,0,1,1,1,1,1
+		0,1,1,1,1,1,1,0,
+		0,1,0,0,0,0,0,0,
+		0,1,1,1,1,1,1,1
 	};
 	if ((locationX - 1 != lastLocationX) && // To not move back
 		locationX > 0 && NumMap[locationY][locationX-1] == 1)  // Check if can move

@@ -65,7 +65,7 @@ void PlayField::Draw()
 		}
 	}
 
-	InitEnemyWave();
+	if (gameOver==false) InitEnemyWave();
 
 	SpawnEnemy();
 
@@ -88,7 +88,8 @@ void PlayField::InitEnemyWave()
 				tempEnemyWave.push_back(e);
 			}
 		}
-		if (waveNum<4) waveNum += 1;
+		cout << waveNum << endl;
+		if (waveNum<waveMax) waveNum += 1;
 	}
 }
 
@@ -127,5 +128,9 @@ void PlayField::Update()
 	if (enemyWave.size() == 0 && tempEnemyWave.size()==0) {
 		waveEnd = true;
 	}
-	//if (enemyWave.size() == 0) waveEnd = true;
+
+	if (waveNum == waveMax) {
+		gameOver = true;
+		//cout << "Game Over!" << endl;
+	}
 }

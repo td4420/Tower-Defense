@@ -3,6 +3,7 @@
 #include "Tile.h"
 #include "Shaders.h"
 #include "Enemies.h"
+#include "Tower.h"
 class PlayField
 {
 public:
@@ -19,23 +20,29 @@ public:
 		0,0,0,0,0,0,0,1
 	};
 
-	int enemyWaveEasy[5][10] =
+	int enemyWaveEasy[10][10] =//used to init waves
 	{
 		1,1,1,1,1,1,0,0,0,0,
 		1,1,1,1,1,1,1,1,1,1,
-		1,2,1,2,1,2,1,2,1,2,
-		0,0,0,0,5,0,0,0,0,0,
-		1,0,0,1,0,4,0,2,1,4
+		0,2,0,2,0,2,0,2,0,0,
+		1,2,0,1,2,0,1,2,0,0,
+		0,0,0,0,4,0,0,0,0,0,
+		1,0,0,1,0,4,0,0,1,2,
+		2,2,2,2,2,2,2,2,2,2,
+		1,2,1,2,1,2,1,4,1,4,
+		2,4,2,4,2,4,2,4,0,0,
+		1,2,4,1,2,4,1,2,4,4
 	};
 
-	int NumMapNormal[7][8] = {
+	int NumMapNormal[7][8] = //used to create TileMap
+	{
 		1,1,0,0,0,0,0,0,
 		0,1,1,0,0,0,0,0,
 		0,0,1,1,1,1,1,0,
 		0,0,0,0,0,0,1,0,
-		0,0,0,1,1,1,1,0,
-		0,0,0,1,0,0,0,0,
-		0,0,0,1,1,1,1,1
+		0,1,1,1,1,1,1,0,
+		0,1,0,0,0,0,0,0,
+		0,1,1,1,1,1,1,1
 	};
 
 	int NumMap[7][8];
@@ -43,16 +50,19 @@ public:
 	Tile TileMap[7][8];
 	vector <Enemies*> tempEnemyWave;
 	vector <Enemies*> enemyWave;
+	vector <Tower*> towerList;
 	//std::vector <int*> NumMap;
 	const int waveLength = 10;
 	const int mapHeight = 7;
 	const int mapWidth = 8;
-	const float spawnTime = 10.0f;
+	const float spawnTime = 15.0f;
+	const int waveMax = 10;
 
 	int countWaveEndInit = 0;
 	bool waveEnd = true;
-	float timeSinceLastSpawn = 10.0f;
-	int waveNum = 4;//save the number of waves in a lv;
+	bool gameOver = false;
+	float timeSinceLastSpawn = 15.0f;
+	int waveNum = 8;//save the number of waves in a lv;
 	Shaders myShaders;
 
 	void Init(Shaders myShaders);

@@ -46,7 +46,7 @@ Tower::Tower(int type)
 		o_Texture.push_back("../ResourcesPacket/Textures/slowTower.tga");
 		o_Texture.push_back("../ResourcesPacket/Textures/slowTower2.tga");
 		o_Texture.push_back("../ResourcesPacket/Textures/slowTower3.tga");
-		damage = 10;
+		damage = 50;
 		range = 0.5f;
 		reloadTime = 10.0f;
 		timeSinceLastShot = reloadTime;
@@ -58,11 +58,11 @@ Tower::Tower(int type)
 		o_Texture.push_back("../ResourcesPacket/Textures/witchTower.tga");
 		o_Texture.push_back("../ResourcesPacket/Textures/witchTower2.tga");
 		o_Texture.push_back("../ResourcesPacket/Textures/witchTower3.tga");
-		damage = 0;
-		range = 0.7f;
+		damage = 15;
+		range = 0.3f;
 		reloadTime = 6.0f;
 		timeSinceLastShot = reloadTime;
-		cost = 400;
+		cost = 350;
 	}
 }
 
@@ -105,6 +105,19 @@ void Tower::Upgrade()//Upgrade price = 1/2 cost, each upgrade increases cost by 
 			damage += 10;
 			range += 0.1f;
 		}
+
+		if (towerType == 2) 
+		{
+			damage += 10;
+			reloadTime -= 1.0f;
+			range += 0.1f;
+		}
+
+		if (towerType == 3)
+		{
+			damage += 10;
+			range += 0.05f;
+		}
 	}
 
 	if (upgrade == 1) {
@@ -120,6 +133,19 @@ void Tower::Upgrade()//Upgrade price = 1/2 cost, each upgrade increases cost by 
 		{
 			damage += 10;
 			range += 0.1f;
+		}
+
+		if (towerType == 2)
+		{
+			damage += 10;
+			reloadTime -= 1.0f;
+			range += 0.1f;
+		}
+
+		if (towerType == 3)
+		{
+			damage += 10;
+			range += 0.05f;
 		}
 	}
 
@@ -192,9 +218,9 @@ void Tower::Shoot()//leak here
 		
 		
 		for (int i = 0; i < projectileOnScreen.size(); i++) {
-			if (projectileOnScreen.at(i)->target == nullptr
-				|| projectileOnScreen.at(i)->target->alive == false) {
+			if (projectileOnScreen.at(i)->target == nullptr || projectileOnScreen.at(i)->target->alive == false) {
 				//cout << "nul" << endl;
+				projectileOnScreen.at(i)->o_Texture.at(0) = Texture("../ResourcesPacket/Textures/blank.tga");
 				projectileOnScreen.at(i)->nullified = true;
 			}
 

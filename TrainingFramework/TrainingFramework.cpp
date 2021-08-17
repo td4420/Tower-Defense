@@ -38,7 +38,7 @@ Tower gun = Tower(1);
 Tower m = Tower(2);
 Tower* s = new Tower(3);
 
-std::vector <Enemies*> wave;
+//std::vector <Enemies*> wave;
 std::vector <Tower*> towerList;
 std::vector <Object*> towerButtonList;
 Object* upgradeButton;
@@ -51,9 +51,9 @@ int NumMap[7][8] =
 	0,1,1,0,0,0,0,0,
 	0,0,1,1,1,1,1,0,
 	0,0,0,0,0,0,1,0,
-	0,0,0,1,1,1,1,0,
-	0,0,0,1,0,0,0,0,
-	0,0,0,1,1,1,1,1
+	0,1,1,1,1,1,1,0,
+	0,1,0,0,0,0,0,0,
+	0,1,1,1,1,1,1,1
 };
 
 int Init(ESContext* esContext)
@@ -431,6 +431,7 @@ void TouchActionMove(ESContext* esContext, int x, int y)
 }
 void CleanUp()
 {
+	delete camera;
 	for (int i = 0; i < towerList.size(); i++) {
 		delete towerList.at(i);// bad pointer deletion if u set tower thats not pointer
 	}
