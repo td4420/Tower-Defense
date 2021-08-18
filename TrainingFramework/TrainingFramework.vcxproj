@@ -63,7 +63,7 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libEGL.lib;libGLESv2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freetype.lib;libEGL.lib;libGLESv2.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
@@ -96,6 +96,7 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Enemies.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -103,6 +104,11 @@
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="StateHelp.cpp" />
+    <ClCompile Include="StateMenu.cpp" />
+    <ClCompile Include="StateOption.cpp" />
+    <ClCompile Include="StateWelcome.cpp" />
+    <ClCompile Include="Text.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Tower.cpp" />
@@ -117,6 +123,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Enemies.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Object.h" />
@@ -127,14 +134,22 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Shaders.h" />
     <ClInclude Include="State.h" />
+    <ClInclude Include="StateBase.h" />
+    <ClInclude Include="StateHelp.h" />
+    <ClInclude Include="StateMenu.h" />
+    <ClInclude Include="StateOption.h" />
+    <ClInclude Include="StateWelcome.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Text.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Tower.h" />
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Resources\Shaders\Text.fs" />
+    <None Include="..\Resources\Shaders\Text.vs" />
     <None Include="..\Resources\Shaders\TriangleShaderFS.fs" />
     <None Include="..\Resources\Shaders\TriangleShaderVS.vs" />
     <None Include="..\Readme.doc" />

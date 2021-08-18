@@ -1,125 +1,24 @@
 ﻿cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-  stdafx.cpp
-cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-  Shaders.cpp
-F:\Dao_3DFrameworkTraining\TrainingFramework\Shaders.cpp(31,2): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\Shaders.cpp(32,2): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   TrainingFramework.cpp
-F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(56,2): warning C4552: '-': result of expression not used
-F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(59,20): warning C4018: '<': signed/unsigned mismatch
-F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(91,20): warning C4018: '<': signed/unsigned mismatch
-F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(123,20): warning C4018: '<': signed/unsigned mismatch
-F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(128,20): warning C4018: '<': signed/unsigned mismatch
-F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(143,20): warning C4018: '<': signed/unsigned mismatch
-F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(148,22): warning C4018: '<': signed/unsigned mismatch
-F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(257,20): warning C4018: '<': signed/unsigned mismatch
-F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(289,20): warning C4018: '<': signed/unsigned mismatch
-F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(309,49): warning C4018: '<': signed/unsigned mismatch
-F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(334,22): warning C4018: '<': signed/unsigned mismatch
-F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(351,22): warning C4018: '<': signed/unsigned mismatch
-F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(373,20): warning C4018: '<': signed/unsigned mismatch
-F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(377,20): warning C4018: '<': signed/unsigned mismatch
-F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(383,20): warning C4018: '<': signed/unsigned mismatch
-F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(384,21): warning C4018: '<': signed/unsigned mismatch
-  Tower.cpp
-F:\Dao_3DFrameworkTraining\TrainingFramework\Tower.cpp(72,20): warning C4018: '<': signed/unsigned mismatch
-F:\Dao_3DFrameworkTraining\TrainingFramework\Tower.cpp(179,20): warning C4018: '<': signed/unsigned mismatch
-F:\Dao_3DFrameworkTraining\TrainingFramework\Tower.cpp(193,21): warning C4018: '<': signed/unsigned mismatch
-F:\Dao_3DFrameworkTraining\TrainingFramework\Tower.cpp(220,21): warning C4018: '<': signed/unsigned mismatch
-  Tile.cpp
-F:\Dao_3DFrameworkTraining\TrainingFramework\Tile.cpp(23,14): warning C4244: '=': conversion from 'int' to 'GLfloat', possible loss of data
-F:\Dao_3DFrameworkTraining\TrainingFramework\Tile.cpp(24,14): warning C4244: '=': conversion from 'int' to 'GLfloat', possible loss of data
-  Texture.cpp
-F:\Dao_3DFrameworkTraining\TrainingFramework\Texture.cpp(41,17): warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _strdup. See online help for details.
-  SceneManager.cpp
-F:\Dao_3DFrameworkTraining\TrainingFramework\SceneManager.cpp(36,15): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\SceneManager.cpp(44,2): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\SceneManager.cpp(47,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\SceneManager.cpp(48,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\SceneManager.cpp(49,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\SceneManager.cpp(50,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\SceneManager.cpp(51,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\SceneManager.cpp(52,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\SceneManager.cpp(53,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\SceneManager.cpp(54,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\SceneManager.cpp(55,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\SceneManager.cpp(57,2): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\SceneManager.cpp(62,2): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\SceneManager.cpp(67,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\SceneManager.cpp(68,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\SceneManager.cpp(70,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\SceneManager.cpp(73,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\SceneManager.cpp(76,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\SceneManager.cpp(79,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\SceneManager.cpp(82,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\SceneManager.cpp(84,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\SceneManager.cpp(85,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\SceneManager.cpp(86,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  ResourceManager.cpp
-F:\Dao_3DFrameworkTraining\TrainingFramework\ResourceManager.cpp(22,15): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\ResourceManager.cpp(24,2): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\ResourceManager.cpp(30,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\ResourceManager.cpp(31,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\ResourceManager.cpp(35,2): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\ResourceManager.cpp(40,2): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\ResourceManager.cpp(43,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\ResourceManager.cpp(44,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\ResourceManager.cpp(45,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\ResourceManager.cpp(46,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\ResourceManager.cpp(49,2): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\ResourceManager.cpp(54,2): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\ResourceManager.cpp(57,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\ResourceManager.cpp(58,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\ResourceManager.cpp(59,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\ResourceManager.cpp(60,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\ResourceManager.cpp(70,2): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\ResourceManager.cpp(74,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\ResourceManager.cpp(75,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\ResourceManager.cpp(76,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\ResourceManager.cpp(77,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\ResourceManager.cpp(80,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  Projectile.cpp
-F:\Dao_3DFrameworkTraining\TrainingFramework\Projectile.cpp(45,20): warning C4018: '<': signed/unsigned mismatch
-F:\Dao_3DFrameworkTraining\TrainingFramework\Projectile.cpp(80,20): warning C4018: '<': signed/unsigned mismatch
-  PlayField.cpp
-F:\Dao_3DFrameworkTraining\TrainingFramework\PlayField.cpp(72,20): warning C4018: '<': signed/unsigned mismatch
-F:\Dao_3DFrameworkTraining\TrainingFramework\PlayField.cpp(104,20): warning C4018: '<': signed/unsigned mismatch
-F:\Dao_3DFrameworkTraining\TrainingFramework\PlayField.cpp(125,20): warning C4018: '<': signed/unsigned mismatch
-  Player.cpp
-  Object.cpp
-F:\Dao_3DFrameworkTraining\TrainingFramework\Object.cpp(52,20): warning C4018: '<': signed/unsigned mismatch
-  Model.cpp
-F:\Dao_3DFrameworkTraining\TrainingFramework\Model.cpp(10,15): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\Model.cpp(13,2): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\Model.cpp(26,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\Model.cpp(27,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\Model.cpp(28,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\Model.cpp(29,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\Model.cpp(30,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\Model.cpp(31,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\Model.cpp(45,2): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\Model.cpp(57,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\Model.cpp(58,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Dao_3DFrameworkTraining\TrainingFramework\Model.cpp(72,2): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  Enemies.cpp
-F:\Dao_3DFrameworkTraining\TrainingFramework\Enemies.cpp(34,21): warning C4018: '<': signed/unsigned mismatch
-F:\Dao_3DFrameworkTraining\TrainingFramework\Enemies.cpp(38,21): warning C4018: '<': signed/unsigned mismatch
-F:\Dao_3DFrameworkTraining\TrainingFramework\Enemies.cpp(52,21): warning C4018: '<': signed/unsigned mismatch
-F:\Dao_3DFrameworkTraining\TrainingFramework\Enemies.cpp(56,21): warning C4018: '<': signed/unsigned mismatch
-F:\Dao_3DFrameworkTraining\TrainingFramework\Enemies.cpp(81,21): warning C4018: '<': signed/unsigned mismatch
-F:\Dao_3DFrameworkTraining\TrainingFramework\Enemies.cpp(85,21): warning C4018: '<': signed/unsigned mismatch
-F:\Dao_3DFrameworkTraining\TrainingFramework\Enemies.cpp(101,20): warning C4018: '<': signed/unsigned mismatch
-F:\Dao_3DFrameworkTraining\TrainingFramework\Enemies.cpp(126,20): warning C4018: '<': signed/unsigned mismatch
-F:\Dao_3DFrameworkTraining\TrainingFramework\Enemies.cpp(136,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-F:\Dao_3DFrameworkTraining\TrainingFramework\Enemies.cpp(152,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-F:\Dao_3DFrameworkTraining\TrainingFramework\Enemies.cpp(168,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-F:\Dao_3DFrameworkTraining\TrainingFramework\Enemies.cpp(184,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-F:\Dao_3DFrameworkTraining\TrainingFramework\Enemies.cpp(262,26): warning C4390: ';': empty controlled statement found; is this the intent?
-  Camera.cpp
-  Animation.cpp
-  Generating Code...
-F:\Dao_3DFrameworkTraining\TrainingFramework\Animation.cpp(154): warning C4715: 'Animation::GetAnimationMoveRight': not all control paths return a value
-F:\Dao_3DFrameworkTraining\TrainingFramework\Animation.cpp(175): warning C4715: 'Animation::GetAnimationMoveLeft': not all control paths return a value
-F:\Dao_3DFrameworkTraining\TrainingFramework\Tower.cpp(297): warning C4715: 'Tower::CheckReload': not all control paths return a value
+F:\Dao_3DFrameworkTraining\TrainingFramework\StateWelcome.h(22,16): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+F:\Dao_3DFrameworkTraining\TrainingFramework\StateWelcome.h(23,19): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(55,33): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(69,2): warning C4552: '-': result of expression not used
+F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(72,20): warning C4018: '<': signed/unsigned mismatch
+F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(104,20): warning C4018: '<': signed/unsigned mismatch
+F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(136,20): warning C4018: '<': signed/unsigned mismatch
+F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(141,20): warning C4018: '<': signed/unsigned mismatch
+F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(164,20): warning C4018: '<': signed/unsigned mismatch
+F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(169,22): warning C4018: '<': signed/unsigned mismatch
+F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(190,20): warning C4018: '<': signed/unsigned mismatch
+F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(220,20): warning C4018: '<': signed/unsigned mismatch
+F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(240,49): warning C4018: '<': signed/unsigned mismatch
+F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(265,22): warning C4018: '<': signed/unsigned mismatch
+F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(282,22): warning C4018: '<': signed/unsigned mismatch
+F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(314,20): warning C4018: '<': signed/unsigned mismatch
+F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(318,20): warning C4018: '<': signed/unsigned mismatch
+F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(324,20): warning C4018: '<': signed/unsigned mismatch
+F:\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(325,21): warning C4018: '<': signed/unsigned mismatch
+  LINK : F:\Dao_3DFrameworkTraining\\BIN\TrainingFramework.exe not found or not built by the last incremental link; performing full link
 Animation.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
   TrainingFramework.vcxproj -> F:\Dao_3DFrameworkTraining\BIN\TrainingFramework.exe

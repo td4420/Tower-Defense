@@ -8,11 +8,16 @@
 #include <vector>
 #include "SceneManager.h"
 #include "ResourceManager.h"
+#include"Text.h"
+#include"StateMenu.h"
+#include"StateBase.h"
+#include"StateWelcome.h"
+#include"Game.h"
+using namespace std;
 #include "Tile.h"
 #include "PlayField.h"
 #include "Enemies.h"
 #include "Tower.h"
-
 #define MOVE_FORWARD 1
 #define MOVE_BACKWARD 1 << 1
 #define MOVE_LEFT 1 << 2
@@ -24,7 +29,10 @@
 
 
 int keyPressed = 0;
+SceneManager* scenemanager = SceneManager::GetInstance("../ResourcesPacket/SM.txt");
 Shaders myShaders;
+Shaders textShader;
+Camera* camera;
 
 PlayField pf = PlayField();
 std::vector <Tower*> towerList;
@@ -43,9 +51,14 @@ int NumMap[7][8] =
 	0,1,0,0,0,0,0,0,
 	0,1,1,1,1,1,1,1
 };
-
+//Button* myButton = new Button();
+Vector4 color(0.0, 0.3, 0.3, 0.8);
+//StateMenu* myStateMenu = new StateMenu();
+//StateWelcome* myStateWelcome = new StateWelcome();
+Game* myGame = new Game();
 int Init(ESContext* esContext)
 {
+
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
@@ -114,9 +127,9 @@ int Init(ESContext* esContext)
 	return myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
 	
 }
-
 void Draw(ESContext* esContext)
 {
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	pf.Draw();
@@ -133,6 +146,14 @@ void Draw(ESContext* esContext)
 
 	sellButton->DrawObject();
 
+	//scenemanager->Draw();
+//myButton->Draw(myShaders);
+//myStateMenu->Draw(textShader);
+//myStateWelcome->Draw(myShaders);
+//myStateWelcome->Drawtext(textShader);
+//myStateWelcome->Draw(myShaders);
+//myStateMenu->DrawLogo(myShaders);
+	myGame->Draw(textShader, myShaders);
 	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
 }
 
@@ -193,9 +214,7 @@ bool CheckSelectionOption(int x, int y) {
 	}
 	return false;
 }
-void TouchActionDown(ESContext* esContext, int x, int y)
-{
-}
+
 
 bool IsBuildable(int xPos, int yPos) {
 	for (int i = 0; i < towerList.size(); i++) {
@@ -273,12 +292,22 @@ void TouchActionUp(ESContext* esContext, int x, int y)
 		}
 	}
 }
+
+void TouchActionDown(ESContext* esContext, int x, int y)
+{
+	myGame->OnMouseClick(x, y);
+	printf("\n: mouse down at: %d, %d", x, y);
+}
+
 void TouchActionDrag(ESContext* esCotext, int x, int y) {
 	//move drag
+	printf("\n mouse when drag: %d, %d", x, y);
 }
+
 void TouchActionMove(ESContext* esContext, int x, int y)
 {
-	
+	myGame->OnMouseOver(x,y);
+
 }
 void CleanUp()
 {
@@ -300,9 +329,9 @@ void CleanUp()
 	}
 	pf.CleanUp();
 }
-
 int _tmain(int argc, TCHAR* argv[])
 {
+	glViewport(0, 0, Globals::screenWidth, Globals::screenHeight);
 	ESContext esContext;
 
 	esInitContext(&esContext);

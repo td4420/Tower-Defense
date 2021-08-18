@@ -36,7 +36,7 @@ void Texture::Init()
 	glBindTexture(GL_TEXTURE_2D, 0);
 	delete imageData;
 }
-Texture::Texture(const char* tgaFilePath, int id, GLenum tiling,GLenum fTiling1,GLenum fTiling2)
+Texture::Texture(const char* tgaFilePath, int id, GLenum tiling ,GLenum fTiling1,GLenum fTiling2)
 {
 	mTgaFilePath = strdup(tgaFilePath);
 	mTiling = tiling;
@@ -44,7 +44,9 @@ Texture::Texture(const char* tgaFilePath, int id, GLenum tiling,GLenum fTiling1,
 	this->fTilling2 = fTiling2;
 	ID = id;
 }
+Texture::Texture() {
 
+}
 Texture::~Texture()
 {
 	glBindTexture(GL_TEXTURE_2D, 0);

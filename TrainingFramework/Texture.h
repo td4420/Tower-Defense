@@ -11,5 +11,6 @@ public:
 	GLuint mTextureId;
 	void Init();
 	Texture(const char* tgaFilePath, int id = 0, GLenum tiling = GL_REPEAT, GLenum fTilling1 = GL_LINEAR, GLenum fTilling2 = GL_LINEAR);
+	Texture();
 	~Texture();
 };

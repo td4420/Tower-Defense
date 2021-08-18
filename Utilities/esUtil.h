@@ -145,6 +145,3 @@ GLuint ESUTIL_API esLoadProgram(GLuint vertexShader, GLuint fragmentShader);
 
 
 
-
-
-
