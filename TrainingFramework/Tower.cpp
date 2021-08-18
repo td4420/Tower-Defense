@@ -220,7 +220,6 @@ void Tower::Shoot()//leak here
 		for (int i = 0; i < projectileOnScreen.size(); i++) {
 			if (projectileOnScreen.at(i)->target == nullptr || projectileOnScreen.at(i)->target->alive == false) {
 				//cout << "nul" << endl;
-				projectileOnScreen.at(i)->o_Texture.at(0) = Texture("../ResourcesPacket/Textures/blank.tga");
 				projectileOnScreen.at(i)->nullified = true;
 			}
 

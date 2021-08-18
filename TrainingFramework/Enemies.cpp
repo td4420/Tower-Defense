@@ -286,8 +286,26 @@ void Enemies::CheckSlowed()
 }
 void Enemies::Reset()
 {
-	
+	alive = true;
 	o_position.x = 0; o_position.y = 0;
 	locationX = 0; locationY = 0; lastLocationX = 0; lastLocationY = 0;
-	currentHP = maxHP;
+	if (enemyType == 1)
+	{
+		maxHP = 70;
+		currentHP = 70;
+	}
+	if (enemyType == 2)
+	{
+		maxHP = 50;
+		currentHP = 50;
+	}
+	if (enemyType == 4)
+	{
+		maxHP = 300;
+		currentHP = 300;
+	}
+	Scale.SetIdentity();
+	Rotation.SetIdentity();
+	Translation.SetIdentity();
+	MVP = Scale * Rotation * Translation;
 }

@@ -24,13 +24,13 @@ public:
 	{
 		1,1,1,1,1,1,0,0,0,0,
 		1,1,1,1,1,1,1,1,1,1,
+		1,1,1,1,1,1,1,1,1,1,
 		0,2,0,2,0,2,0,2,0,0,
 		1,2,0,1,2,0,1,2,0,0,
 		0,0,0,0,4,0,0,0,0,0,
 		1,0,0,1,0,4,0,0,1,2,
 		2,2,2,2,2,2,2,2,2,2,
 		1,2,1,2,1,2,1,4,1,4,
-		2,4,2,4,2,4,2,4,0,0,
 		1,2,4,1,2,4,1,2,4,4
 	};
 
@@ -48,9 +48,9 @@ public:
 	int NumMap[7][8];
 
 	Tile TileMap[7][8];
-	Enemies* normal[10] = { new Enemies(1), new Enemies(1),new Enemies(1), new Enemies(1), new Enemies(1), new Enemies(1), new Enemies(1), new Enemies(1), new Enemies(1), new Enemies(1) };
-	Enemies* fast[10] = { new Enemies(2), new Enemies(2),new Enemies(2), new Enemies(2), new Enemies(2), new Enemies(2), new Enemies(2), new Enemies(2), new Enemies(2), new Enemies(2) };
-	Enemies* tank[10] = { new Enemies(4),new Enemies(4),new Enemies(4),new Enemies(4),new Enemies(4),new Enemies(4),new Enemies(4),new Enemies(4),new Enemies(4),new Enemies(4) };
+	Enemies* normal[10] = { new Enemies(1), new Enemies(1),new Enemies(1), new Enemies(1), new Enemies(1), new Enemies(1), new Enemies(1), new Enemies(1), new Enemies(1), new Enemies(1) }; //30
+	Enemies* fast[10] = { new Enemies(2), new Enemies(2),new Enemies(2), new Enemies(2), new Enemies(2), new Enemies(2), new Enemies(2), new Enemies(2), new Enemies(2), new Enemies(2) }; //28
+	Enemies* tank[10] = { new Enemies(4),new Enemies(4),new Enemies(4),new Enemies(4),new Enemies(4),new Enemies(4),new Enemies(4),new Enemies(4),new Enemies(4),new Enemies(4) }; //11
 	int numberOfTank = 0, numberOfFast = 0, numberOfNormal = 0;
 	vector <Enemies*> tempEnemyWave;
 	vector <Enemies*> enemyWave;

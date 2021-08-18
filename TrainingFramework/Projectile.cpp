@@ -28,7 +28,6 @@ Projectile::Projectile(int type, Shaders shaders)
 	if (type == 1)
 	{
 		o_Texture.push_back("../ResourcesPacket/Textures/mortarBullet.tga");
-		o_Texture.push_back("../ResourcesPacket/Textures/explosion.tga");
 	}
 	if (type==2)  o_Texture.push_back("../ResourcesPacket/Textures/thunderBullet.tga");
 	if (type == 3) o_Texture.push_back("../ResourcesPacket/Textures/bullet.tga");
