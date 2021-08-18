@@ -12,8 +12,8 @@ Tile::Tile()
 Tile::Tile(int type, int numX, int numY, float x, float y, Shaders shaders)
 {
 	tileType = type;
-	if (tileType == 0) { 
-		canBuild = true; 
+	if (tileType == 0) {
+		canBuild = true;
 		tileTexture = Texture("../Resources/grass_tile.tga");
 	}
 	else {
@@ -34,11 +34,6 @@ Tile::Tile(int type, int numX, int numY, float x, float y, Shaders shaders)
 	tileVertices[1].coords.x = 1.0f;	tileVertices[1].coords.y = 0.0f;
 	tileVertices[2].coords.x = 1.0f;	tileVertices[2].coords.y = 1.0f;
 	tileVertices[3].coords.x = 0.0f;	tileVertices[3].coords.y = 1.0f;
-
-	/*std::cout << "Tile " << tileNum.x << " " << tileNum.y << " type: " << tileType << std::endl;
-	for (int i = 0; i < 4; i++) {
-		std::cout << tileVertices[i].pos.x << " " << tileVertices[i].pos.y << std::endl;
-	}*/
 }
 
 void Tile::Bind()
@@ -71,11 +66,11 @@ void Tile::Draw()
 
 	GLushort indices[]{ 0,1,2 };
 	GLushort in[]{ 0,2,3 };
-	
+
 	glUniformMatrix4fv(myShaders.u_MVP, 1, GL_FALSE, *MVP.m);
 	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, &indices);
 	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, &in);
-	
+
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);
 }

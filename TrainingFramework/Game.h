@@ -4,17 +4,20 @@
 #include"StateWelcome.h"
 #include"StateOption.h"
 #include"StateHelp.h"
+#include"StateLogo.h"
+#include"StatePlay.h"
 #include<stack>
 using namespace std;
 class Game  {
 public:
-
 	StateBase::StateControl curState;
-	stack<StateBase::StateControl> stackState;
+
+	StateLogo* stateLogo = new StateLogo();
 	StateWelcome* stateWelcome = new StateWelcome();
 	StateMenu* stateMenu = new StateMenu();
 	StateOption* stateOption = new StateOption();
-	bool isFinishLoading;
+	StatePlay* statePlay = new StatePlay();
+	
 	void Update(float deltaTime);
 	void Draw(Shaders textShader, Shaders shapeShader);
 	void init();

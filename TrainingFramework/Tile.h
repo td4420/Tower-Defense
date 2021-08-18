@@ -12,7 +12,7 @@ public:
 	int tileType;
 	bool canBuild = true;
 	GLuint vboId;
-	GLuint iboId; 
+	GLuint iboId;
 
 	Matrix MVP;
 	Shaders myShaders;
@@ -24,4 +24,3 @@ public:
 	void Bind();
 	void Draw();
 };
-

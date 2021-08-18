@@ -32,20 +32,23 @@ void Text::init() {
 	widthText += 14.5;
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
+	color = Vector4(0.5, 0.5, 0.5, 0.5);
 	
 	
 }
 
 void Text::RenderText(Shaders shader) {
-	
+
+	glUseProgram(shader.program);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	glUseProgram(shader.program);
+	
 	glUniform4f(glGetUniformLocation(shader.program, "u_color"), color.x, color.y, color.z, color.w);
 	glGenBuffers(1, &textVBO);
 	glGenTextures(1, &textImgTexture);
 	glBindBuffer(GL_ARRAY_BUFFER, textVBO);
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, textImgTexture);
 
 	float sx = 1.0f / Globals::screenWidth * scaleX;
@@ -89,6 +92,7 @@ void Text::RenderText(Shaders shader) {
 		{x2 + w, y2 - h, 1, 1},
 		};
 		glBufferData(GL_ARRAY_BUFFER, sizeof(box), box, GL_STATIC_DRAW);
+		//glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(box), box);
 		if (glGetAttribLocation(shader.program, "a_position") != -1)
 		{
 			glEnableVertexAttribArray(glGetAttribLocation(shader.program, "a_position"));

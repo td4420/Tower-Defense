@@ -93,17 +93,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Enemies.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayField.cpp" />
+    <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="StateHelp.cpp" />
+    <ClCompile Include="StateLogo.cpp" />
     <ClCompile Include="StateMenu.cpp" />
     <ClCompile Include="StateOption.cpp" />
+    <ClCompile Include="StatePlay.cpp" />
     <ClCompile Include="StateWelcome.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -117,21 +122,26 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Enemies.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="PlayField.h" />
+    <ClInclude Include="Projectile.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Shaders.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateBase.h" />
     <ClInclude Include="StateHelp.h" />
+    <ClInclude Include="StateLogo.h" />
     <ClInclude Include="StateMenu.h" />
     <ClInclude Include="StateOption.h" />
+    <ClInclude Include="StatePlay.h" />
     <ClInclude Include="StateWelcome.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />

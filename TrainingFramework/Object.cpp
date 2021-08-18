@@ -13,7 +13,7 @@ void Object::SetWorldMatrix()
 {
 	WorldMatrix = Scale * Rotation * Translation;
 }
-Object::Object(Model model, vector<Texture> texture, Shaders shaders,int id)
+Object::Object(Model model, vector<Texture> texture, Shaders shaders, int id)
 {
 	o_Model = model;
 	o_Texture = texture;
@@ -42,23 +42,22 @@ void Object::setMVPMatrix(Matrix v, Matrix p)
 }
 void Object::InitObject()
 {
-	Translation.SetIdentity();
-	Scale.SetIdentity();
-	Rotation.SetIdentity();
-	//SetWorldMatrix();
-	
 	o_Model.Init();
-	o_Texture.at(0).Init();
-	for (int i = 0; i < numberOfTexture; i++)
+	for (int i = 0; i < o_Texture.size(); i++)
 	{
 		o_Texture.at(i).Init();
 	}
-	for (int i = 0; i < numberOfCube; i++)
-	{
-		o_Cube.at(i).Init();
-	}
 }
+void Object::Build(float x, float y) {
+	o_position.x = x;
+	o_position.y = y;
+	o_position.z = 0;
 
+	Scale.SetIdentity();
+	Rotation.SetIdentity();
+	Translation.SetTranslation(o_position);
+	MVP = Scale * Rotation * Translation;
+}
 void Object::DrawObject()
 {
 	glUseProgram(o_shaders.program);
@@ -73,7 +72,7 @@ void Object::DrawObject()
 	if (o_shaders.uvAttribute != -1)
 	{
 		glEnableVertexAttribArray(o_shaders.uvAttribute);
-		glVertexAttribPointer(o_shaders.uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(2*sizeof(Vector3)));
+		glVertexAttribPointer(o_shaders.uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(2 * sizeof(Vector3)));
 	}
 
 	MVP = Scale * Rotation * Translation;
