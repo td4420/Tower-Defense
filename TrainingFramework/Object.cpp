@@ -42,21 +42,11 @@ void Object::setMVPMatrix(Matrix v, Matrix p)
 }
 void Object::InitObject()
 {
-	//Translation.SetIdentity();
-	//Scale.SetIdentity();
-	//Rotation.SetIdentity();
-	//SetWorldMatrix();
-	
 	o_Model.Init();
-	//o_Texture.at(0).Init();
 	for (int i = 0; i < o_Texture.size(); i++)
 	{
 		o_Texture.at(i).Init();
 	}
-	/*for (int i = 0; i < numberOfCube; i++)
-	{
-		o_Cube.at(i).Init();
-	}*/
 }
 void Object::Build(float x, float y) {
 	o_position.x = x ;

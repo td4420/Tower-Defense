@@ -65,7 +65,7 @@ public:
 	bool waveEnd = true;
 	bool gameOver = false;
 	float timeSinceLastSpawn = 15.0f;
-	int waveNum = 4;//save the number of waves in a lv;
+	int waveNum = 0;//save the number of waves in a lv;
 	Shaders myShaders;
 
 	void Init(Shaders myShaders);

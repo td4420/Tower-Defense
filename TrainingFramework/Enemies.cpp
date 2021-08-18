@@ -284,3 +284,10 @@ void Enemies::CheckSlowed()
 		slowed = false;
 	}
 }
+void Enemies::Reset()
+{
+	
+	o_position.x = 0; o_position.y = 0;
+	locationX = 0; locationY = 0; lastLocationX = 0; lastLocationY = 0;
+	currentHP = maxHP;
+}

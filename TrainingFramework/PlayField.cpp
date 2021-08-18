@@ -78,6 +78,13 @@ void PlayField::InitEnemyWave()
 {
 	if (waveEnd) {
 		waveEnd = false;
+		numberOfFast = 0; numberOfNormal = 0; numberOfTank = 0;
+		for (int i = 0; i < 10; i++)
+		{
+			normal[i]->Reset();
+			fast[i]->Reset(); 
+			tank[i]->Reset();
+		}
 		for (int j = 0; j < waveLength; j++)
 		{
 			if (enemyWaveEasy[waveNum][j] == 1) 
@@ -126,7 +133,6 @@ void PlayField::Update()
 	{
 		if ((enemyWave.at(i)->locationX == 7 && enemyWave.at(i)->locationY == 6) || !enemyWave.at(i)->alive)
 		{
-			//delete enemyWave.at(i);
 			enemyWave.erase(enemyWave.begin() + i);
 		}
 		else enemyWave.at(i)->Update();

@@ -33,7 +33,6 @@ public:
 
 	bool toLeft = false; //Check the last step is go to left or right
 	Animation animation;
-	vector<Texture> Right;
 
 	GLuint enemyVBO;
 	//GLuint enemyIBO;
@@ -46,6 +45,7 @@ public:
 	~Enemies();
 
 	//void Bind();
+	void Reset();
 	void MoveEnemies();
 	void MoveToLeft();
 	void MoveToRight();
