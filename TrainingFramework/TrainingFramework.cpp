@@ -24,21 +24,9 @@
 
 
 int keyPressed = 0;
-//SceneManager* scenemanager = SceneManager::GetInstance("../ResourcesPacket/SM.txt");
 Shaders myShaders;
-Camera* camera;
 
 PlayField pf = PlayField();
-Enemies e = Enemies(1);
-Enemies f = Enemies(2);
-Enemies tank = Enemies(3);
-
-Tower t = Tower(0);
-Tower gun = Tower(1);
-Tower m = Tower(2);
-Tower* s = new Tower(3);
-
-//std::vector <Enemies*> wave;
 std::vector <Tower*> towerList;
 std::vector <Object*> towerButtonList;
 Object* upgradeButton;
@@ -65,25 +53,14 @@ int Init(ESContext* esContext)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	
 	
-	myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
+	-myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
 	pf.Init(myShaders);
-	//pf.InitEnemyWave(myShaders);
 
-	//t.Build(3, 3);
-	//gun.Build(5, 3);
-	//m.Build(5, 3);
-	//s->Build(4, 3);
-	//towerList.push_back(&m);
-	//towerList.push_back(s);
-
-	//towerList.push_back(&t);
-	//towerList.push_back(&gun);
 	for (int i = 0; i < towerList.size(); i++) {
 		towerList.at(i)->o_shaders = myShaders;
 		towerList.at(i)->InitObject();
 	}
 
-	//cout << t.o_Texture.size() << endl;	
 
 	//add Button Tower 
 	Object* archerTowerButton = new Object();
@@ -143,7 +120,6 @@ void Draw(ESContext* esContext)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	pf.Draw();
-
 	for (int i = 0; i < towerList.size(); i++) {
 		towerList.at(i)->DrawObject();
 		towerList.at(i)->Shoot();
@@ -162,44 +138,7 @@ void Draw(ESContext* esContext)
 
 void Update(ESContext* esContext, float deltaTime)
 {
-	if (keyPressed & MOVE_FORWARD) {
-		camera->MoveForward(deltaTime);
-	}
-
-	if (keyPressed & MOVE_BACKWARD) {
-		camera->MoveBackward(deltaTime);
-	}
-
-	if (keyPressed & MOVE_LEFT) {
-		camera->MoveToLeft(0.01f);
-	}
-
-	if (keyPressed & MOVE_RIGHT) {
-		camera->MoveToRight(0.01f);
-	}
-	if (keyPressed & ROTATE_UP) {
-		camera->RotationUp(deltaTime);
-	}
-
-	if (keyPressed & ROTATE_DOWN) {
-		camera->RotationDown(deltaTime);
-	}
-	if (keyPressed & ROTATE_LEFT) {
-		camera->RotationLeft(0.01f);
-	}
-	if (keyPressed & ROTATE_RIGHT) {
-		camera->RotationRight(0.01f);
-	}
-	//scenemanager->Update(deltaTime);
 	pf.Update();
-
-	/*for (int i = 0; i < wave.size(); i++) {
-		if (wave.at(i)->alive) wave.at(i)->Update();
-		else
-		{
-			wave.erase(wave.begin() + i);
-		}
-	}*/
 
 	for (int i = 0; i < towerList.size(); i++) {
 		towerList.at(i)->AddEnemiesInRange(pf.enemyWave);
@@ -431,7 +370,6 @@ void TouchActionMove(ESContext* esContext, int x, int y)
 }
 void CleanUp()
 {
-	delete camera;
 	for (int i = 0; i < towerList.size(); i++) {
 		delete towerList.at(i);// bad pointer deletion if u set tower thats not pointer
 	}
@@ -448,11 +386,6 @@ void CleanUp()
 			towerList.at(i)->projectileOnScreen.clear();
 		}
 	}
-
-	/*for (int i = 0; i < wave.size(); i++) {
-		wave.at(i)->~Enemies();
-		delete wave.at(i);
-	}*/
 	pf.CleanUp();
 }
 

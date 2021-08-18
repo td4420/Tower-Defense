@@ -11,28 +11,21 @@ PlayField::PlayField()
 
 void PlayField::CleanUp()
 {
-	for (int i = 0; i < enemyWave.size(); i++) {
+	/*for (int i = 0; i < enemyWave.size(); i++) {
 		delete enemyWave.at(i);
 	}
 
 	for (int i = 0; i < tempEnemyWave.size(); i++) {
 		delete tempEnemyWave.at(i);
-	}
+	}*/
 }
 
 void PlayField::Init(Shaders shaders)
 {
+	
 	myShaders = shaders;
 	int NumMap[7][8];
-	/*{
-		1,1,0,0,0,0,0,0,
-		0,1,1,0,0,0,0,0,
-		0,0,1,1,1,1,1,0,
-		0,0,0,0,0,0,1,0,
-		0,0,0,1,1,1,1,0,
-		0,0,0,1,0,0,0,0,
-		0,0,0,1,1,1,1,1
-	};*/
+
 
 	for (int i = 0; i < 7; i++)
 	{
@@ -55,6 +48,15 @@ void PlayField::Init(Shaders shaders)
 			TileMap[i][j].Bind();
 		}
 	}
+	for (int i = 0; i < 10; i++)
+	{
+		normal[i]->o_shaders = myShaders;
+		normal[i]->InitObject();
+		fast[i]->o_shaders = myShaders;
+		fast[i]->InitObject();
+		tank[i]->o_shaders = myShaders;
+		tank[i]->InitObject();
+	}
 }
 
 void PlayField::Draw()
@@ -64,9 +66,7 @@ void PlayField::Draw()
 			TileMap[i][j].Draw();
 		}
 	}
-
-	if (gameOver==false) InitEnemyWave();
-
+	if (gameOver == false) InitEnemyWave();
 	SpawnEnemy();
 
 	for (int i = 0; i < enemyWave.size(); i++) {
@@ -78,23 +78,29 @@ void PlayField::InitEnemyWave()
 {
 	if (waveEnd) {
 		waveEnd = false;
-		for (int j = 0; j < waveLength; j++) 
+		for (int j = 0; j < waveLength; j++)
 		{
-			//cout << "[" << waveNum << "][" << j << "] ";
-			if (enemyWaveEasy[waveNum][j] != 0) {
-				Enemies* e = new Enemies(enemyWaveEasy[waveNum][j]);
-				e->o_shaders = myShaders;
-				e->InitObject();
-				tempEnemyWave.push_back(e);
+			if (enemyWaveEasy[waveNum][j] == 1) 
+			{
+				tempEnemyWave.push_back(normal[numberOfNormal]);
+				numberOfNormal++;
+			}
+			if (enemyWaveEasy[waveNum][j] == 2)
+			{
+				tempEnemyWave.push_back(fast[numberOfFast]);
+				numberOfFast++;
+			}
+			if (enemyWaveEasy[waveNum][j] == 4)
+			{
+				tempEnemyWave.push_back(tank[numberOfTank]);
+				numberOfTank++;
 			}
 		}
-		cout << waveNum << endl;
 		if (waveNum<waveMax) waveNum += 1;
 	}
 }
 
 void PlayField::SpawnEnemy() {
-	//cout << tempEnemyWave.size() << " ";
 	for (int i = 0; i < tempEnemyWave.size(); i++) {
 		if (CheckSpawnTime()) {
 			enemyWave.push_back(tempEnemyWave.at(i));
@@ -118,11 +124,12 @@ void PlayField::Update()
 {	
 	for (int i = 0; i < enemyWave.size(); i++)
 	{
-		if (enemyWave.at(i)->alive) enemyWave.at(i)->Update();
-		else {
-			delete enemyWave.at(i);
+		if ((enemyWave.at(i)->locationX == 7 && enemyWave.at(i)->locationY == 6) || !enemyWave.at(i)->alive)
+		{
+			//delete enemyWave.at(i);
 			enemyWave.erase(enemyWave.begin() + i);
 		}
+		else enemyWave.at(i)->Update();
 	}
 
 	if (enemyWave.size() == 0 && tempEnemyWave.size()==0) {

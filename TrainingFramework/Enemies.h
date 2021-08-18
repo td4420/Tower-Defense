@@ -4,8 +4,9 @@
 #include "Texture.h"
 #include "Shaders.h"
 #include "Vertex.h"
+#include "Animation.h"
 class Enemies :
-    public Object
+	public Object
 {
 public:
 	/*enum EnemyType
@@ -13,7 +14,7 @@ public:
 		NORMAL, FAST, TANK
 	};*/
 	int enemyType;//1:normal, 2:fast, 3:tank
-	
+
 	Vector2 enemyPos;
 	int locationX = 0, locationY = 0;
 	int lastLocationX = 0, lastLocationY = 0;
@@ -30,16 +31,20 @@ public:
 	bool slowed = false;
 	bool reachedExit = false;
 
+	bool toLeft = false; //Check the last step is go to left or right
+	Animation animation;
+	vector<Texture> Right;
+
 	GLuint enemyVBO;
 	//GLuint enemyIBO;
 
 	Enemies();
 	Enemies(int type);
-	Enemies(Enemies *e);
+	Enemies(Enemies* e);
 	Enemies(Shaders myShaders, int maxHP, float speed, int reward);
 	Enemies(Shaders myShaders, int maxHP, float speed, int reward, Tile spawner);
 	~Enemies();
-	
+
 	//void Bind();
 	void MoveEnemies();
 	void MoveToLeft();

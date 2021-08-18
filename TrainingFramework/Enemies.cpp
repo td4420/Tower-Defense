@@ -21,7 +21,8 @@ Enemies::Enemies(int type)
 	Translation.SetIdentity();
 	MVP = Scale * Rotation * Translation;
 	slowTime = 0.0f;
-
+	enemyType = type;
+	animation.Init();
 	if (type == 1)
 	{
 		o_Texture.push_back(Texture("../Resources/enemy.tga"));
@@ -30,6 +31,14 @@ Enemies::Enemies(int type)
 		movementSpeed = 0.003f;
 		fixedSpeed = 0.002f;
 		reward = 30;
+		for (int i = 0; i < animation.normalMoveLeft.size(); i++)
+		{
+			o_Texture.push_back(animation.normalMoveLeft.at(i));
+		}
+		for (int j = 0; j < animation.normalMoveRight.size(); j++)
+		{
+			o_Texture.push_back(animation.normalMoveRight.at(j));
+		}
 	}
 
 	if (type == 2)
@@ -40,6 +49,14 @@ Enemies::Enemies(int type)
 		movementSpeed = 0.005f;
 		fixedSpeed = 0.005f;
 		reward = 25;
+		for (int i = 0; i < animation.fastMoveLeft.size(); i++)
+		{
+			o_Texture.push_back(animation.fastMoveLeft.at(i));
+		}
+		for (int j = 0; j < animation.fastMoveRight.size(); j++)
+		{
+			o_Texture.push_back(animation.fastMoveRight.at(j));
+		}
 	}
 
 	if (type == 3)
@@ -50,6 +67,7 @@ Enemies::Enemies(int type)
 		movementSpeed = 0.001f;
 		fixedSpeed = 0.001f;
 		reward = 100;
+
 	}
 
 	if (type == 4)
@@ -60,6 +78,14 @@ Enemies::Enemies(int type)
 		movementSpeed = 0.001f;
 		fixedSpeed = 0.001f;
 		reward = 100;
+		for (int i = 0; i < animation.tankMoveLeft.size(); i++)
+		{
+			o_Texture.push_back(animation.tankMoveLeft.at(i));
+		}
+		for (int j = 0; j < animation.tankMoveRight.size(); j++)
+		{
+			o_Texture.push_back(animation.tankMoveRight.at(j));
+		}
 	}
 }
 
@@ -70,7 +96,7 @@ Enemies::Enemies(Enemies* e)
 	movementSpeed = e->movementSpeed;
 	fixedSpeed = e->fixedSpeed;
 	reward = e->reward;
-
+	enemyType = e->enemyType;
 	o_Model = e->o_Model;
 	for (int i = 0; i < e->o_Texture.size(); i++) {
 		o_Texture.push_back(e->o_Texture.at(i));
@@ -122,8 +148,8 @@ void Enemies::MoveToLeft()
 }
 void Enemies::MoveToRight()
 {
-	
-	float deltaX = o_position.x - locationX*0.15;
+
+	float deltaX = o_position.x - locationX * 0.15;
 	if (deltaX >= 0.15)
 	{
 		lastLocationX = locationX;
@@ -166,11 +192,15 @@ void Enemies::MoveUp()
 	o_position.y += movementSpeed;
 	Translation.SetTranslation(o_position);
 	MVP = Scale * Rotation * Translation;
-	
+
 }
 
 void Enemies::MoveEnemies()
 {
+	int temp;
+	if (enemyType == 1) temp = animation.normalMoveLeft.size() + 1;
+	if (enemyType == 2) temp = animation.fastMoveLeft.size() + 1;
+	if (enemyType == 3 || enemyType == 4) temp = animation.tankMoveLeft.size() + 1;
 	int NumMap[7][8] =
 	{
 		1,1,0,0,0,0,0,0,
@@ -182,36 +212,44 @@ void Enemies::MoveEnemies()
 		0,1,1,1,1,1,1,1
 	};
 	if ((locationX - 1 != lastLocationX) && // To not move back
-		locationX > 0 && NumMap[locationY][locationX-1] == 1)  // Check if can move
+		locationX > 0 && NumMap[locationY][locationX - 1] == 1)  // Check if can move
 	{
+		o_Texture.at(0) = o_Texture.at(animation.GetAnimationMoveLeft(enemyType) + 1);
+		toLeft = true;
 		MoveToLeft();
 		return;
 	}
 	if ((locationX + 1 != lastLocationX) &&  //To not move back
-		locationX < 6 && NumMap[locationY][locationX+1] == 1) // Check if can move
+		locationX < 7 && NumMap[locationY][locationX + 1] == 1) // Check if can move
 	{
+		o_Texture.at(0) = o_Texture.at(animation.GetAnimationMoveRight(enemyType) + temp);
+		toLeft = false;
 		MoveToRight();
 		return;
 	}
 	if ((locationY - 1 != lastLocationY) && // To not move back
-		locationY > 0 && NumMap[locationY-1][locationX] == 1)  // Check if can move
+		locationY > 0 && NumMap[locationY - 1][locationX] == 1)  // Check if can move
 	{
+		if (!toLeft) o_Texture.at(0) = o_Texture.at(animation.GetAnimationMoveRight(enemyType) + temp);
+		else o_Texture.at(0) = o_Texture.at(animation.GetAnimationMoveLeft(enemyType) + 1);
 		MoveUp();
 		return;
 	}
 	if ((locationY + 1 != lastLocationY) && // To not move back
-		locationY < 7 && NumMap[locationY+1][locationX] == 1)  // Check if can move
+		locationY < 6 && NumMap[locationY + 1][locationX] == 1)  // Check if can move
 	{
+		if (!toLeft) o_Texture.at(0) = o_Texture.at(animation.GetAnimationMoveRight(enemyType) + temp);
+		else o_Texture.at(0) = o_Texture.at(animation.GetAnimationMoveLeft(enemyType) + 1);
 		MoveDown();
 		return;
 	}
 }
 
-void Enemies::Update() 
+void Enemies::Update()
 {
 	//cout << "X: " << (o_position.x + 0.075f) << " Y: " << (o_position.y - 0.1f) << endl;
 	CheckSlowed();
-	
+
 	MoveEnemies();
 	if (currentHP <= 0)
 	{

@@ -22,12 +22,6 @@ Projectile::Projectile(int type, Shaders shaders)
 
 	if (type == 0) 
 	{
-		//o_Texture.push_back(Texture("../ResourcesPacket/Textures/arrowUp.tga"));//0
-		//o_Texture.push_back(Texture("../ResourcesPacket/Textures/arrowRight.tga"));//1
-		//o_Texture.push_back(Texture("../ResourcesPacket/Textures/arrowDown.tga"));//2
-		//o_Texture.push_back(Texture("../ResourcesPacket/Textures/arrowLeft.tga"));//3
-		//o_Texture.push_back(Texture("../ResourcesPacket/Textures/arrowUp.tga"));//4
-
 		o_Texture.push_back("..//ResourcesPacket/Textures/fireBullet.tga");
 	}
 
@@ -37,7 +31,7 @@ Projectile::Projectile(int type, Shaders shaders)
 		o_Texture.push_back("../ResourcesPacket/Textures/explosion.tga");
 	}
 	if (type==2)  o_Texture.push_back("../ResourcesPacket/Textures/thunderBullet.tga");
-
+	if (type == 3) o_Texture.push_back("../ResourcesPacket/Textures/bullet.tga");
 	o_shaders = shaders;
 
 	movementSpeed = 0.01f;

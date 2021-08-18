@@ -48,10 +48,13 @@ public:
 	int NumMap[7][8];
 
 	Tile TileMap[7][8];
+	Enemies* normal[10] = { new Enemies(1), new Enemies(1),new Enemies(1), new Enemies(1), new Enemies(1), new Enemies(1), new Enemies(1), new Enemies(1), new Enemies(1), new Enemies(1) };
+	Enemies* fast[10] = { new Enemies(2), new Enemies(2),new Enemies(2), new Enemies(2), new Enemies(2), new Enemies(2), new Enemies(2), new Enemies(2), new Enemies(2), new Enemies(2) };
+	Enemies* tank[10] = { new Enemies(4),new Enemies(4),new Enemies(4),new Enemies(4),new Enemies(4),new Enemies(4),new Enemies(4),new Enemies(4),new Enemies(4),new Enemies(4) };
+	int numberOfTank = 0, numberOfFast = 0, numberOfNormal = 0;
 	vector <Enemies*> tempEnemyWave;
 	vector <Enemies*> enemyWave;
 	vector <Tower*> towerList;
-	//std::vector <int*> NumMap;
 	const int waveLength = 10;
 	const int mapHeight = 7;
 	const int mapWidth = 8;
