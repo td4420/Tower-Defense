@@ -5,7 +5,7 @@
 Projectile::Projectile()
 {
 	o_Model = Model("../Resources/modelProjectile.nfg");
-	o_Texture.push_back("../ResourcesPacket/Textures/machineGunTowerProjectile.tga");
+	//o_Texture.push_back("../ResourcesPacket/Textures/machineGunTowerProjectile.tga");
 }
 
 Projectile::Projectile(Projectile* p)
@@ -22,7 +22,7 @@ Projectile::Projectile(int type, Shaders shaders)
 
 	if (type == 0) 
 	{
-		o_Texture.push_back("..//ResourcesPacket/Textures/fireBullet.tga");
+		o_Texture.push_back("../ResourcesPacket/Textures/fireBullet.tga");
 	}
 
 	if (type == 1)

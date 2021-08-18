@@ -77,6 +77,7 @@ void PlayField::Draw()
 void PlayField::InitEnemyWave()
 {
 	if (waveEnd) {
+		cout << "Wave lv: " << waveNum + 1 << endl;
 		waveEnd = false;
 		numberOfFast = 0; numberOfNormal = 0; numberOfTank = 0;
 		for (int i = 0; i < 10; i++)

@@ -22,7 +22,7 @@ Tower::Tower(int type)
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/archerTower.tga"));
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/archerTower2.tga"));
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/archerTower3.tga"));
-		damage = 0;
+		damage = 8;
 		range = 0.3f;
 		reloadTime = 5.0f;
 		timeSinceLastShot = reloadTime;
@@ -46,11 +46,11 @@ Tower::Tower(int type)
 		o_Texture.push_back("../ResourcesPacket/Textures/slowTower.tga");
 		o_Texture.push_back("../ResourcesPacket/Textures/slowTower2.tga");
 		o_Texture.push_back("../ResourcesPacket/Textures/slowTower3.tga");
-		damage = 50;
+		damage = 30;
 		range = 0.5f;
-		reloadTime = 10.0f;
+		reloadTime = 12.0f;
 		timeSinceLastShot = reloadTime;
-		cost = 250;
+		cost = 400;
 	}
 
 	if (towerType == 3)//chance tower: 3%-5% chance for huge damage, 10-20% chance for slow
@@ -58,9 +58,9 @@ Tower::Tower(int type)
 		o_Texture.push_back("../ResourcesPacket/Textures/witchTower.tga");
 		o_Texture.push_back("../ResourcesPacket/Textures/witchTower2.tga");
 		o_Texture.push_back("../ResourcesPacket/Textures/witchTower3.tga");
-		damage = 15;
+		damage = 10;
 		range = 0.3f;
-		reloadTime = 6.0f;
+		reloadTime = 7.0f;
 		timeSinceLastShot = reloadTime;
 		cost = 350;
 	}
@@ -115,7 +115,7 @@ void Tower::Upgrade()//Upgrade price = 1/2 cost, each upgrade increases cost by 
 
 		if (towerType == 3)
 		{
-			damage += 10;
+			damage += 2;
 			range += 0.05f;
 		}
 	}
