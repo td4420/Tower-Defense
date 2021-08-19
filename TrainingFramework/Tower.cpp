@@ -12,6 +12,8 @@ Tower::Tower()
 
 Tower::Tower(int type)
 {
+	//placeTowerS.setBuffer(SoundController::GetInstance()->m_SoundBuffers.at(4));
+
 	towerType = type;
 	o_Model = Model("../Resources/model.nfg");
 	reloadSpeed = 0.1f;
@@ -76,6 +78,7 @@ Tower::~Tower()
 
 void Tower::Build(int x, int y)//Set Tower Texture position based on Tile Num
 {
+	//.play();
 	o_position.x = x * 0.15f;
 	o_position.y = y * -0.2f;
 	o_position.z = 0;

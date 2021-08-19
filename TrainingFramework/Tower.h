@@ -2,6 +2,8 @@
 #include "Object.h"
 #include "Enemies.h"
 #include "Projectile.h"
+#include "SFML/Audio.hpp"
+#include "SoundController.h"
 class Tower :
     public Object
 {
@@ -19,7 +21,6 @@ public:
     float timeSinceLastShot = reloadTime;
     int cost = 0;
     
-
     std::vector <Enemies*> enemiesInRange;
     std::vector <Projectile*> projectileOnScreen;
     Enemies *currentTarget;
@@ -33,6 +34,13 @@ public:
     void SetTarget();
     void Update();
     bool CheckReload();
+
+    sf::Sound placeTowerS;
+    sf::Sound type1ShootS;
+    sf::Sound type2ShootS;
+    sf::Sound type3ShootS;
+    sf::Sound upgradeS;
+    sf::Sound sellS;
 
     Tower();
     Tower(int towerType);

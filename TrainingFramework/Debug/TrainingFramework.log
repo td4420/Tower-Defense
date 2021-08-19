@@ -1,1 +1,8 @@
-﻿
+﻿cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  Tower.cpp
+D:\Dao_3DFrameworkTraining\TrainingFramework\Tower.cpp(74,20): warning C4018: '<': signed/unsigned mismatch
+D:\Dao_3DFrameworkTraining\TrainingFramework\Tower.cpp(182,20): warning C4018: '<': signed/unsigned mismatch
+D:\Dao_3DFrameworkTraining\TrainingFramework\Tower.cpp(196,21): warning C4018: '<': signed/unsigned mismatch
+D:\Dao_3DFrameworkTraining\TrainingFramework\Tower.cpp(223,21): warning C4018: '<': signed/unsigned mismatch
+D:\Dao_3DFrameworkTraining\TrainingFramework\Tower.cpp(299): warning C4715: 'Tower::CheckReload': not all control paths return a value
+  TrainingFramework.vcxproj -> D:\Dao_3DFrameworkTraining\BIN\TrainingFramework.exe

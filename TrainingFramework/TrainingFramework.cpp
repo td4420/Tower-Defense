@@ -13,6 +13,7 @@
 #include "Enemies.h"
 #include "Tower.h"
 #include "StatePlay.h"
+#include "SoundController.h"
 
 #define MOVE_FORWARD 1
 #define MOVE_BACKWARD 1 << 1
@@ -31,6 +32,7 @@ StatePlay sp = StatePlay();
 
 int Init(ESContext* esContext)
 {
+
 	sp.Init();
 
 	return myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");

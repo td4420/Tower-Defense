@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "StatePlay.h"
+#include "SoundController.h"
 
 StatePlay::StatePlay()
 {
@@ -72,6 +73,7 @@ void StatePlay::Init()
 	//towerButtonList.push_back(upgradeButton);
 	sellButton->o_shaders = myShaders;
 	sellButton->InitObject();
+
 }
 
 void StatePlay::Draw()
