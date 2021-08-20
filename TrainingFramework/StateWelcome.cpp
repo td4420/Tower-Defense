@@ -33,31 +33,28 @@ void StateWelcome::Update(float deltaTime) {
 	loading->text = num_char;
 }
 void StateWelcome::Draw(Shaders textShader, Shaders shapeShader) {
-	/*if (time > 0) {
-		glUseProgram(shapeShader.program);
-		glBindBuffer(GL_ARRAY_BUFFER, modelLogo->mVBO);
-		glBindTexture(GL_TEXTURE_2D, textureLogo->mTextureId);
+	glUseProgram(shapeShader.program);
+	glBindBuffer(GL_ARRAY_BUFFER, modelLogo->mVBO);
+	glBindTexture(GL_TEXTURE_2D, textureLogo->mTextureId);
 
-		if (shapeShader.positionAttribute != -1)
-		{
-			glEnableVertexAttribArray(shapeShader.positionAttribute);
-			glVertexAttribPointer(shapeShader.positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
-		}
-		if (shapeShader.uvAttribute != -1)
-		{
-			glEnableVertexAttribArray(shapeShader.uvAttribute);
-			glVertexAttribPointer(shapeShader.uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(2 * sizeof(Vector3)));
-		}
-
-		glUniformMatrix4fv(shapeShader.u_MVP, 1, GL_FALSE, *mvp.m);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, modelLogo->mIBO);
-		glDrawElements(GL_TRIANGLES, modelLogo->mNumberOfIndices, GL_UNSIGNED_INT, 0);
-		glBindTexture(GL_TEXTURE_2D, 0);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-		
+	if (shapeShader.positionAttribute != -1)
+	{
+		glEnableVertexAttribArray(shapeShader.positionAttribute);
+		glVertexAttribPointer(shapeShader.positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
 	}
-	else*/ 
+	if (shapeShader.uvAttribute != -1)
+	{
+		glEnableVertexAttribArray(shapeShader.uvAttribute);
+		glVertexAttribPointer(shapeShader.uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(2 * sizeof(Vector3)));
+	}
+
+	glUniformMatrix4fv(shapeShader.u_MVP, 1, GL_FALSE, *mvp.m);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, modelLogo->mIBO);
+	glDrawElements(GL_TRIANGLES, modelLogo->mNumberOfIndices, GL_UNSIGNED_INT, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	
 	if (percentLoad < 100) {
 		loading->RenderText(textShader);
 		pt->RenderText(textShader);
