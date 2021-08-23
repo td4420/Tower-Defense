@@ -34,10 +34,36 @@ void StateWelcome::Update(float deltaTime) {
 	num_char = tmp.c_str();
 	loading->text = num_char;
 }
+<<<<<<< HEAD
 void StateWelcome::Draw(Shaders* textShader, Shaders* shapeShader) {
 
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	//draw text
+=======
+void StateWelcome::Draw(Shaders textShader, Shaders shapeShader) {
+	glUseProgram(shapeShader.program);
+	glBindBuffer(GL_ARRAY_BUFFER, modelLogo->mVBO);
+	glBindTexture(GL_TEXTURE_2D, textureLogo->mTextureId);
+
+	if (shapeShader.positionAttribute != -1)
+	{
+		glEnableVertexAttribArray(shapeShader.positionAttribute);
+		glVertexAttribPointer(shapeShader.positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
+	}
+	if (shapeShader.uvAttribute != -1)
+	{
+		glEnableVertexAttribArray(shapeShader.uvAttribute);
+		glVertexAttribPointer(shapeShader.uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(2 * sizeof(Vector3)));
+	}
+
+	glUniformMatrix4fv(shapeShader.u_MVP, 1, GL_FALSE, *mvp.m);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, modelLogo->mIBO);
+	glDrawElements(GL_TRIANGLES, modelLogo->mNumberOfIndices, GL_UNSIGNED_INT, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	
+>>>>>>> 225342971ee67805f9f648b00dea681984a7f137
 	if (percentLoad < 100) {
 		loading->RenderText(textShader);
 		pt->RenderText(textShader);
