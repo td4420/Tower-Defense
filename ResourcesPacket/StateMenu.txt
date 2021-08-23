@@ -1,5 +1,5 @@
 Model: ../ResourcesPacket/Models/Button.nfg
-Texture: ../ResourcesPacket/Textures/Woman1.tga
+Texture: ../ResourcesPacket/Textures/bg.tga
 NumOfText: 4
 ID: 0
 TEXT: PLAY

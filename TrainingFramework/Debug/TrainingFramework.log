@@ -1,11 +1,10 @@
 ﻿cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-  StateWelcome.cpp
-C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StateWelcome.h(21,16): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StateWelcome.h(22,11): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StateWelcome.h(23,19): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StateWelcome.cpp(22,36): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StateWelcome.cpp(8,9): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StateWelcome.cpp(11,2): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StateWelcome.cpp(14,2): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StateWelcome.cpp(77,45): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+  StateMenu.cpp
+C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StateMenu.cpp(9,9): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StateMenu.cpp(11,2): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StateMenu.cpp(14,2): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StateMenu.cpp(81,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StateMenu.cpp(92,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StateMenu.cpp(95,50): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StateMenu.cpp(103,20): warning C4018: '<': signed/unsigned mismatch
   TrainingFramework.vcxproj -> C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\BIN\TrainingFramework.exe

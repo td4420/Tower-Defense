@@ -68,8 +68,8 @@ void StateMenu::Draw(Shaders* textShader, Shaders* shapeShader) {
 		glVertexAttribPointer(shapeShader->uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(2 * sizeof(Vector3)));
 	}
 	Matrix pos, scale, mvp;
-	scale.SetScale(0.5, 0.5, 0.5);
-	pos.SetTranslation(0, 0, 0);
+	scale.SetScale(2, 3, 2);
+	pos.SetTranslation(-3, -1, 0);
 	mvp = scale * pos;
 	glUniformMatrix4fv(shapeShader->u_MVP, 1, GL_FALSE, *mvp.m);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, modelLogo->mIBO);
