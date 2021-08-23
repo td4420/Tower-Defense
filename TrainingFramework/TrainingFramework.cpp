@@ -27,8 +27,8 @@ using namespace std;
 
 int keyPressed = 0;
 SceneManager* scenemanager = SceneManager::GetInstance("../ResourcesPacket/SM.txt");
-Shaders myShaders;
-Shaders textShader;
+Shaders* myShaders = new Shaders();
+Shaders* textShader = new Shaders();
 Camera* camera;
 Vector4 color(0.0, 0.3, 0.3, 0.8);
 //StateMenu* myStateMenu = new StateMenu();
@@ -38,8 +38,8 @@ Game* myGame = new Game();
 //StatePlay* statePlay = new StatePlay();
 int Init(ESContext* esContext)
 {
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-	glEnable(GL_DEPTH_TEST);
+	
+	//glEnable(GL_DEPTH_TEST);
 	
 	
 	//creation of shaders and program 
@@ -50,8 +50,8 @@ int Init(ESContext* esContext)
 	myGame->init();
 	
 	//myShaders = scenemanager->s_ListObject.at(0)->o_shaders;
-	myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
-	return textShader.Init("../Resources/Shaders/Text.vs", "../Resources/Shaders/Text.fs");
+	myShaders->Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
+	return textShader->Init("../Resources/Shaders/Text.vs", "../Resources/Shaders/Text.fs");
 
 }
 void Draw(ESContext* esContext)
@@ -238,7 +238,7 @@ int _tmain(int argc, TCHAR* argv[])
 
 	esInitContext(&esContext);
 
-	esCreateWindow(&esContext, "Hello Triangle", Globals::screenWidth, Globals::screenHeight, ES_WINDOW_RGB | ES_WINDOW_DEPTH);
+	esCreateWindow(&esContext, "Tower Defense", Globals::screenWidth, Globals::screenHeight, ES_WINDOW_RGB | ES_WINDOW_DEPTH);
 
 	if (Init(&esContext) != 0)
 		return 0;

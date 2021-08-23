@@ -19,7 +19,7 @@ public:
 	StatePlay* statePlay = new StatePlay();
 	
 	void Update(float deltaTime);
-	void Draw(Shaders textShader, Shaders shapeShader);
+	void Draw(Shaders* textShader, Shaders* shapeShader);
 	void init();
 	void OnMouseOver(int x, int y);
 	void OnMouseClick(int x, int y);

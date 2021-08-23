@@ -13,5 +13,5 @@ public:
 	int time = 30;
 	void init();
 	void Update(float deltaTime);
-	void Draw(Shaders textShader, Shaders shapeShader);
+	void Draw(Shaders* textShader, Shaders* shapeShader);
 };

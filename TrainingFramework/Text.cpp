@@ -33,22 +33,21 @@ void Text::init() {
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
 	color = Vector4(0.5, 0.5, 0.5, 0.5);
-	
+	glGenBuffers(1, &textVBO);
+	glGenTextures(1, &textImgTexture);
 	
 }
 
-void Text::RenderText(Shaders shader) {
-
-	glUseProgram(shader.program);
+void Text::RenderText(Shaders* shader) {
+	
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
+	glUseProgram(shader->program);
 	
-	glUniform4f(glGetUniformLocation(shader.program, "u_color"), color.x, color.y, color.z, color.w);
-	glGenBuffers(1, &textVBO);
-	glGenTextures(1, &textImgTexture);
+	glUniform4f(glGetUniformLocation(shader->program, "u_color"), color.x, color.y, color.z, color.w);
+	
 	glBindBuffer(GL_ARRAY_BUFFER, textVBO);
-	glActiveTexture(GL_TEXTURE0);
+	///glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, textImgTexture);
 
 	float sx = 1.0f / Globals::screenWidth * scaleX;
@@ -79,27 +78,30 @@ void Text::RenderText(Shaders shader) {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glGenerateMipmap(GL_TEXTURE_2D);
+		//glGenerateMipmap(GL_TEXTURE_2D);
 		
 		float x2 = x + m_glyphSlot->bitmap_left * sx;
 		float y2 = y + m_glyphSlot->bitmap_top * sy;
 		float w = m_glyphSlot->bitmap.width * sx;
 		float h = m_glyphSlot->bitmap.rows * sy;
-		GLfloat box[4][4] = {
+		GLfloat box[6][4] = {
 		{x2, y2 , 0, 0},
+		{x2 + w, y2 , 1, 0},
+		{x2, y2 - h, 0, 1},
+
 		{x2 + w, y2 , 1, 0},
 		{x2, y2 - h, 0, 1},
 		{x2 + w, y2 - h, 1, 1},
 		};
 		glBufferData(GL_ARRAY_BUFFER, sizeof(box), box, GL_STATIC_DRAW);
 		//glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(box), box);
-		if (glGetAttribLocation(shader.program, "a_position") != -1)
+		if (glGetAttribLocation(shader->program, "a_position") != -1)
 		{
-			glEnableVertexAttribArray(glGetAttribLocation(shader.program, "a_position"));
-			glVertexAttribPointer(glGetAttribLocation(shader.program, "a_position"), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+			glEnableVertexAttribArray(glGetAttribLocation(shader->program, "a_position"));
+			glVertexAttribPointer(glGetAttribLocation(shader->program, "a_position"), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
 		}
 
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
 		x += (m_glyphSlot->advance.x >> 6) * sx;
 		y += (m_glyphSlot->advance.y >> 6) * sy;
 	}
@@ -107,7 +109,7 @@ void Text::RenderText(Shaders shader) {
 	//glBindBuffer(GL_TEXTURE_2D, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	//glBlendFunc(GL_ONE, GL_ZERO);
-	glDisable(GL_BLEND);
+	//glDisable(GL_BLEND);
 	//glUseProgram(0);
 	
 }

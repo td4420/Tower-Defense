@@ -16,7 +16,7 @@ public:
 	vector<Text*> listText;
 	void init();
 	void Update(float deltaTime);
-	void Draw(Shaders textShader, Shaders shapeShader);
-	void OnMousOver(int x, int y);
+	void Draw(Shaders* textShader, Shaders* shapeShader);
+	void OnMouseOver(int x, int y);
 	void OnMouseClick(int x, int y);
 };

@@ -25,5 +25,6 @@ public:
 	void Update(float deltaTime);
 	void OnMouseOver(int x, int y);
 	void OnMouseClick(int x, int y);
-	void Draw(Shaders textShader, Shaders shapeShader);
+	void Draw(Shaders* textShader, Shaders* shapeShader);
+	void DrawLogo(Shaders* shapeShader);
 };

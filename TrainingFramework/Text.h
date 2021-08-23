@@ -22,7 +22,7 @@ public:
 	GLuint textImgTexture;
 	GLuint textVAO;
 	void init();
-	void RenderText(Shaders shader);
+	void RenderText(Shaders* shader);
 	bool checkChoose(int x, int y);
 	void highLight();
 	Text(const char* s, float x, float y, const char* fileFont, float scaleX, float scaleY, Vector4 color, int size);

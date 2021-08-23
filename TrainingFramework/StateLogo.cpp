@@ -23,23 +23,23 @@ void StateLogo::Update(float deltaTime) {
 	//	time--;
 	//}
 }
-void StateLogo::Draw(Shaders textShader, Shaders shapeShader) {
-	glUseProgram(shapeShader.program);
+void StateLogo::Draw(Shaders* textShader, Shaders* shapeShader) {
+	glUseProgram(shapeShader->program);
 	glBindBuffer(GL_ARRAY_BUFFER, modelLogo->mVBO);
 	glBindTexture(GL_TEXTURE_2D, textureLogo->mTextureId);
 
-	if (shapeShader.positionAttribute != -1)
+	if (shapeShader->positionAttribute != -1)
 	{
-		glEnableVertexAttribArray(shapeShader.positionAttribute);
-		glVertexAttribPointer(shapeShader.positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
+		glEnableVertexAttribArray(shapeShader->positionAttribute);
+		glVertexAttribPointer(shapeShader->positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
 	}
-	if (shapeShader.uvAttribute != -1)
+	if (shapeShader->uvAttribute != -1)
 	{
-		glEnableVertexAttribArray(shapeShader.uvAttribute);
-		glVertexAttribPointer(shapeShader.uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(2 * sizeof(Vector3)));
+		glEnableVertexAttribArray(shapeShader->uvAttribute);
+		glVertexAttribPointer(shapeShader->uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(2 * sizeof(Vector3)));
 	}
 
-	glUniformMatrix4fv(shapeShader.u_MVP, 1, GL_FALSE, *mvp.m);
+	glUniformMatrix4fv(shapeShader->u_MVP, 1, GL_FALSE, *mvp.m);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, modelLogo->mIBO);
 	glDrawElements(GL_TRIANGLES, modelLogo->mNumberOfIndices, GL_UNSIGNED_INT, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);

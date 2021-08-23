@@ -9,7 +9,8 @@ StatePlay::StatePlay()
 void StatePlay::init()
 {
 	
-	-myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
+	
+	myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
 	pf.Init(myShaders);
 
 	for (int i = 0; i < towerList.size(); i++) {

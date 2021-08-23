@@ -20,7 +20,8 @@ void StateOption::init() {
 void StateOption::Update(float deltaTime) {
 
 }
-void StateOption::Draw(Shaders textShader, Shaders shapeShader) {
+void StateOption::Draw(Shaders* textShader, Shaders* shapeShader) {
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	for (int i = 0; i < listText.size(); i++) {
 		listText.at(i)->RenderText(textShader);
 	}
@@ -32,7 +33,7 @@ void StateOption::Draw(Shaders textShader, Shaders shapeShader) {
 	}
 	std::cout << onSound;
 }
-void StateOption::OnMousOver(int x, int y) {
+void StateOption::OnMouseOver(int x, int y) {
 	if (back->checkChoose(x, y) == true) {
 		back->color = Vector4(0.6, 0.4, 0.5, 1.0);
 	}

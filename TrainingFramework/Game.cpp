@@ -3,7 +3,7 @@
 #include"StateBase.h"
 using namespace std;
 void Game::Update(float deltaTime) {
-	//getCurState();
+	getCurState();
 	if (curState == StateBase::StateControl::StateLogo) {
 		stateLogo->Update(deltaTime);
 	}
@@ -13,14 +13,14 @@ void Game::Update(float deltaTime) {
 	else if (curState == StateBase::StateControl::StateMenu) {
 		stateMenu->Update(deltaTime);
 	}
-	else if (curState == StateBase::StateControl::StatePlay) {
-		statePlay->Update();
-	}
+	
 	else if (curState == StateBase::StateControl::StateOption) {
 		stateOption->Update(deltaTime);
+	}else if (curState == StateBase::StateControl::StatePlay) {
+		statePlay->Update();
 	}
 }
-void Game::Draw(Shaders textShader, Shaders shapeShader) {
+void Game::Draw(Shaders* textShader, Shaders* shapeShader) {
 	getCurState();
 	if (curState == StateBase::StateControl::StateLogo) {
 		stateLogo->Draw(textShader, shapeShader);
@@ -34,13 +34,13 @@ void Game::Draw(Shaders textShader, Shaders shapeShader) {
 		stateMenu->Draw(textShader, shapeShader);
 		cout << "menu\n";
 	}
-	else if (curState == StateBase::StateControl::StatePlay) {
-		statePlay->Draw();
-		cout << "play\n";
-	}
+	
 	else if (curState == StateBase::StateControl::StateOption) {
 		stateOption->Draw(textShader, shapeShader);
 		cout << "option\n";
+	}else if (curState == StateBase::StateControl::StatePlay) {
+		statePlay->Draw();
+		cout << "play\n";
 	}
 }
 void Game::init() {
@@ -60,7 +60,7 @@ void Game::OnMouseOver(int x, int y) {
 		stateMenu->OnMouseOver(x,y);
 	}
 	else if (curState == StateBase::StateControl::StateOption) {
-		stateOption->OnMousOver(x, y);
+		stateOption->OnMouseOver(x, y);
 	}
 }
 void Game::OnMouseClick(int x, int y) {
