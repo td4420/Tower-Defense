@@ -53,20 +53,27 @@ void StatePlay::init()
 	// init upgrade button
 	upgradeButton = new Object();
 	upgradeButton->o_Model = Model("../Resources/model.nfg");
-	upgradeButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/upgradeButton.tga"));
+	upgradeButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/UpgradeButton.tga"));
 	upgradeButton->Build(12 * 0.15f, 0 * -0.2f);
-	//towerButtonList.push_back(upgradeButton);
 	upgradeButton->o_shaders = myShaders;
 	upgradeButton->InitObject();
 
 	// init sell button
 	sellButton = new Object();
 	sellButton->o_Model = Model("../Resources/model.nfg");
-	sellButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/sellButton.tga"));
+	sellButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/SellButton.tga"));
 	sellButton->Build(11 * 0.15f, 0 * -0.2f);
-	//towerButtonList.push_back(upgradeButton);
+	
 	sellButton->o_shaders = myShaders;
 	sellButton->InitObject();
+
+	// init sell button
+	nextWaveButton = new Object();
+	nextWaveButton->o_Model = Model("../Resources/model.nfg");
+	nextWaveButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/NextWaveButton.tga"));
+	nextWaveButton->Build(8 * 0.15f, 0 * -0.2f);
+	nextWaveButton->o_shaders = myShaders;
+	nextWaveButton->InitObject();
 }
 
 void StatePlay::Draw()
@@ -89,8 +96,14 @@ void StatePlay::Draw()
 	}
 
 	upgradeButton->DrawObject();
-
 	sellButton->DrawObject();
+
+	if (pf.waveEnd) {
+		nextWaveButton->DrawObject();
+
+	}
+
+
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
 	glDisable(GL_SAMPLE_ALPHA_TO_COVERAGE);
@@ -144,6 +157,14 @@ bool StatePlay::CheckSelectionOption(int x, int y)
 	if (x_sell_button <= x && x <= x_sell_button + 70
 		&& y_sell_button <= y && y <= y_sell_button + 70) {
 		selectMenuOption = towerButtonList.size() + 1;
+		return true;
+	}
+
+	float x_wave_button = nextWaveButton->o_position.x / 0.15f * 70;
+	float y_wave_button = nextWaveButton->o_position.y / -0.2f * 70;
+	if (x_wave_button <= x && x <= x_wave_button + 70
+		&& y_wave_button <= y && y <= y_wave_button + 70) {
+		selectMenuOption = towerButtonList.size() + 2;
 		return true;
 	}
 	return false;
@@ -221,6 +242,15 @@ void StatePlay::OnMouseClick(int x, int y)
 					break;
 				}
 			}
+			if (!CheckSelectionOption(x, y)) selectMenuOption = -1;
+		}
+		else if (selectMenuOption == towerButtonList.size() + 2) {
+			
+			if (pf.waveEnd) {
+				pf.nextWave = true;
+				printf("\n next wave btn");
+			}
+			
 			if (!CheckSelectionOption(x, y)) selectMenuOption = -1;
 		}
 	}

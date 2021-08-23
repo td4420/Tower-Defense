@@ -204,17 +204,17 @@ void TouchActionDown(ESContext* esContext, int x, int y)
 	myGame->OnMouseClick(x, y);
 	//stateWelcome->OnMouseClick(x,y);
 	//statePlay->OnMouseClick(x,y);
-	printf("\n: mouse down at: %d, %d", x, y);
+	
 }
 
 void TouchActionUp(ESContext* esContext, int x, int y)
 {
 	//myGame->OnMouseClick(x, y);
-	printf("\n: mouse up at: %d, %d", x, y);
+	
 }
 void TouchActionDrag(ESContext* esCotext, int x, int y) {
 	//move drag
-	printf("\n mouse when drag: %d, %d", x, y);
+	
 }
 
 void TouchActionMove(ESContext* esContext, int x, int y)

@@ -22,6 +22,7 @@ public:
 	std::vector <Object*> towerButtonList;
 	Object* upgradeButton;
 	Object* sellButton;
+	Object* nextWaveButton;
 
 	int selectMenuOption = -1;
 	int NumMap[7][8] =
