@@ -13,6 +13,7 @@
 #include "PlayField.h"
 #include "Enemies.h"
 #include "Tower.h"
+#include "Frame.h"
 class StatePlay
 {
 public:
@@ -20,6 +21,7 @@ public:
 	PlayField pf = PlayField();
 	std::vector <Tower*> towerList;
 	std::vector <Object*> towerButtonList;
+	vector <Frame*> frameList;
 	Object* upgradeButton;
 	Object* sellButton;
 

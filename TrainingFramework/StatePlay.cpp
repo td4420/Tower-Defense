@@ -9,7 +9,6 @@ StatePlay::StatePlay()
 void StatePlay::init()
 {
 	
-	
 	myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
 	pf.Init(myShaders);
 
@@ -18,27 +17,39 @@ void StatePlay::init()
 		towerList.at(i)->InitObject();
 	}
 
-
 	//add Button Tower 
+	Frame* frameArcher = new Frame();
+	Frame* frameMortar = new Frame();
+	Frame* frameSlow = new Frame();
+	Frame* frameWitch = new Frame();
+	frameList.push_back(frameArcher);
+	frameList.push_back(frameMortar);
+	frameList.push_back(frameSlow);
+	frameList.push_back(frameWitch);
+
 	Object* archerTowerButton = new Object();
 	archerTowerButton->o_Model = Model("../Resources/model.nfg");
 	archerTowerButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/archerTowerButton.tga"));
 	archerTowerButton->Build(10 * 0.15f, 1 * -0.2f);
+	frameArcher->Build(10 * 0.15f, 1 * -0.2f);
 
 	Object* mortarTowerButton = new Object();
 	mortarTowerButton->o_Model = Model("../Resources/model.nfg");
 	mortarTowerButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTowerButton.tga"));
 	mortarTowerButton->Build(10 * 0.15f, 3 * -0.2f);
+	frameMortar->Build(10 * 0.15f, 3 * -0.2f);
 
 	Object* slowTowerButton = new Object();
 	slowTowerButton->o_Model = Model("../Resources/model.nfg");
 	slowTowerButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/slowTowerButton.tga"));
 	slowTowerButton->Build(10 * 0.15f, 5 * -0.2f);
+	frameSlow->Build(10 * 0.15f, 5 * -0.2f);
 
 	Object* witchTowerButton = new Object();
 	witchTowerButton->o_Model = Model("../Resources/model.nfg");
 	witchTowerButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/witchTowerButton.tga"));
 	witchTowerButton->Build(10 * 0.15f, 7 * -0.2f);
+	frameWitch->Build(10 * 0.15f, 7 * -0.2f);
 
 	towerButtonList.push_back(archerTowerButton);
 	towerButtonList.push_back(mortarTowerButton);
@@ -48,6 +59,11 @@ void StatePlay::init()
 	for (int i = 0; i < towerButtonList.size(); i++) {
 		towerButtonList.at(i)->o_shaders = myShaders;
 		towerButtonList.at(i)->InitObject();
+	}
+
+	for (int i = 0; i < frameList.size(); i++) {
+		frameList.at(i)->o_shaders = myShaders;
+		frameList.at(i)->InitObject();
 	}
 
 	// init upgrade button
@@ -62,9 +78,8 @@ void StatePlay::init()
 	// init sell button
 	sellButton = new Object();
 	sellButton->o_Model = Model("../Resources/model.nfg");
-	sellButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/sellButton.tga"));
+	sellButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/sell.tga"));
 	sellButton->Build(11 * 0.15f, 0 * -0.2f);
-	//towerButtonList.push_back(upgradeButton);
 	sellButton->o_shaders = myShaders;
 	sellButton->InitObject();
 }
@@ -84,13 +99,17 @@ void StatePlay::Draw()
 		towerList.at(i)->Shoot();
 	}
 
+	for (int i = 0; i < frameList.size(); i++) {
+		frameList.at(i)->DrawObject();
+	}
+
 	for (int i = 0; i < towerButtonList.size(); i++) {
 		towerButtonList.at(i)->DrawObject();
 	}
 
 	upgradeButton->DrawObject();
-
 	sellButton->DrawObject();
+
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
 	glDisable(GL_SAMPLE_ALPHA_TO_COVERAGE);
@@ -230,6 +249,11 @@ void StatePlay::CleanUp()
 {
 	for (int i = 0; i < towerList.size(); i++) {
 		delete towerList.at(i);// bad pointer deletion if u set tower thats not pointer
+	}
+
+	for (int i = 0; i < frameList.size(); i++)
+	{
+		delete frameList.at(i);
 	}
 
 	for (int i = 0; i < towerButtonList.size(); i++) {

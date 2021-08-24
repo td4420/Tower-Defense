@@ -24,7 +24,10 @@ void PlayField::Init(Shaders shaders)
 
 	myShaders = shaders;
 	int NumMap[7][8];
-
+	background->o_Model = Model("../Resources/modelBackground.nfg");
+	background->o_Texture.push_back("../ResourcesPacket/Textures/bg.tga");
+	background->o_shaders = shaders;
+	background->InitObject();
 
 	for (int i = 0; i < 7; i++)
 	{
@@ -60,6 +63,8 @@ void PlayField::Init(Shaders shaders)
 
 void PlayField::Draw()
 {
+	background->DrawObject();
+
 	for (int i = 0; i < mapHeight; i++) {
 		for (int j = 0; j < mapWidth; j++) {
 			TileMap[i][j].Draw();
@@ -131,10 +136,23 @@ void PlayField::Update()
 {
 	for (int i = 0; i < enemyWave.size(); i++)
 	{
-		if ((enemyWave.at(i)->locationX == 7 && enemyWave.at(i)->locationY == 6) || !enemyWave.at(i)->alive)
+		if (!enemyWave.at(i)->alive)
 		{
-			enemyWave.erase(enemyWave.begin() + i);
+			money += enemyWave.at(i)->reward;
+			cout << "Gold: " << money << endl;
+			//enemyWave.erase(enemyWave.begin() + i);
 		}
+
+		if (enemyWave.at(i)->locationX == 7 && enemyWave.at(i)->locationY == 6)
+		{
+			HP -= 1;
+			cout << "Lives: " << HP << endl;
+			enemyWave.at(i)->reachedExit = true;
+			//enemyWave.erase(enemyWave.begin() + i);
+		}
+
+		if (enemyWave.at(i)->alive == false || enemyWave.at(i)->reachedExit == true) enemyWave.erase(enemyWave.begin() + i);//glitch when reset
+
 		else enemyWave.at(i)->Update();
 	}
 
@@ -142,7 +160,7 @@ void PlayField::Update()
 		waveEnd = true;
 	}
 
-	if (waveNum == waveMax) {
+	if (waveNum == waveMax || HP<=0) {
 		gameOver = true;
 		//cout << "Game Over!" << endl;
 	}

@@ -208,7 +208,7 @@ void Tower::Shoot()//leak here
 {
 	if (enemiesInRange.size() != 0 && currentTarget != nullptr) {
 		if (CheckReload()) {
-			Projectile* p = new Projectile(towerType, o_shaders);//will leak if !bullet->reachedTarget
+			Projectile* p = new Projectile(towerType, o_shaders);//will leak if !bullet->reachedTarget when exit
 			p->target = currentTarget;
 			p->InitObject();
 			if (towerType != 2) p->SetFiringLocation(o_position.x, o_position.y);
@@ -219,7 +219,6 @@ void Tower::Shoot()//leak here
 
 		for (int i = 0; i < projectileOnScreen.size(); i++) {
 			if (projectileOnScreen.at(i)->target == nullptr || projectileOnScreen.at(i)->target->alive == false) {
-				//cout << "nul" << endl;
 				projectileOnScreen.at(i)->nullified = true;
 			}
 
@@ -252,7 +251,6 @@ void Tower::Shoot()//leak here
 
 			if (projectileOnScreen.at(i)->nullified == true)
 			{
-				//cout << "Nulled ";
 				delete projectileOnScreen.at(i);
 				projectileOnScreen.erase(projectileOnScreen.begin() + i);
 			}

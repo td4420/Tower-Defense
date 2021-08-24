@@ -24,23 +24,23 @@ void Game::Draw(Shaders* textShader, Shaders* shapeShader) {
 	getCurState();
 	if (curState == StateBase::StateControl::StateLogo) {
 		stateLogo->Draw(textShader, shapeShader);
-		cout << "logo\n";
+		//cout << "logo\n";
 	}
 	else if (curState == StateBase::StateControl::StateWelcome) {
 		stateWelcome->Draw(textShader, shapeShader);
-		cout << "wellcome\n";
+		//cout << "welcome\n";
 	}
 	else if (curState == StateBase::StateControl::StateMenu) {
 		stateMenu->Draw(textShader, shapeShader);
-		cout << "menu\n";
+		//cout << "menu\n";
 	}
 	
 	else if (curState == StateBase::StateControl::StateOption) {
 		stateOption->Draw(textShader, shapeShader);
-		cout << "option\n";
+		//cout << "option\n";
 	}else if (curState == StateBase::StateControl::StatePlay) {
 		statePlay->Draw();
-		cout << "play\n";
+		//cout << "play\n";
 	}
 }
 void Game::init() {
@@ -49,7 +49,7 @@ void Game::init() {
 	stateWelcome->init();
 	statePlay->init();
 	stateOption->init();
-	curState = StateBase::StateControl::StateWelcome;
+	curState = StateBase::StateControl::StatePlay;
 	
 }
 void Game::OnMouseOver(int x, int y) {

@@ -226,10 +226,7 @@ void TouchActionMove(ESContext* esContext, int x, int y)
 }
 void CleanUp()
 {
-	for (int i = 0; i < scenemanager->numberOfObject; i++)
-	{
-		scenemanager->s_ListObject.at(i)->~Object();
-	}
+	myGame->statePlay->CleanUp();
 }
 int _tmain(int argc, TCHAR* argv[])
 {

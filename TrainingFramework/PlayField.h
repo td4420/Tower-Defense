@@ -10,6 +10,9 @@ public:
 	const float disX = 0.15f;
 	const float disY = 0.2f;
 
+	int HP = 20;
+	int money = 500;
+
 	int NumMapEasy[7][8] = {
 		0,0,0,0,0,1,1,1,
 		0,1,1,1,0,1,0,1,
@@ -67,6 +70,7 @@ public:
 	float timeSinceLastSpawn = 15.0f;
 	int waveNum = 0;//save the number of waves in a lv;
 	Shaders myShaders;
+	Object* background = new Object();
 
 	void Init(Shaders myShaders);
 	void Draw();
