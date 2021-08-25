@@ -31,8 +31,9 @@ void Text::init() {
 	}
 	widthText += 14.5;
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-	color = Vector4(0.5, 0.5, 0.5, 0.5);
+	//color = color;
+	Vector4 temp = color;
+	color = temp;
 	glGenBuffers(1, &textVBO);
 	glGenTextures(1, &textImgTexture);
 	

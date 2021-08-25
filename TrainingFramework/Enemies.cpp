@@ -23,10 +23,11 @@ Enemies::Enemies(int type)
 	slowTime = 0.0f;
 	enemyType = type;
 	animation.Init();
+
 	if (type == 1)
 	{
 		o_Texture.push_back(Texture("../Resources/enemy.tga"));
-		maxHP = 70;
+		maxHP = 100;
 		currentHP = maxHP;
 		movementSpeed = 0.003f;
 		fixedSpeed = 0.002f;
@@ -44,7 +45,7 @@ Enemies::Enemies(int type)
 	if (type == 2)
 	{
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/fastEnemy.tga"));
-		maxHP = 50;
+		maxHP = 70;
 		currentHP = maxHP;
 		movementSpeed = 0.005f;
 		fixedSpeed = 0.005f;
@@ -87,11 +88,13 @@ Enemies::Enemies(int type)
 			o_Texture.push_back(animation.tankMoveRight.at(j));
 		}
 	}
+	HP->moveSpeed = movementSpeed;
 }
 
 Enemies::Enemies(Enemies* e)
 {
 	maxHP = e->maxHP;
+	cout << "jafajf";
 	currentHP = this->maxHP;
 	movementSpeed = e->movementSpeed;
 	fixedSpeed = e->fixedSpeed;
@@ -249,26 +252,23 @@ void Enemies::Update()
 {
 	//cout << "X: " << (o_position.x + 0.075f) << " Y: " << (o_position.y - 0.1f) << endl;
 	CheckSlowed();
-
 	MoveEnemies();
+
+	strHP = std::to_string(currentHP);
+	charHp = strHP.c_str();
+	HP->text = charHp;
+
 	if (currentHP <= 0)
 	{
 		alive = false;
 	}
 }
 
-void Enemies::Kill()
-{
-	if (reachedExit == true);
-
-	//if (currentHP <= 0) ~Object();
-}
-
 void Enemies::CheckSlowed()
 {
 	if (slowed && slowTime <= 0.1f)
 	{
-		slowTime = 6.1f;
+		slowTime = 8.1f;
 		//slowed = false;
 	}
 
@@ -287,17 +287,18 @@ void Enemies::CheckSlowed()
 void Enemies::Reset()
 {
 	alive = true;
+	reachedExit = false;
 	o_position.x = 0; o_position.y = 0;
 	locationX = 0; locationY = 0; lastLocationX = 0; lastLocationY = 0;
 	if (enemyType == 1)
 	{
-		maxHP = 70;
-		currentHP = 70;
+		maxHP = 100;
+		currentHP = maxHP;
 	}
 	if (enemyType == 2)
 	{
-		maxHP = 50;
-		currentHP = 50;
+		maxHP = 70;
+		currentHP = 70;
 	}
 	if (enemyType == 4)
 	{

@@ -26,10 +26,10 @@ public:
 	int enemyWaveEasy[10][10] =//used to init waves
 	{
 		1,1,1,1,1,1,0,0,0,0,
-		1,1,1,1,1,1,1,1,1,1,
+		1,1,1,0,1,0,1,0,1,1,
 		1,1,1,1,1,1,1,1,1,1,
 		0,2,0,2,0,2,0,2,0,0,
-		1,2,0,1,2,0,1,2,0,0,
+		1,2,0,1,2,0,1,2,0,2,
 		0,0,0,0,4,0,0,0,0,0,
 		1,0,0,1,0,4,0,0,1,2,
 		2,2,2,2,2,2,2,2,2,2,
@@ -70,7 +70,7 @@ public:
 	float timeSinceLastSpawn = 15.0f;
 	int waveNum = 0;//save the number of waves in a lv;
 	Shaders myShaders;
-	Object* background = new Object();
+	Object* background;
 
 	void Init(Shaders myShaders);
 	void Draw();

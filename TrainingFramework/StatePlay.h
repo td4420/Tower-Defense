@@ -14,16 +14,29 @@
 #include "Enemies.h"
 #include "Tower.h"
 #include "Frame.h"
+#include "Text.h"
+#include <sstream>
 class StatePlay
 {
 public:
 	Shaders myShaders;
+	//Shaders *textShaders = new Shaders();
 	PlayField pf = PlayField();
 	std::vector <Tower*> towerList;
 	std::vector <Object*> towerButtonList;
 	vector <Frame*> frameList;
 	Object* upgradeButton;
 	Object* sellButton;
+	Object* background;
+
+	std::string strLives = std::to_string(pf.HP);
+	char const* cLives = strLives.c_str();
+	Text* lives = new Text(cLives, 810, 350, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 0.0, 0.0, 1.0), 68);
+
+	std::string strMoney = std::to_string(pf.money);
+	char const* cMoney = strMoney.c_str();
+	Text* money = new Text(cMoney, 810, 310, "../Font/OceanSummer.ttf", 1, 1, Vector4(0.0, 1.0, 0.0, 1.0), 68);
+	//Text* gold;
 
 	int selectMenuOption = -1;
 	int NumMap[7][8] =
@@ -38,7 +51,7 @@ public:
 	};
 
 	void init();
-	void Draw();
+	void Draw(Shaders* textShaders);
 	void Update();
 	bool IsBuildable(int xPos, int yPos);
 	bool CheckSelectionOption(int x, int y);

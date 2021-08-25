@@ -18,7 +18,7 @@ public:
     float reloadSpeed = 0.1f;
     float timeSinceLastShot = reloadTime;
     int cost = 0;
-
+    int shotFired = 0;
 
     std::vector <Enemies*> enemiesInRange;
     std::vector <Projectile*> projectileOnScreen;

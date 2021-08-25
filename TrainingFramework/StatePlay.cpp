@@ -8,9 +8,18 @@ StatePlay::StatePlay()
 
 void StatePlay::init()
 {
-	
+	lives->init();
+	money->init();
 	myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
+	
 	pf.Init(myShaders);
+
+	background = new Object();
+	background->o_Model = Model("../Resources/modelBackground.nfg");
+	background->o_Texture.push_back("../ResourcesPacket/Textures/bgPlay.tga");
+	background->o_shaders = myShaders;
+	background->Build(0*0.15f, 0*0.2f);
+	background->InitObject();
 
 	for (int i = 0; i < towerList.size(); i++) {
 		towerList.at(i)->o_shaders = myShaders;
@@ -30,26 +39,26 @@ void StatePlay::init()
 	Object* archerTowerButton = new Object();
 	archerTowerButton->o_Model = Model("../Resources/model.nfg");
 	archerTowerButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/archerTowerButton.tga"));
-	archerTowerButton->Build(10 * 0.15f, 1 * -0.2f);
-	frameArcher->Build(10 * 0.15f, 1 * -0.2f);
+	archerTowerButton->Build(9 * 0.15f, 1.5f * -0.2f);
+	frameArcher->Build(9 * 0.15f, 1.5f * -0.2f);
 
 	Object* mortarTowerButton = new Object();
 	mortarTowerButton->o_Model = Model("../Resources/model.nfg");
 	mortarTowerButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTowerButton.tga"));
-	mortarTowerButton->Build(10 * 0.15f, 3 * -0.2f);
-	frameMortar->Build(10 * 0.15f, 3 * -0.2f);
+	mortarTowerButton->Build(11 * 0.15f, 1.5f * -0.2f);
+	frameMortar->Build(11 * 0.15f, 1.5f * -0.2f);
 
 	Object* slowTowerButton = new Object();
 	slowTowerButton->o_Model = Model("../Resources/model.nfg");
 	slowTowerButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/slowTowerButton.tga"));
-	slowTowerButton->Build(10 * 0.15f, 5 * -0.2f);
-	frameSlow->Build(10 * 0.15f, 5 * -0.2f);
+	slowTowerButton->Build(9 * 0.15f, 3 * -0.2f);
+	frameSlow->Build(9 * 0.15f, 3 * -0.2f);
 
 	Object* witchTowerButton = new Object();
 	witchTowerButton->o_Model = Model("../Resources/model.nfg");
 	witchTowerButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/witchTowerButton.tga"));
-	witchTowerButton->Build(10 * 0.15f, 7 * -0.2f);
-	frameWitch->Build(10 * 0.15f, 7 * -0.2f);
+	witchTowerButton->Build(11 * 0.15f, 3 * -0.2f);
+	frameWitch->Build(11 * 0.15f, 3 * -0.2f);
 
 	towerButtonList.push_back(archerTowerButton);
 	towerButtonList.push_back(mortarTowerButton);
@@ -78,13 +87,13 @@ void StatePlay::init()
 	// init sell button
 	sellButton = new Object();
 	sellButton->o_Model = Model("../Resources/model.nfg");
-	sellButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/sell.tga"));
+	sellButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/sellButton.tga"));
 	sellButton->Build(11 * 0.15f, 0 * -0.2f);
 	sellButton->o_shaders = myShaders;
 	sellButton->InitObject();
 }
 
-void StatePlay::Draw()
+void StatePlay::Draw(Shaders * textShaders)
 {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
@@ -93,6 +102,7 @@ void StatePlay::Draw()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
+	background->DrawObject();
 	pf.Draw();
 	for (int i = 0; i < towerList.size(); i++) {
 		towerList.at(i)->DrawObject();
@@ -113,6 +123,9 @@ void StatePlay::Draw()
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
 	glDisable(GL_SAMPLE_ALPHA_TO_COVERAGE);
+
+	lives->RenderText(textShaders);
+	money->RenderText(textShaders);
 }
 
 void StatePlay::Update()
@@ -136,6 +149,14 @@ void StatePlay::Update()
 			}
 		}
 	}
+
+	strLives = std::to_string(pf.HP);
+	cLives = strLives.c_str();
+	lives->text = cLives;
+	
+	strMoney = std::to_string(pf.money);
+	cMoney = strMoney.c_str();
+	money->text = cMoney;
 }
 
 bool StatePlay::CheckSelectionOption(int x, int y)
@@ -234,6 +255,8 @@ void StatePlay::OnMouseClick(int x, int y)
 			for (int i = 0; i < towerList.size(); i++) {
 				Vector3 o_positon = towerList.at(i)->o_position;
 				if (xPos * 0.15f == o_positon.x && yPos * -0.2f == o_positon.y) {
+					pf.money += towerList.at(i)->cost/2;
+					cout << "Tower sell for: " << towerList.at(i)->cost/2 << endl;
 					delete towerList.at(i);
 					towerList.erase(towerList.begin() + i);
 					selectMenuOption = -1;
@@ -247,7 +270,14 @@ void StatePlay::OnMouseClick(int x, int y)
 
 void StatePlay::CleanUp()
 {
+	delete background;
+
 	for (int i = 0; i < towerList.size(); i++) {
+		for (int j = 0; j < towerList.at(i)->projectileOnScreen.size(); j++)
+		{
+			delete towerList.at(i)->projectileOnScreen.at(j);
+			towerList.at(i)->projectileOnScreen.erase(towerList.at(i)->projectileOnScreen.begin() + j);
+		}
 		delete towerList.at(i);// bad pointer deletion if u set tower thats not pointer
 	}
 

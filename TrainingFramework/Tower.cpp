@@ -22,9 +22,9 @@ Tower::Tower(int type)
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/archerTower.tga"));
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/archerTower2.tga"));
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/archerTower3.tga"));
-		damage = 8;
+		damage = 10;
 		range = 0.3f;
-		reloadTime = 5.0f;
+		reloadTime = 10.0f;
 		timeSinceLastShot = reloadTime;
 		cost = 100;
 	}
@@ -36,7 +36,7 @@ Tower::Tower(int type)
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTower3temp.tga"));
 		damage = 70;
 		range = 0.5f;
-		reloadTime = 20.0f;
+		reloadTime = 25.0f;
 		timeSinceLastShot = reloadTime;
 		cost = 500;
 	}
@@ -47,8 +47,8 @@ Tower::Tower(int type)
 		o_Texture.push_back("../ResourcesPacket/Textures/slowTower2.tga");
 		o_Texture.push_back("../ResourcesPacket/Textures/slowTower3.tga");
 		damage = 30;
-		range = 0.5f;
-		reloadTime = 12.0f;
+		range = 0.4f;
+		reloadTime = 15.0f;
 		timeSinceLastShot = reloadTime;
 		cost = 400;
 	}
@@ -60,9 +60,9 @@ Tower::Tower(int type)
 		o_Texture.push_back("../ResourcesPacket/Textures/witchTower3.tga");
 		damage = 10;
 		range = 0.3f;
-		reloadTime = 7.0f;
+		reloadTime = 10.0f;
 		timeSinceLastShot = reloadTime;
-		cost = 350;
+		cost = 360;
 	}
 }
 
@@ -104,6 +104,7 @@ void Tower::Upgrade()//Upgrade price = 1/2 cost, each upgrade increases cost by 
 		{
 			damage += 10;
 			range += 0.1f;
+			reloadTime -= 1.0f;
 		}
 
 		if (towerType == 2)
@@ -131,7 +132,7 @@ void Tower::Upgrade()//Upgrade price = 1/2 cost, each upgrade increases cost by 
 
 		if (towerType == 1)
 		{
-			damage += 10;
+			damage += 20;
 			range += 0.1f;
 		}
 
@@ -144,7 +145,7 @@ void Tower::Upgrade()//Upgrade price = 1/2 cost, each upgrade increases cost by 
 
 		if (towerType == 3)
 		{
-			damage += 10;
+			damage += 0;
 			range += 0.05f;
 		}
 	}
@@ -184,6 +185,7 @@ void Tower::AddEnemiesInRange(vector <Enemies*> enemyWave)//check if enemies in 
 			//cout << enemiesInRange.at(i)->o_position.x << endl;
 		}
 	}
+	SetTarget();
 }
 
 void Tower::RemoveEnemiesOutOfRange()//Remove enemies moved out of range and update target
@@ -201,19 +203,22 @@ void Tower::RemoveEnemiesOutOfRange()//Remove enemies moved out of range and upd
 		}
 	}
 
-	SetTarget();
+	//SetTarget();
 }
 
 void Tower::Shoot()//leak here
 {
 	if (enemiesInRange.size() != 0 && currentTarget != nullptr) {
+		//cout << currentTarget->currentHP << endl;
 		if (CheckReload()) {
-			Projectile* p = new Projectile(towerType, o_shaders);//will leak if !bullet->reachedTarget when exit
+			Projectile* p = new Projectile(towerType, o_shaders);
 			p->target = currentTarget;
 			p->InitObject();
 			if (towerType != 2) p->SetFiringLocation(o_position.x, o_position.y);
 			if (towerType == 2) p->SetFiringLocation(currentTarget->o_position.x - 0.05f, currentTarget->o_position.y + 0.15f);
 			projectileOnScreen.push_back(p);
+			//shotFired++;
+			//cout << "Tower at " << o_position.x << " & " << o_position.y << " fired: " << shotFired << endl;
 		}
 
 

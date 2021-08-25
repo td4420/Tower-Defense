@@ -24,10 +24,13 @@ void PlayField::Init(Shaders shaders)
 
 	myShaders = shaders;
 	int NumMap[7][8];
-	background->o_Model = Model("../Resources/modelBackground.nfg");
+
+	/*background = new Object();
+	background->o_Model = Model("../ResourcesPacket/Models/Button.nfg");
 	background->o_Texture.push_back("../ResourcesPacket/Textures/bg.tga");
 	background->o_shaders = shaders;
-	background->InitObject();
+	background->Build(-1.0f, 1.0f);
+	background->InitObject();*/
 
 	for (int i = 0; i < 7; i++)
 	{
@@ -63,7 +66,7 @@ void PlayField::Init(Shaders shaders)
 
 void PlayField::Draw()
 {
-	background->DrawObject();
+	//background->DrawObject();
 
 	for (int i = 0; i < mapHeight; i++) {
 		for (int j = 0; j < mapWidth; j++) {

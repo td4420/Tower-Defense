@@ -39,7 +39,7 @@ void Game::Draw(Shaders* textShader, Shaders* shapeShader) {
 		stateOption->Draw(textShader, shapeShader);
 		//cout << "option\n";
 	}else if (curState == StateBase::StateControl::StatePlay) {
-		statePlay->Draw();
+		statePlay->Draw(textShader);
 		//cout << "play\n";
 	}
 }

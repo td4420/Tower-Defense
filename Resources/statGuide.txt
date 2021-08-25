@@ -1,0 +1,24 @@
+Tháp tên:
+Lv1: 10, bắn nhanh , tầm 1 ô, 100$
+Lv2: 15, +50$
+Lv3: 20, +75$
+
+Tháp pháo:
+Lv1: 70, bắn siêu chậm, tầm 2 ô , 500$
+Lv2: 80, tầm 2.5 ô, +250$
+Lv3: 100, tầm 3 ô, +375$
+
+Tháp sét: Gây choáng ngắn
+Lv1: 30, bắn chậm, tầm 1.5 ô, 400$
+Lv2: 40, +200$
+Lv3: 50, +300$, tầm 2 ô
+
+Tháp phù thuỷ:
+Lv1 : 10, bắn trung bình ,10% choáng, 3% chí mạng, tầm 1 ô, 360$
+LV2 : 12, 15% choáng, 4% chí mạng, +180$
+Lv3 : 12, 20% choáng, 5% chí mạng, tầm 1.5 ô ,+270$
+
+Quái
+Thường: 100Hp, chạy trung bình, 30$
+Nhanh: 70Hp, chạy nhanh, 25$
+Tank: 300Hp, chạy chậm, 100$

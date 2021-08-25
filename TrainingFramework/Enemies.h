@@ -5,6 +5,9 @@
 #include "Shaders.h"
 #include "Vertex.h"
 #include "Animation.h"
+#include "Text.h"
+#include <cstring>
+#include <sstream>
 class Enemies :
 	public Object
 {
@@ -20,6 +23,10 @@ public:
 	int lastLocationX = 0, lastLocationY = 0;
 	int maxHP = 60;
 	int currentHP = 60;
+
+	string strHP = std::to_string(currentHP);
+	char const* charHp = strHP.c_str();
+	Text* HP = new Text(charHp, o_position.x, o_position.y + 0.01f, "../Font/OceanSummer.ttf", 1, 1, Vector4(0.6, 0.6, 0.6, 0.6), 3);
 
 	float movementSpeed = 0.001f;
 	float fixedSpeed = movementSpeed;
