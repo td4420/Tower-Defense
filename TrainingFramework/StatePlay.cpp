@@ -91,6 +91,14 @@ void StatePlay::init()
 	sellButton->Build(11 * 0.15f, 0 * -0.2f);
 	sellButton->o_shaders = myShaders;
 	sellButton->InitObject();
+
+	// init sell button
+	nextWaveButton = new Object();
+	nextWaveButton->o_Model = Model("../Resources/model.nfg");
+	nextWaveButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/NextWaveButton.tga"));
+	nextWaveButton->Build(8 * 0.15f, 0 * -0.2f);
+	nextWaveButton->o_shaders = myShaders;
+	nextWaveButton->InitObject();
 }
 
 void StatePlay::Draw(Shaders * textShaders)
@@ -119,6 +127,10 @@ void StatePlay::Draw(Shaders * textShaders)
 
 	upgradeButton->DrawObject();
 	sellButton->DrawObject();
+	if (pf.waveEnd) {
+		nextWaveButton->DrawObject();
+
+	}
 
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
@@ -186,6 +198,13 @@ bool StatePlay::CheckSelectionOption(int x, int y)
 		selectMenuOption = towerButtonList.size() + 1;
 		return true;
 	}
+	float x_wave_button = nextWaveButton->o_position.x / 0.15f * 70;
+	float y_wave_button = nextWaveButton->o_position.y / -0.2f * 70;
+	if (x_wave_button <= x && x <= x_wave_button + 70
+		&& y_wave_button <= y && y <= y_wave_button + 70) {
+		selectMenuOption = towerButtonList.size() + 2;
+		return true;
+	}
 	return false;
 }
 
@@ -216,13 +235,21 @@ void StatePlay::OnMouseClick(int x, int y)
 			if (-1 < xPos && xPos < 8 && -1 < yPos && yPos < 7) {
 				if (NumMap[yPos][xPos] == 0 && IsBuildable(xPos, yPos)) {
 					Tower* t = new Tower(selectMenuOption);//super leak :V
+					if (pf.money >= t->cost) {
+						Shaders s = Shaders();
+						s.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
+						t->o_shaders = s;
+						t->Build(xPos, yPos);
+						t->InitObject();
+						towerList.push_back(t);
 
-					Shaders s = Shaders();
-					s.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
-					t->o_shaders = s;
-					t->Build(xPos, yPos);
-					t->InitObject();
-					towerList.push_back(t);
+						pf.money -= t->cost;
+					}
+					else {
+						//not enought money
+						delete t;
+					}
+					
 				}
 				selectMenuOption = -1;
 			}
@@ -239,7 +266,12 @@ void StatePlay::OnMouseClick(int x, int y)
 				Vector3 o_positon = towerList.at(i)->o_position;
 				if (xPos * 0.15f == o_positon.x && yPos * -0.2f == o_positon.y) {
 					//printf("\ntower at: %d, %d upgrade", xPos, yPos);
-					towerList.at(i)->Upgrade();
+					if (towerList.at(i)->upgrade < 1 && pf.money >= towerList.at(i)->cost / 2) {
+						pf.money -= towerList.at(i)->cost / 2;
+						towerList.at(i)->Upgrade();
+						
+					}
+					
 					selectMenuOption = -1;
 					break;
 				}
@@ -251,7 +283,7 @@ void StatePlay::OnMouseClick(int x, int y)
 		else if (selectMenuOption == towerButtonList.size() + 1) {
 			int xPos = static_cast<int>(std::round(x / 70));
 			int yPos = static_cast<int>(std::round(y / 70));
-			//get tower upgrade
+			//get tower
 			for (int i = 0; i < towerList.size(); i++) {
 				Vector3 o_positon = towerList.at(i)->o_position;
 				if (xPos * 0.15f == o_positon.x && yPos * -0.2f == o_positon.y) {
@@ -263,6 +295,15 @@ void StatePlay::OnMouseClick(int x, int y)
 					break;
 				}
 			}
+			if (!CheckSelectionOption(x, y)) selectMenuOption = -1;
+		}
+		else if (selectMenuOption == towerButtonList.size() + 2) {
+
+			if (pf.waveEnd) {
+				pf.nextWave = true;
+				printf("\n next wave btn");
+			}
+
 			if (!CheckSelectionOption(x, y)) selectMenuOption = -1;
 		}
 	}
@@ -291,6 +332,7 @@ void StatePlay::CleanUp()
 	}
 	delete upgradeButton;
 	delete sellButton;
+	delete nextWaveButton;
 
 	for (int i = 0; i < towerList.size(); i++) {
 		for (int j = 0; j < towerList.at(i)->projectileOnScreen.size(); j++) {

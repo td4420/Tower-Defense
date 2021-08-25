@@ -27,6 +27,8 @@ public:
 	vector <Frame*> frameList;
 	Object* upgradeButton;
 	Object* sellButton;
+	Object* nextWaveButton;
+
 	Object* background;
 
 	std::string strLives = std::to_string(pf.HP);

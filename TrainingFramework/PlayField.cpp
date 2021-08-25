@@ -62,6 +62,7 @@ void PlayField::Init(Shaders shaders)
 		tank[i]->o_shaders = myShaders;
 		tank[i]->InitObject();
 	}
+	nextWave = false;
 }
 
 void PlayField::Draw()
@@ -83,7 +84,7 @@ void PlayField::Draw()
 
 void PlayField::InitEnemyWave()
 {
-	if (waveEnd) {
+	if (waveEnd && nextWave) {
 		cout << "Wave lv: " << waveNum + 1 << endl;
 		waveEnd = false;
 		numberOfFast = 0; numberOfNormal = 0; numberOfTank = 0;
@@ -112,6 +113,7 @@ void PlayField::InitEnemyWave()
 			}
 		}
 		if (waveNum < waveMax) waveNum += 1;
+		nextWave = false;
 	}
 }
 

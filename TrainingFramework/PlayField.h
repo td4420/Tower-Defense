@@ -66,6 +66,7 @@ public:
 
 	int countWaveEndInit = 0;
 	bool waveEnd = true;
+	bool nextWave = false;
 	bool gameOver = false;
 	float timeSinceLastSpawn = 15.0f;
 	int waveNum = 0;//save the number of waves in a lv;
