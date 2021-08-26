@@ -74,7 +74,7 @@ public:
 	Object* background;
 
 	void Init(Shaders myShaders);
-	void Draw();
+	void Draw(Shaders* textShaders);
 	void InitEnemyWave();
 	void SpawnEnemy();
 	void CleanUp();

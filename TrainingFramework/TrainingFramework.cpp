@@ -26,10 +26,8 @@ using namespace std;
 
 
 int keyPressed = 0;
-SceneManager* scenemanager = SceneManager::GetInstance("../ResourcesPacket/SM.txt");
 Shaders* myShaders = new Shaders();
 Shaders* textShader = new Shaders();
-Camera* camera;
 Vector4 color(0.0, 0.3, 0.3, 0.8);
 //StateMenu* myStateMenu = new StateMenu();
 //StateWelcome* myStateWelcome = new StateWelcome();
@@ -72,35 +70,6 @@ void Draw(ESContext* esContext)
 
 void Update(ESContext* esContext, float deltaTime)
 {
-	if (keyPressed & MOVE_FORWARD) {
-		camera->MoveForward(deltaTime);
-	}
-
-	if (keyPressed & MOVE_BACKWARD) {
-		camera->MoveBackward(deltaTime);
-	}
-
-	if (keyPressed & MOVE_LEFT) {
-		camera->MoveToLeft(deltaTime);
-	}
-
-	if (keyPressed & MOVE_RIGHT) {
-		camera->MoveToRight(deltaTime);
-	}
-	if (keyPressed & ROTATE_UP) {
-		camera->RotationUp(deltaTime);
-	}
-
-	if (keyPressed & ROTATE_DOWN) {
-		camera->RotationDown(deltaTime);
-	}
-	if (keyPressed & ROTATE_LEFT) {
-		camera->RotationLeft(deltaTime);
-	}
-	if (keyPressed & ROTATE_RIGHT) {
-		camera->RotationRight(deltaTime);
-	}
-	scenemanager->Update(deltaTime);
 	//stateWelcome->Update(deltaTime);
 	//statePlay->Update();
 	myGame->Update(deltaTime);
@@ -108,95 +77,6 @@ void Update(ESContext* esContext, float deltaTime)
 
 void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 {
-	if (bIsPressed)
-	{
-		if (key == VK_UP)
-		{
-			keyPressed = keyPressed | ROTATE_UP;
-			return;
-		}
-
-		if (key == VK_DOWN)
-		{
-			keyPressed = keyPressed | ROTATE_DOWN;
-			return;
-		}
-
-		if (key == VK_LEFT)
-		{
-			keyPressed = keyPressed | ROTATE_LEFT;
-			return;
-		}
-		if (key == VK_RIGHT)
-		{
-			keyPressed = keyPressed | ROTATE_RIGHT;
-			return;
-		}
-		if (key == 'A')
-		{
-			keyPressed = keyPressed | MOVE_LEFT;
-			return;
-		}
-		if (key == 'D')
-		{
-			keyPressed = keyPressed | MOVE_RIGHT;
-			return;
-		}
-		if (key == 'W')
-		{
-			keyPressed = keyPressed | MOVE_FORWARD;
-			return;
-		}
-		if (key == 'S')
-		{
-			keyPressed = keyPressed | MOVE_BACKWARD;
-			return;
-		}
-	}
-	else
-	{
-		if (key == VK_UP)
-		{
-			keyPressed = keyPressed ^ ROTATE_UP;
-			return;
-		}
-
-		if (key == VK_DOWN)
-		{
-			keyPressed = keyPressed ^ ROTATE_DOWN;
-			return;
-		}
-
-		if (key == VK_LEFT)
-		{
-			keyPressed = keyPressed ^ ROTATE_LEFT;
-			return;
-		}
-		if (key == VK_RIGHT)
-		{
-			keyPressed = keyPressed ^ ROTATE_RIGHT;
-			return;
-		}
-		if (key == 'A')
-		{
-			keyPressed = keyPressed ^ MOVE_LEFT;
-			return;
-		}
-		if (key == 'D')
-		{
-			keyPressed = keyPressed ^ MOVE_RIGHT;
-			return;
-		}
-		if (key == 'W')
-		{
-			keyPressed = keyPressed ^ MOVE_FORWARD;
-			return;
-		}
-		if (key == 'S') {
-			keyPressed = keyPressed ^ MOVE_BACKWARD;
-			return;
-		}
-	}
 }
 
 void TouchActionDown(ESContext* esContext, int x, int y)
@@ -204,17 +84,18 @@ void TouchActionDown(ESContext* esContext, int x, int y)
 	myGame->OnMouseClick(x, y);
 	//stateWelcome->OnMouseClick(x,y);
 	//statePlay->OnMouseClick(x,y);
-	printf("\n: mouse down at: %d, %d", x, y);
+	//printf("\n: mouse down at: %d, %d", x, y);
 }
 
 void TouchActionUp(ESContext* esContext, int x, int y)
 {
 	//myGame->OnMouseClick(x, y);
-	printf("\n: mouse up at: %d, %d", x, y);
+	//printf("\n: mouse up at: %d, %d", x, y);
 }
-void TouchActionDrag(ESContext* esCotext, int x, int y) {
+void TouchActionDrag(ESContext* esCotext, int x, int y) 
+{
 	//move drag
-	printf("\n mouse when drag: %d, %d", x, y);
+	//printf("\n mouse when drag: %d, %d", x, y);
 }
 
 void TouchActionMove(ESContext* esContext, int x, int y)

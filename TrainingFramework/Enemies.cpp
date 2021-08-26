@@ -89,6 +89,7 @@ Enemies::Enemies(int type)
 		}
 	}
 	HP->moveSpeed = movementSpeed;
+	HP->init();
 }
 
 Enemies::Enemies(Enemies* e)
@@ -254,9 +255,9 @@ void Enemies::Update()
 	CheckSlowed();
 	MoveEnemies();
 
-	strHP = std::to_string(currentHP);
+	/*strHP = std::to_string(currentHP);
 	charHp = strHP.c_str();
-	HP->text = charHp;
+	HP->text = charHp;*/
 
 	if (currentHP <= 0)
 	{
@@ -268,7 +269,7 @@ void Enemies::CheckSlowed()
 {
 	if (slowed && slowTime <= 0.1f)
 	{
-		slowTime = 8.1f;
+		slowTime = 7.1f;
 		//slowed = false;
 	}
 
@@ -309,4 +310,9 @@ void Enemies::Reset()
 	Rotation.SetIdentity();
 	Translation.SetIdentity();
 	MVP = Scale * Rotation * Translation;
+}
+
+void Enemies::DrawHP(Shaders* textShaders)
+{
+	HP->RenderText(textShaders);
 }

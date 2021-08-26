@@ -139,6 +139,20 @@ Text::Text(const char* s, float x, float y, const char* fileFont, float scaleX, 
 	this->scaleY = scaleY;
 	this->size = size;
 }
+
+Text::Text(const char* s, const char* fileFont, float scaleX, float scaleY, Vector4 color, int size, float x, float y) {
+	text = strdup(s);
+	this->posX = (x + 1) * Globals::screenWidth / 2;
+	this->posY = ((y - 30 / Globals::screenHeight + 1) * Globals::screenHeight) / 2;
+	this->heightText = 0;
+	this->widthText = 0;
+	this->color = color;
+	this->fileFont = strdup(fileFont);
+	this->scaleX = scaleX;
+	this->scaleY = scaleY;
+	this->size = size;
+}
+
 Text::~Text() {
 
 }

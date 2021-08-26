@@ -3,13 +3,14 @@
 
 StatePlay::StatePlay()
 {
-
 }
 
 void StatePlay::init()
 {
 	lives->init();
 	money->init();
+	//showHP->init();
+	//showMoney->init();
 	myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
 	
 	pf.Init(myShaders);
@@ -65,6 +66,7 @@ void StatePlay::init()
 	towerButtonList.push_back(slowTowerButton);
 	towerButtonList.push_back(witchTowerButton);
 
+	
 	for (int i = 0; i < towerButtonList.size(); i++) {
 		towerButtonList.at(i)->o_shaders = myShaders;
 		towerButtonList.at(i)->InitObject();
@@ -75,30 +77,55 @@ void StatePlay::init()
 		frameList.at(i)->InitObject();
 	}
 
+	bugFixButton = new Object();
+	bugFixButton->o_Model = Model("../Resources/model.nfg");
+	bugFixButton->o_Texture.push_back("../ResourcesPacket/Textures/sand_tile.tga");
+	//bugFixButton->Build(11.0f * 0.15f, 0.0f * -0.2f);
+
 	// init upgrade button
 	upgradeButton = new Object();
 	upgradeButton->o_Model = Model("../Resources/model.nfg");
 	upgradeButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/upgradeButton.tga"));
-	upgradeButton->Build(12 * 0.15f, 0 * -0.2f);
-	//towerButtonList.push_back(upgradeButton);
-	upgradeButton->o_shaders = myShaders;
-	upgradeButton->InitObject();
+	upgradeButton->Build(12.0f * 0.15f, 0.0f * -0.2f);
+	
 
 	// init sell button
 	sellButton = new Object();
 	sellButton->o_Model = Model("../Resources/model.nfg");
 	sellButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/sellButton.tga"));
-	sellButton->Build(11 * 0.15f, 0 * -0.2f);
-	sellButton->o_shaders = myShaders;
-	sellButton->InitObject();
+	sellButton->Build(11.0f * 0.15f, 0.0f * -0.2f);
 
-	// init sell button
+	functionButtonList.push_back(bugFixButton);
+	functionButtonList.push_back(sellButton);
+	functionButtonList.push_back(upgradeButton);
+
+	for (int i = 0; i < functionButtonList.size(); i++)
+	{
+		functionButtonList.at(i)->o_shaders = myShaders;
+		functionButtonList.at(i)->InitObject();
+	}
+
+	// init next wave button
 	nextWaveButton = new Object();
 	nextWaveButton->o_Model = Model("../Resources/model.nfg");
 	nextWaveButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/NextWaveButton.tga"));
-	nextWaveButton->Build(8 * 0.15f, 0 * -0.2f);
+	nextWaveButton->Build(8.0f * 0.15f, 0.0f * -0.2f);
 	nextWaveButton->o_shaders = myShaders;
 	nextWaveButton->InitObject();
+
+	hpIcon = new Object();
+	hpIcon->o_Model = Model("../Resources/model.nfg");
+	hpIcon->o_Texture.push_back("../ResourcesPacket/Textures/hp.tga");
+	hpIcon->Build(10 * 0.15f, 4.5f * -0.2f);
+	hpIcon->o_shaders = myShaders;
+	hpIcon->InitObject();
+
+	moneyIcon = new Object();
+	moneyIcon->o_Model = Model("../Resources/model.nfg");
+	moneyIcon->o_Texture.push_back("../ResourcesPacket/Textures/money.tga");
+	moneyIcon->Build(10 * 0.15f, 5.5f * -0.2f);
+	moneyIcon->o_shaders = myShaders;
+	moneyIcon->InitObject();
 }
 
 void StatePlay::Draw(Shaders * textShaders)
@@ -111,7 +138,6 @@ void StatePlay::Draw(Shaders * textShaders)
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
 	background->DrawObject();
-	pf.Draw();
 	for (int i = 0; i < towerList.size(); i++) {
 		towerList.at(i)->DrawObject();
 		towerList.at(i)->Shoot();
@@ -125,12 +151,19 @@ void StatePlay::Draw(Shaders * textShaders)
 		towerButtonList.at(i)->DrawObject();
 	}
 
-	upgradeButton->DrawObject();
-	sellButton->DrawObject();
+	for (int i = 0; i < functionButtonList.size(); i++)
+	{
+		functionButtonList.at(i)->DrawObject();
+	}
+	//upgradeButton->DrawObject();
+	//sellButton->DrawObject();
+	pf.Draw(textShaders);
 	if (pf.waveEnd) {
 		nextWaveButton->DrawObject();
 
 	}
+	hpIcon->DrawObject();
+	moneyIcon->DrawObject();
 
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
@@ -138,6 +171,8 @@ void StatePlay::Draw(Shaders * textShaders)
 
 	lives->RenderText(textShaders);
 	money->RenderText(textShaders);
+	//showHP->RenderText(textShaders);
+	//showMoney->RenderText(textShaders);
 }
 
 void StatePlay::Update()
@@ -266,10 +301,9 @@ void StatePlay::OnMouseClick(int x, int y)
 				Vector3 o_positon = towerList.at(i)->o_position;
 				if (xPos * 0.15f == o_positon.x && yPos * -0.2f == o_positon.y) {
 					//printf("\ntower at: %d, %d upgrade", xPos, yPos);
-					if (towerList.at(i)->upgrade < 1 && pf.money >= towerList.at(i)->cost / 2) {
+					if (towerList.at(i)->upgrade < 2 && pf.money >= towerList.at(i)->cost / 2) {
 						pf.money -= towerList.at(i)->cost / 2;
 						towerList.at(i)->Upgrade();
-						
 					}
 					
 					selectMenuOption = -1;
@@ -301,7 +335,7 @@ void StatePlay::OnMouseClick(int x, int y)
 
 			if (pf.waveEnd) {
 				pf.nextWave = true;
-				printf("\n next wave btn");
+				//printf("\n next wave btn");
 			}
 
 			if (!CheckSelectionOption(x, y)) selectMenuOption = -1;
@@ -330,8 +364,11 @@ void StatePlay::CleanUp()
 	for (int i = 0; i < towerButtonList.size(); i++) {
 		delete towerButtonList.at(i);
 	}
-	delete upgradeButton;
-	delete sellButton;
+	
+	for (int i = 0; i < functionButtonList.size(); i++)
+	{
+		delete functionButtonList.at(i);
+	}
 	delete nextWaveButton;
 
 	for (int i = 0; i < towerList.size(); i++) {

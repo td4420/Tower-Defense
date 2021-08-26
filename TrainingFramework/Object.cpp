@@ -27,10 +27,7 @@ Object::Object()
 Object::~Object()
 {
 	o_Model.~Model();
-	for (int i = 0; i < numberOfCube; i++)
-	{
-		o_Cube.at(i).~Texture();
-	}
+	
 	for (int i = 0; i < numberOfTexture; i++)
 	{
 		o_Texture.at(i).~Texture();
@@ -51,7 +48,7 @@ void Object::InitObject()
 void Object::Build(float x, float y) {
 	o_position.x = x;
 	o_position.y = y;
-	o_position.z = 0;
+	o_position.z = 0.0f;
 
 	Scale.SetIdentity();
 	Rotation.SetIdentity();

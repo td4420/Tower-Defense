@@ -7,7 +7,6 @@ Tower::Tower()
 	o_Model = Model("../Resources/model.nfg");
 	o_Texture.push_back(Texture("../ResourcesPacket/Textures/machineGunTower.tga"));
 	range = 0.3f;
-
 }
 
 Tower::Tower(int type)
@@ -208,9 +207,11 @@ void Tower::RemoveEnemiesOutOfRange()//Remove enemies moved out of range and upd
 
 void Tower::Shoot()//leak here
 {
+	CheckReload();
 	if (enemiesInRange.size() != 0 && currentTarget != nullptr) {
 		//cout << currentTarget->currentHP << endl;
-		if (CheckReload()) {
+		if (canFire) {
+			timeSinceLastShot = 0.0f;
 			Projectile* p = new Projectile(towerType, o_shaders);
 			p->target = currentTarget;
 			p->InitObject();
@@ -275,12 +276,17 @@ void Tower::SetTarget()
 bool Tower::CheckReload()
 {
 	if (towerType != 4) {
-		timeSinceLastShot += reloadSpeed;
 		if (timeSinceLastShot >= reloadTime) {
-			timeSinceLastShot = 0.0f;
+			//timeSinceLastShot = 0.0f;
+			canFire = true;
 			return true;
 		}
-		else return false;
+		else if (timeSinceLastShot<reloadTime)
+		{
+			timeSinceLastShot += reloadSpeed;
+			canFire = false;
+			return false;
+		}
 	}
 
 	/*if (towerType == 3) {

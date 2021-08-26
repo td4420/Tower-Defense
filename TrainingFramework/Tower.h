@@ -6,8 +6,8 @@ class Tower :
     public Object
 {
 public:
-    Model towerModel = Model("../Resources/model.txt");
-    Texture towerTexture = Texture("../Resources/nen.txt");
+    //odel towerModel = Model("../Resources/model.txt");
+    //Texture towerTexture = Texture("../Resources/nen.txt");
 
     Vector2 towerPos;//onscreen position
     int towerType = 0;
@@ -19,6 +19,7 @@ public:
     float timeSinceLastShot = reloadTime;
     int cost = 0;
     int shotFired = 0;
+    bool canFire = true;
 
     std::vector <Enemies*> enemiesInRange;
     std::vector <Projectile*> projectileOnScreen;

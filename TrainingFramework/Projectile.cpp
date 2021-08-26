@@ -33,7 +33,7 @@ Projectile::Projectile(int type, Shaders shaders)
 	if (type == 3) o_Texture.push_back("../ResourcesPacket/Textures/bullet.tga");
 	o_shaders = shaders;
 
-	movementSpeed = 0.01f;
+	movementSpeed = 0.025f;
 	Scale.SetIdentity();
 	Rotation.SetIdentity();
 }

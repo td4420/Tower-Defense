@@ -49,7 +49,7 @@ void Game::init() {
 	stateWelcome->init();
 	statePlay->init();
 	stateOption->init();
-	curState = StateBase::StateControl::StatePlay;
+	curState = StateBase::StateControl::StateMenu;
 	
 }
 void Game::OnMouseOver(int x, int y) {

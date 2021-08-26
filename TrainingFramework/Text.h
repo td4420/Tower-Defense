@@ -29,5 +29,7 @@ public:
 	void highLight();
 	void Move();
 	Text(const char* s, float x, float y, const char* fileFont, float scaleX, float scaleY, Vector4 color, int size);
+	Text(const char* s, const char* fileFont, float scaleX, float scaleY, Vector4 color, int size, float x, float y);
+		
 	~Text();
 };

@@ -26,7 +26,8 @@ public:
 
 	string strHP = std::to_string(currentHP);
 	char const* charHp = strHP.c_str();
-	Text* HP = new Text(charHp, o_position.x, o_position.y + 0.01f, "../Font/OceanSummer.ttf", 1, 1, Vector4(0.6, 0.6, 0.6, 0.6), 3);
+	Text* HP = new Text(charHp, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 0.0, 0.0, 1.0), 45, o_position.x, o_position.y + 0.02f);
+	//Text* HP = new Text(charHp, 810, 200, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 0.0, 0.0, 1.0), 45);
 
 	float movementSpeed = 0.001f;
 	float fixedSpeed = movementSpeed;
@@ -59,7 +60,7 @@ public:
 	void MoveToRight();
 	void MoveUp();
 	void MoveDown();
-	void Draw();
+	void DrawHP(Shaders *textShaders);
 	void Update();
 	void Kill();
 	void CheckSlowed();

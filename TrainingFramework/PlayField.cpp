@@ -6,7 +6,8 @@
 
 PlayField::PlayField()
 {
-
+	money = 5000;
+	HP = 20;
 }
 
 void PlayField::CleanUp()
@@ -25,13 +26,6 @@ void PlayField::Init(Shaders shaders)
 	myShaders = shaders;
 	int NumMap[7][8];
 
-	/*background = new Object();
-	background->o_Model = Model("../ResourcesPacket/Models/Button.nfg");
-	background->o_Texture.push_back("../ResourcesPacket/Textures/bg.tga");
-	background->o_shaders = shaders;
-	background->Build(-1.0f, 1.0f);
-	background->InitObject();*/
-
 	for (int i = 0; i < 7; i++)
 	{
 		for (int j = 0; j < 8; j++) {
@@ -47,10 +41,13 @@ void PlayField::Init(Shaders shaders)
 			float countX = disX * j;
 			float countY = -disY * i;
 
-			TileMap[i][j] = Tile(NumMap[i][j], i, j, initX + countX, initY + countY, shaders);
+			TileMap[i][j] = Tile(NumMap[i][j], i, j, initX + countX, initY + countY, myShaders);
 			TileMap[i][j].tileTexture.Init();
-
 			TileMap[i][j].Bind();
+
+			/*TileMap[i][j] = Tile(NumMap[i][j], i, j);
+			TileMap[i][j].o_shaders = myShaders;
+			TileMap[i][j].InitObject();*/
 		}
 	}
 	for (int i = 0; i < 10; i++)
@@ -65,13 +62,12 @@ void PlayField::Init(Shaders shaders)
 	nextWave = false;
 }
 
-void PlayField::Draw()
+void PlayField::Draw(Shaders* textShader)
 {
-	//background->DrawObject();
-
 	for (int i = 0; i < mapHeight; i++) {
 		for (int j = 0; j < mapWidth; j++) {
 			TileMap[i][j].Draw();
+			//TileMap[i][j].DrawObject();
 		}
 	}
 	if (gameOver == false) InitEnemyWave();
@@ -79,6 +75,7 @@ void PlayField::Draw()
 
 	for (int i = 0; i < enemyWave.size(); i++) {
 		enemyWave.at(i)->DrawObject();
+		//enemyWave.at(i)->HP->RenderText(textShader);
 	}
 }
 
@@ -115,6 +112,7 @@ void PlayField::InitEnemyWave()
 		if (waveNum < waveMax) waveNum += 1;
 		nextWave = false;
 	}
+	//cout << TileMap[3][2].tileTexture.mTgaFilePath << endl;
 }
 
 void PlayField::SpawnEnemy() {
