@@ -62,8 +62,9 @@ public:
 	bool IsBuildable(int xPos, int yPos);
 	bool CheckSelectionOption(int x, int y);
 	void OnMouseClick(int x, int y);
+	void OnMouseOver(int x, int y);
 	void CleanUp();
-
+	int FindIndexOfTower(int x, int y);
 
 	StatePlay();
 };

@@ -62,6 +62,9 @@ void Game::OnMouseOver(int x, int y) {
 	else if (curState == StateBase::StateControl::StateOption) {
 		stateOption->OnMouseOver(x, y);
 	}
+	else if (curState == StateBase::StateControl::StatePlay) {
+		statePlay->OnMouseOver(x, y);
+	}
 }
 void Game::OnMouseClick(int x, int y) {
 	if (curState == StateBase::StateControl::StateWelcome) {

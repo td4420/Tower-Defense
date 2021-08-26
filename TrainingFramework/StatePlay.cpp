@@ -254,9 +254,23 @@ bool StatePlay::IsBuildable(int xPos, int yPos)
 	}
 	return true;
 }
+int StatePlay::FindIndexOfTower(int x, int y)
+{
+	int xPos = static_cast<int>(std::round(x / 70));
+	int yPos = static_cast<int>(std::round(y / 70));
+	for (int i = 0; i < towerList.size(); i++) {
+		Vector3 o_positon = towerList.at(i)->o_position;
+		if (xPos * 0.15f == o_positon.x && yPos * -0.2f == o_positon.y) {
+			printf("\nmouse on tower at: %d, %d ", xPos, yPos);
+			return i;
+		}
+	}
+	return -1;
+}
 
 void StatePlay::OnMouseClick(int x, int y)
 {
+
 	if (selectMenuOption == -1) {
 		CheckSelectionOption(x, y);
 	}
@@ -292,44 +306,31 @@ void StatePlay::OnMouseClick(int x, int y)
 
 		}
 		else if (selectMenuOption == towerButtonList.size()) {
-			//upgrade Button
-			int xPos = static_cast<int>(std::round(x / 70));
-			int yPos = static_cast<int>(std::round(y / 70));
-
-			//get tower upgrade
-			for (int i = 0; i < towerList.size(); i++) {
-				Vector3 o_positon = towerList.at(i)->o_position;
-				if (xPos * 0.15f == o_positon.x && yPos * -0.2f == o_positon.y) {
-					//printf("\ntower at: %d, %d upgrade", xPos, yPos);
-					if (towerList.at(i)->upgrade < 2 && pf.money >= towerList.at(i)->cost / 2) {
-						pf.money -= towerList.at(i)->cost / 2;
-						towerList.at(i)->Upgrade();
-					}
-					
-					selectMenuOption = -1;
-					break;
+			int index = FindIndexOfTower(x, y);
+			if (index != -1) {
+				if (towerList.at(index)->upgrade < 2 && pf.money >= towerList.at(index)->cost / 2) {
+					pf.money -= towerList.at(index)->cost / 2;
+					towerList.at(index)->Upgrade();
 				}
+
+				selectMenuOption = -1;
 			}
 			if (!CheckSelectionOption(x, y)) selectMenuOption = -1;
 
 		}
 		//sell Button
 		else if (selectMenuOption == towerButtonList.size() + 1) {
-			int xPos = static_cast<int>(std::round(x / 70));
-			int yPos = static_cast<int>(std::round(y / 70));
-			//get tower
-			for (int i = 0; i < towerList.size(); i++) {
-				Vector3 o_positon = towerList.at(i)->o_position;
-				if (xPos * 0.15f == o_positon.x && yPos * -0.2f == o_positon.y) {
-					pf.money += towerList.at(i)->cost/2;
-					cout << "Tower sell for: " << towerList.at(i)->cost/2 << endl;
-					delete towerList.at(i);
-					towerList.erase(towerList.begin() + i);
-					selectMenuOption = -1;
-					break;
-				}
+			int index = FindIndexOfTower(x, y);
+			if (index != -1) {
+				pf.money += towerList.at(index)->cost / 2;
+				cout << "Tower sell for: " << towerList.at(index)->cost / 2 << endl;
+				delete towerList.at(index);
+				towerList.erase(towerList.begin() + index);
+
+				selectMenuOption = -1;
 			}
 			if (!CheckSelectionOption(x, y)) selectMenuOption = -1;
+			
 		}
 		else if (selectMenuOption == towerButtonList.size() + 2) {
 
@@ -343,6 +344,9 @@ void StatePlay::OnMouseClick(int x, int y)
 	}
 }
 
+void StatePlay::OnMouseOver(int x, int y) {
+	FindIndexOfTower(x, y);
+}
 void StatePlay::CleanUp()
 {
 	delete background;

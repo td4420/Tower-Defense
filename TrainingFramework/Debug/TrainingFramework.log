@@ -1,1 +1,24 @@
-﻿
+﻿cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  StatePlay.cpp
+F:\dao-test\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(25,20): warning C4018: '<': signed/unsigned mismatch
+F:\dao-test\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(70,20): warning C4018: '<': signed/unsigned mismatch
+F:\dao-test\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(75,20): warning C4018: '<': signed/unsigned mismatch
+F:\dao-test\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(102,20): warning C4018: '<': signed/unsigned mismatch
+F:\dao-test\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(141,20): warning C4018: '<': signed/unsigned mismatch
+F:\dao-test\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(146,20): warning C4018: '<': signed/unsigned mismatch
+F:\dao-test\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(150,20): warning C4018: '<': signed/unsigned mismatch
+F:\dao-test\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(154,20): warning C4018: '<': signed/unsigned mismatch
+F:\dao-test\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(182,20): warning C4018: '<': signed/unsigned mismatch
+F:\dao-test\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(187,22): warning C4018: '<': signed/unsigned mismatch
+F:\dao-test\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(211,20): warning C4018: '<': signed/unsigned mismatch
+F:\dao-test\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(248,20): warning C4018: '<': signed/unsigned mismatch
+F:\dao-test\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(261,20): warning C4018: '<': signed/unsigned mismatch
+F:\dao-test\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(281,49): warning C4018: '<': signed/unsigned mismatch
+F:\dao-test\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(354,20): warning C4018: '<': signed/unsigned mismatch
+F:\dao-test\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(355,21): warning C4018: '<': signed/unsigned mismatch
+F:\dao-test\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(363,20): warning C4018: '<': signed/unsigned mismatch
+F:\dao-test\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(368,20): warning C4018: '<': signed/unsigned mismatch
+F:\dao-test\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(372,20): warning C4018: '<': signed/unsigned mismatch
+F:\dao-test\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(378,20): warning C4018: '<': signed/unsigned mismatch
+F:\dao-test\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(379,21): warning C4018: '<': signed/unsigned mismatch
+  TrainingFramework.vcxproj -> F:\dao-test\Dao_3DFrameworkTraining\BIN\TrainingFramework.exe
