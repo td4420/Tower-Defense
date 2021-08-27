@@ -230,6 +230,7 @@ void CleanUp()
 	{
 		scenemanager->s_ListObject.at(i)->~Object();
 	}
+	myGame->~Game();
 }
 int _tmain(int argc, TCHAR* argv[])
 {

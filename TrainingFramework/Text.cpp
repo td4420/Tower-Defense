@@ -32,7 +32,6 @@ void Text::init() {
 	widthText += 14.5;
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-	color = Vector4(0.5, 0.5, 0.5, 0.5);
 	glGenBuffers(1, &textVBO);
 	glGenTextures(1, &textImgTexture);
 	
@@ -47,7 +46,7 @@ void Text::RenderText(Shaders* shader) {
 	glUniform4f(glGetUniformLocation(shader->program, "u_color"), color.x, color.y, color.z, color.w);
 	
 	glBindBuffer(GL_ARRAY_BUFFER, textVBO);
-	///glActiveTexture(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, textImgTexture);
 
 	float sx = 1.0f / Globals::screenWidth * scaleX;
@@ -106,11 +105,8 @@ void Text::RenderText(Shaders* shader) {
 		y += (m_glyphSlot->advance.y >> 6) * sy;
 	}
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	//glBindBuffer(GL_TEXTURE_2D, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);
-	//glBlendFunc(GL_ONE, GL_ZERO);
-	//glDisable(GL_BLEND);
-	//glUseProgram(0);
+	
 	
 }
 bool Text::checkChoose(int x, int y) {
@@ -120,12 +116,7 @@ bool Text::checkChoose(int x, int y) {
 	}
 	return false;
 }
-void Text::highLight() {
-	if (isChoose) {
-		color = Vector4(0.6,1,0.4,1);
-	}
-	if (isChoose==false) color = Vector4(0.5,0.5,0.5,0.5); 
-}
+
 Text::Text(const char* s, float x, float y, const char* fileFont, float scaleX, float scaleY, Vector4 color, int size) {
 	text = strdup(s);
 	this->posX = x;
@@ -138,6 +129,23 @@ Text::Text(const char* s, float x, float y, const char* fileFont, float scaleX, 
 	this->scaleY = scaleY;
 	this->size = size;
 }
-Text::~Text() {
+Text::Text(const char* s, const char* fileFont, float scaleX, float scaleY, Vector4 color, int size, float x, float y) {
+	text = strdup(s);
+	this->posX = (x+1)*Globals::screenWidth/2;
+	this->posY = ((y-45/Globals::screenHeight +1)* Globals::screenHeight)/2;
+	this->heightText = 0;
+	this->widthText = 0;
+	this->color = color;
+	this->fileFont = strdup(fileFont);
+	this->scaleX = scaleX;
+	this->scaleY = scaleY;
+	this->size = size;
+}
 
+Text::~Text() {
+	
+	//glBindBuffer(GL_ARRAY_BUFFER, 0);
+	//glDeleteBuffers(1, &textVBO);
+	//glBindTexture(GL_TEXTURE_2D, 0);
+	//glDeleteTextures(1, &textImgTexture);
 }

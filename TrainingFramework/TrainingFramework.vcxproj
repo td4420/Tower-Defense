@@ -105,7 +105,6 @@
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="StateHelp.cpp" />
-    <ClCompile Include="StateLogo.cpp" />
     <ClCompile Include="StateMenu.cpp" />
     <ClCompile Include="StateOption.cpp" />
     <ClCompile Include="StatePlay.cpp" />
@@ -138,7 +137,6 @@
     <ClInclude Include="State.h" />
     <ClInclude Include="StateBase.h" />
     <ClInclude Include="StateHelp.h" />
-    <ClInclude Include="StateLogo.h" />
     <ClInclude Include="StateMenu.h" />
     <ClInclude Include="StateOption.h" />
     <ClInclude Include="StatePlay.h" />

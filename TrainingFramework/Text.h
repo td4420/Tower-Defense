@@ -7,7 +7,7 @@
 #include FT_FREETYPE_H
 class Text {
 public:
-	Vector4 color;
+	Vector4 color = Vector4(1.0, 0.5, 1.0, 1.0);
 	float scaleX, scaleY;
 	float posX, posY;
 	float widthText, heightText;
@@ -20,11 +20,10 @@ public:
 	FT_GlyphSlot m_glyphSlot;
 	GLuint textVBO;
 	GLuint textImgTexture;
-	GLuint textVAO;
 	void init();
 	void RenderText(Shaders* shader);
 	bool checkChoose(int x, int y);
-	void highLight();
 	Text(const char* s, float x, float y, const char* fileFont, float scaleX, float scaleY, Vector4 color, int size);
+	Text(const char* s, const char* fileFont, float scaleX, float scaleY, Vector4 color, int size, float x, float y);
 	~Text();
 };

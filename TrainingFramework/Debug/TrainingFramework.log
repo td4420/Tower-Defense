@@ -1,10 +1,22 @@
 ﻿cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-  StateMenu.cpp
-C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StateMenu.cpp(9,9): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StateMenu.cpp(11,2): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StateMenu.cpp(14,2): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StateMenu.cpp(81,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StateMenu.cpp(92,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StateMenu.cpp(95,50): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StateMenu.cpp(103,20): warning C4018: '<': signed/unsigned mismatch
+  StatePlay.cpp
+C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.h(27,14): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(16,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(48,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(73,9): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(75,2): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(78,2): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(100,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(105,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(145,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(150,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(166,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(196,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(215,49): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(240,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(257,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(273,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(277,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(283,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\TrainingFramework\StatePlay.cpp(284,21): warning C4018: '<': signed/unsigned mismatch
   TrainingFramework.vcxproj -> C:\Users\Xuan Ngoc\Desktop\Project\Dao_3DFrameworkTraining\BIN\TrainingFramework.exe

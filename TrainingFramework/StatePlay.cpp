@@ -8,7 +8,7 @@ StatePlay::StatePlay()
 
 void StatePlay::init()
 {
-	
+	lives->init();
 	
 	myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
 	pf.Init(myShaders);
@@ -67,16 +67,34 @@ void StatePlay::init()
 	//towerButtonList.push_back(upgradeButton);
 	sellButton->o_shaders = myShaders;
 	sellButton->InitObject();
+
+	// init bg
+	FILE* file;
+	file = fopen("../ResourcesPacket/bgPlay.txt", "r");
+	char modelfile[50], texturefile[50];
+	fscanf(file, "Model: %s\n", &modelfile);
+	modelLogo = new Model(modelfile);
+	modelLogo->Init();
+	fscanf(file, "Texture: %s\n", &texturefile);
+	textureLogo = new Texture();
+	textureLogo->mTgaFilePath = texturefile;
+	textureLogo->Init();
+
+	scaleP.SetScale(2, 4, 3);
+	posP.SetTranslation(-1, -3, 0);
+	mvpP = scaleP * posP;
+
 }
 
-void StatePlay::Draw()
+void StatePlay::Draw(Shaders* textShader, Shaders* shapeShader)
 {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
 	glEnable(GL_SAMPLE_ALPHA_TO_COVERAGE);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+
+	//glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
 	pf.Draw();
 	for (int i = 0; i < towerList.size(); i++) {
@@ -89,15 +107,39 @@ void StatePlay::Draw()
 	}
 
 	upgradeButton->DrawObject();
-
 	sellButton->DrawObject();
+	
+	//draw bg
+	glUseProgram(shapeShader->program);
+	glBindTexture(GL_TEXTURE_2D, textureLogo->mTextureId);
+	glBindBuffer(GL_ARRAY_BUFFER, modelLogo->mVBO);
+	if (shapeShader->positionAttribute != -1)
+	{
+		glEnableVertexAttribArray(shapeShader->positionAttribute);
+		glVertexAttribPointer(shapeShader->positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
+	}
+	if (shapeShader->uvAttribute != -1)
+	{
+		glEnableVertexAttribArray(shapeShader->uvAttribute);
+		glVertexAttribPointer(shapeShader->uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(2 * sizeof(Vector3)));
+	}
+
+
+	glUniformMatrix4fv(shapeShader->u_MVP, 1, GL_FALSE, *mvpP.m);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, modelLogo->mIBO);
+	glDrawElements(GL_TRIANGLES, modelLogo->mNumberOfIndices, GL_UNSIGNED_INT, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glDisable(GL_DEPTH_TEST);
-	glDisable(GL_BLEND);
-	glDisable(GL_SAMPLE_ALPHA_TO_COVERAGE);
+	lives->RenderText(textShader);
+	
+	
 }
 
 void StatePlay::Update()
 {
+	
 	pf.Update();
 
 	for (int i = 0; i < towerList.size(); i++) {
@@ -245,4 +287,6 @@ void StatePlay::CleanUp()
 		}
 	}
 	pf.CleanUp();
+	delete modelLogo;
+	delete textureLogo;
 }

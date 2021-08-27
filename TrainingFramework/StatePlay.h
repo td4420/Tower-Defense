@@ -13,6 +13,7 @@
 #include "PlayField.h"
 #include "Enemies.h"
 #include "Tower.h"
+#include"Text.h"
 class StatePlay
 {
 public:
@@ -22,6 +23,12 @@ public:
 	std::vector <Object*> towerButtonList;
 	Object* upgradeButton;
 	Object* sellButton;
+
+	Text* lives = new Text("TEST", "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 1.0, 1.0, 1.0), 45, -1, -0.8);
+
+	Model* modelLogo;
+	Texture* textureLogo;
+	Matrix posP, scaleP, mvpP;
 
 	int selectMenuOption = -1;
 	int NumMap[7][8] =
@@ -36,7 +43,7 @@ public:
 	};
 
 	void init();
-	void Draw();
+	void Draw(Shaders* textShader, Shaders* shapeShader);
 	void Update();
 	bool IsBuildable(int xPos, int yPos);
 	bool CheckSelectionOption(int x, int y);
