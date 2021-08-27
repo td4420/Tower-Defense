@@ -51,10 +51,8 @@ public:
 	//std::string strTowerUpgradeFor;
 	Text* towerStat = new Text("!", 10, 10, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 0.0, 0.0, 1.0), 60);
 
-	Text* archerTowerCost = new Text("100$", 665, 515, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 1.0, 0.0, 1.0), 60);
-	Text* mortarTowerCost = new Text("500$", 810, 515, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 1.0, 0.0, 1.0), 60);
-	Text* thunderTowerCost = new Text("400$", 665, 370, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 1.0, 0.0, 1.0), 60);
-	Text* witchTowerCost = new Text("280$", 810, 370, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 1.0, 0.0, 1.0), 60);
+	Text* gameOverText = new Text("GAME OVER!", 320, 370, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 0.0, 0.0, 1.0), 200);
+	Text* winText = new Text("YOU WIN!", 310, 370, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 1.0, 1.0, 1.0), 200);
 
 	int selectMenuOption = -1;
 	int NumMap[7][8] =
@@ -78,6 +76,7 @@ public:
 	void OnMouseClick(int x, int y);
 	void OnMouseOver(int x, int y);
 	void CleanUp();
+	
 	int FindIndexOfTower(int x, int y);
 
 	StatePlay();

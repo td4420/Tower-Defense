@@ -6,7 +6,7 @@
 
 PlayField::PlayField()
 {
-	money = 1000;
+	money = 1200;
 	HP = 20;
 }
 
@@ -22,7 +22,6 @@ void PlayField::CleanUp()
 
 void PlayField::Init(Shaders shaders)
 {
-
 	myShaders = shaders;
 	int NumMap[7][8];
 
@@ -109,7 +108,7 @@ void PlayField::InitEnemyWave()
 				numberOfTank++;
 			}
 		}
-		if (waveNum < waveMax) waveNum += 1;
+		if (waveNum <= waveMax) waveNum += 1;
 		nextWave = false;
 	}
 	//cout << TileMap[3][2].tileTexture.mTgaFilePath << endl;
@@ -163,8 +162,10 @@ void PlayField::Update()
 		waveEnd = true;
 	}
 
-	if (waveNum == waveMax || HP<=0) {
+	if (HP<=0) {
 		gameOver = true;
 		//cout << "Game Over!" << endl;
 	}
+
+	if (waveNum > waveMax && HP>0) uWin = true;
 }

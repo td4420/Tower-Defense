@@ -10,6 +10,8 @@ void StatePlay::init()
 	lives->init();
 	money->init();
 	towerStat->init();
+	gameOverText->init();
+	winText->init();
 	
 	myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
 	
@@ -130,87 +132,117 @@ void StatePlay::init()
 
 void StatePlay::Draw(Shaders * textShaders)
 {
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_BLEND);
-	glEnable(GL_SAMPLE_ALPHA_TO_COVERAGE);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-
-	background->DrawObject();
-	for (int i = 0; i < towerList.size(); i++) {
-		towerList.at(i)->DrawObject();
-		towerList.at(i)->Shoot();
-	}
-
-	for (int i = 0; i < frameList.size(); i++) {
-		frameList.at(i)->DrawObject();
-	}
-
-	for (int i = 0; i < towerButtonList.size(); i++) {
-		towerButtonList.at(i)->DrawObject();
-	}
-
-	for (int i = 0; i < functionButtonList.size(); i++)
+	if (pf.gameOver)
 	{
-		functionButtonList.at(i)->DrawObject();
+		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+
+		background->DrawObject();
+		gameOverText->RenderText(textShaders);
+
+		glDisable(GL_DEPTH_TEST);
+		glDisable(GL_BLEND);
 	}
-	//upgradeButton->DrawObject();
-	//sellButton->DrawObject();
-	pf.Draw(textShaders);
-	if (pf.waveEnd) {
-		nextWaveButton->DrawObject();
 
-	}
-	hpIcon->DrawObject();
-	moneyIcon->DrawObject();
-
-	glDisable(GL_DEPTH_TEST);
-	glDisable(GL_BLEND);
-	glDisable(GL_SAMPLE_ALPHA_TO_COVERAGE);
-
-	lives->RenderText(textShaders);
-	money->RenderText(textShaders);
-	
-
-	if (mouseOnTower)
+	if (pf.uWin)
 	{
-		towerStat->RenderText(textShaders);
+		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+
+		background->DrawObject();
+		winText->RenderText(textShaders);
+
+		glDisable(GL_DEPTH_TEST);
+		glDisable(GL_BLEND);
 	}
-	//showHP->RenderText(textShaders);
-	//showMoney->RenderText(textShaders);
+
+	if (!pf.gameOver && !pf.uWin) {
+		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_BLEND);
+		glEnable(GL_SAMPLE_ALPHA_TO_COVERAGE);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+
+		background->DrawObject();
+		for (int i = 0; i < towerList.size(); i++) {
+			towerList.at(i)->DrawObject();
+			towerList.at(i)->Shoot();
+		}
+
+		for (int i = 0; i < frameList.size(); i++) {
+			frameList.at(i)->DrawObject();
+		}
+
+		for (int i = 0; i < towerButtonList.size(); i++) {
+			towerButtonList.at(i)->DrawObject();
+		}
+
+		for (int i = 0; i < functionButtonList.size(); i++)
+		{
+			functionButtonList.at(i)->DrawObject();
+		}
+		
+		pf.Draw(textShaders);
+		if (pf.waveEnd) {
+			nextWaveButton->DrawObject();
+
+		}
+		hpIcon->DrawObject();
+		moneyIcon->DrawObject();
+
+		glDisable(GL_DEPTH_TEST);
+		glDisable(GL_BLEND);
+		glDisable(GL_SAMPLE_ALPHA_TO_COVERAGE);
+
+		lives->RenderText(textShaders);
+		money->RenderText(textShaders);
+
+
+		if (mouseOnTower)
+		{
+			towerStat->RenderText(textShaders);
+		}
+	}
 }
 
 void StatePlay::Update()
 {
-	pf.Update();
+	if (!pf.uWin && !pf.gameOver) {
+		pf.Update();
 
-	for (int i = 0; i < towerList.size(); i++) {
-		towerList.at(i)->AddEnemiesInRange(pf.enemyWave);
-		towerList.at(i)->RemoveEnemiesOutOfRange();
+		for (int i = 0; i < towerList.size(); i++) {
+			towerList.at(i)->AddEnemiesInRange(pf.enemyWave);
+			towerList.at(i)->RemoveEnemiesOutOfRange();
 
-		if (towerList.at(i)->projectileOnScreen.size() != 0) {
-			for (int j = 0; j < towerList.at(i)->projectileOnScreen.size(); j++) {
-				if (towerList.at(i)->projectileOnScreen.at(j)->nullified == false) {
-					towerList.at(i)->projectileOnScreen.at(j)->Move(towerList.at(i)->projectileOnScreen.at(j)->GetAngleToEnemies());
-				}
+			if (towerList.at(i)->projectileOnScreen.size() != 0) {
+				for (int j = 0; j < towerList.at(i)->projectileOnScreen.size(); j++) {
+					if (towerList.at(i)->projectileOnScreen.at(j)->nullified == false) {
+						towerList.at(i)->projectileOnScreen.at(j)->Move(towerList.at(i)->projectileOnScreen.at(j)->GetAngleToEnemies());
+					}
 
-				if (towerList.at(i)->projectileOnScreen.at(j)->nullified == true) {
-					delete towerList.at(i)->projectileOnScreen.at(j);
-					towerList.at(i)->projectileOnScreen.erase(towerList.at(i)->projectileOnScreen.begin() + j);
+					if (towerList.at(i)->projectileOnScreen.at(j)->nullified == true) {
+						delete towerList.at(i)->projectileOnScreen.at(j);
+						towerList.at(i)->projectileOnScreen.erase(towerList.at(i)->projectileOnScreen.begin() + j);
+					}
 				}
 			}
 		}
+
+		strLives = std::to_string(pf.HP);
+		cLives = strLives.c_str();
+		lives->text = cLives;
+
+		strMoney = std::to_string(pf.money);
+		cMoney = strMoney.c_str();
+		money->text = cMoney;
 	}
-
-	strLives = std::to_string(pf.HP);
-	cLives = strLives.c_str();
-	lives->text = cLives;
-	
-	strMoney = std::to_string(pf.money);
-	cMoney = strMoney.c_str();
-	money->text = cMoney;
-
 }
 
 bool StatePlay::CheckSelectionOption(int x, int y)
@@ -269,13 +301,13 @@ int StatePlay::FindIndexOfTower(int x, int y)
 		Vector3 o_positon = towerList.at(i)->o_position;
 		if (xPos * 0.15f == o_positon.x && yPos * -0.2f == o_positon.y) {
 			mouseOnTower = true;
-			//currentTower = i;
+			
 			strTowerDmg = std::to_string(towerList.at(i)->damage);
 			strTowerSellFor = std::to_string(towerList.at(i)->cost / 2);
-			strTowerStats = " Damage " + strTowerDmg + " " + strTowerSellFor + "$";
+			strTowerStats = "Damage " + strTowerDmg + " " + strTowerSellFor + "$";
 
 			towerStat->text = strTowerStats.c_str();
-			cout << "Mouse on tower at tile " << xPos << " " << yPos << endl;
+			//cout << "Mouse on tower at tile " << xPos << " " << yPos << endl;
 			return i;
 		}
 		else

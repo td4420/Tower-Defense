@@ -11,7 +11,7 @@ public:
 	const float disY = 0.2f;
 
 	int HP = 20;
-	int money = 1000;
+	int money = 2000;
 
 	int NumMapEasy[7][8] = {
 		0,0,0,0,0,1,1,1,
@@ -25,8 +25,8 @@ public:
 
 	int enemyWaveEasy[10][10] =//used to init waves
 	{
-		1,1,1,1,1,1,0,0,0,0,
-		1,1,1,0,1,0,1,0,1,1,
+		1,1,1,1,1,0,0,0,0,0,
+		1,1,1,1,1,1,1,0,0,0,
 		1,1,1,1,1,1,1,1,1,1,
 		0,2,0,2,0,2,0,2,0,0,
 		1,2,0,1,2,0,1,2,0,2,
@@ -68,6 +68,7 @@ public:
 	bool waveEnd = true;
 	bool nextWave = false;
 	bool gameOver = false;
+	bool uWin = false;
 	float timeSinceLastSpawn = 15.0f;
 	int waveNum = 0;//save the number of waves in a lv;
 	Shaders myShaders;
@@ -80,6 +81,7 @@ public:
 	void CleanUp();
 	void Update();
 	bool CheckSpawnTime();
+
 
 	PlayField();
 	//~PlayField();

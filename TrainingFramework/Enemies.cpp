@@ -31,7 +31,7 @@ Enemies::Enemies(int type)
 		currentHP = maxHP;
 		movementSpeed = 0.003f;
 		fixedSpeed = 0.002f;
-		reward = 30;
+		reward = 40;
 		for (int i = 0; i < animation.normalMoveLeft.size(); i++)
 		{
 			o_Texture.push_back(animation.normalMoveLeft.at(i));
