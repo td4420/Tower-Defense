@@ -9,8 +9,8 @@ void StatePlay::init()
 {
 	lives->init();
 	money->init();
-	//showHP->init();
-	//showMoney->init();
+	towerStat->init();
+	
 	myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
 	
 	pf.Init(myShaders);
@@ -52,14 +52,14 @@ void StatePlay::init()
 	Object* slowTowerButton = new Object();
 	slowTowerButton->o_Model = Model("../Resources/model.nfg");
 	slowTowerButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/slowTowerButton.tga"));
-	slowTowerButton->Build(9 * 0.15f, 3 * -0.2f);
-	frameSlow->Build(9 * 0.15f, 3 * -0.2f);
+	slowTowerButton->Build(9 * 0.15f, 3.5f * -0.2f);
+	frameSlow->Build(9 * 0.15f, 3.5f * -0.2f);
 
 	Object* witchTowerButton = new Object();
 	witchTowerButton->o_Model = Model("../Resources/model.nfg");
 	witchTowerButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/witchTowerButton.tga"));
-	witchTowerButton->Build(11 * 0.15f, 3 * -0.2f);
-	frameWitch->Build(11 * 0.15f, 3 * -0.2f);
+	witchTowerButton->Build(11 * 0.15f, 3.5f * -0.2f);
+	frameWitch->Build(11 * 0.15f, 3.5f * -0.2f);
 
 	towerButtonList.push_back(archerTowerButton);
 	towerButtonList.push_back(mortarTowerButton);
@@ -77,10 +77,10 @@ void StatePlay::init()
 		frameList.at(i)->InitObject();
 	}
 
-	bugFixButton = new Object();
-	bugFixButton->o_Model = Model("../Resources/model.nfg");
-	bugFixButton->o_Texture.push_back("../ResourcesPacket/Textures/sand_tile.tga");
-	//bugFixButton->Build(11.0f * 0.15f, 0.0f * -0.2f);
+	//bugFixButton = new Object();
+	//bugFixButton->o_Model = Model("../Resources/model.nfg");
+	//bugFixButton->o_Texture.push_back("../ResourcesPacket/Textures/sand_tile.tga");
+
 
 	// init upgrade button
 	upgradeButton = new Object();
@@ -95,7 +95,7 @@ void StatePlay::init()
 	sellButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/sellButton.tga"));
 	sellButton->Build(11.0f * 0.15f, 0.0f * -0.2f);
 
-	functionButtonList.push_back(bugFixButton);
+	//functionButtonList.push_back(bugFixButton);
 	functionButtonList.push_back(sellButton);
 	functionButtonList.push_back(upgradeButton);
 
@@ -116,14 +116,14 @@ void StatePlay::init()
 	hpIcon = new Object();
 	hpIcon->o_Model = Model("../Resources/model.nfg");
 	hpIcon->o_Texture.push_back("../ResourcesPacket/Textures/hp.tga");
-	hpIcon->Build(10 * 0.15f, 4.5f * -0.2f);
+	hpIcon->Build(10 * 0.15f, 5.2f * -0.2f);
 	hpIcon->o_shaders = myShaders;
 	hpIcon->InitObject();
 
 	moneyIcon = new Object();
 	moneyIcon->o_Model = Model("../Resources/model.nfg");
 	moneyIcon->o_Texture.push_back("../ResourcesPacket/Textures/money.tga");
-	moneyIcon->Build(10 * 0.15f, 5.5f * -0.2f);
+	moneyIcon->Build(10 * 0.15f, 6.2f * -0.2f);
 	moneyIcon->o_shaders = myShaders;
 	moneyIcon->InitObject();
 }
@@ -171,6 +171,12 @@ void StatePlay::Draw(Shaders * textShaders)
 
 	lives->RenderText(textShaders);
 	money->RenderText(textShaders);
+	
+
+	if (mouseOnTower)
+	{
+		towerStat->RenderText(textShaders);
+	}
 	//showHP->RenderText(textShaders);
 	//showMoney->RenderText(textShaders);
 }
@@ -204,6 +210,7 @@ void StatePlay::Update()
 	strMoney = std::to_string(pf.money);
 	cMoney = strMoney.c_str();
 	money->text = cMoney;
+
 }
 
 bool StatePlay::CheckSelectionOption(int x, int y)
@@ -261,8 +268,20 @@ int StatePlay::FindIndexOfTower(int x, int y)
 	for (int i = 0; i < towerList.size(); i++) {
 		Vector3 o_positon = towerList.at(i)->o_position;
 		if (xPos * 0.15f == o_positon.x && yPos * -0.2f == o_positon.y) {
-			printf("\nmouse on tower at: %d, %d ", xPos, yPos);
+			mouseOnTower = true;
+			//currentTower = i;
+			strTowerDmg = std::to_string(towerList.at(i)->damage);
+			strTowerSellFor = std::to_string(towerList.at(i)->cost / 2);
+			strTowerStats = " Damage " + strTowerDmg + " " + strTowerSellFor + "$";
+
+			towerStat->text = strTowerStats.c_str();
+			cout << "Mouse on tower at tile " << xPos << " " << yPos << endl;
 			return i;
+		}
+		else
+		{
+			mouseOnTower = false;
+			//return -1;
 		}
 	}
 	return -1;
@@ -357,7 +376,7 @@ void StatePlay::CleanUp()
 			delete towerList.at(i)->projectileOnScreen.at(j);
 			towerList.at(i)->projectileOnScreen.erase(towerList.at(i)->projectileOnScreen.begin() + j);
 		}
-		delete towerList.at(i);// bad pointer deletion if u set tower thats not pointer
+		delete towerList.at(i);
 	}
 
 	for (int i = 0; i < frameList.size(); i++)
@@ -374,6 +393,8 @@ void StatePlay::CleanUp()
 		delete functionButtonList.at(i);
 	}
 	delete nextWaveButton;
+	delete hpIcon;
+	delete moneyIcon;
 
 	for (int i = 0; i < towerList.size(); i++) {
 		for (int j = 0; j < towerList.at(i)->projectileOnScreen.size(); j++) {

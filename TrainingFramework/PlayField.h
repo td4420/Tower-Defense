@@ -11,7 +11,7 @@ public:
 	const float disY = 0.2f;
 
 	int HP = 20;
-	int money = 500;
+	int money = 1000;
 
 	int NumMapEasy[7][8] = {
 		0,0,0,0,0,1,1,1,

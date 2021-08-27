@@ -23,7 +23,7 @@ Tower::Tower(int type)
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/archerTower3.tga"));
 		damage = 10;
 		range = 0.3f;
-		reloadTime = 10.0f;
+		reloadTime = 7.0f;
 		timeSinceLastShot = reloadTime;
 		cost = 100;
 	}
@@ -61,7 +61,7 @@ Tower::Tower(int type)
 		range = 0.3f;
 		reloadTime = 10.0f;
 		timeSinceLastShot = reloadTime;
-		cost = 360;
+		cost = 280;
 	}
 }
 

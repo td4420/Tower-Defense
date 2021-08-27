@@ -153,6 +153,19 @@ Text::Text(const char* s, const char* fileFont, float scaleX, float scaleY, Vect
 	this->size = size;
 }
 
+Text::Text(const char* fileFont, float x, float y, int size, float scaleX, float scaleY, Vector4 color)
+{
+	this->posX = x;
+	this->posY = y;
+	this->heightText = 0;
+	this->widthText = 0;
+	this->color = color;
+	this->fileFont = strdup(fileFont);
+	this->scaleX = scaleX;
+	this->scaleY = scaleY;
+	this->size = size;
+}
+
 Text::~Text() {
 
 }

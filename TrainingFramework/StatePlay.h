@@ -35,14 +35,26 @@ public:
 
 	std::string strLives = "Lives: " + std::to_string(pf.HP);
 	char const* cLives = strLives.c_str();
-	Text* lives = new Text(cLives, 800, 350, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 0.0, 0.0, 1.0), 70);
+	Text* lives = new Text(cLives, 800, 300, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 0.0, 0.0, 1.0), 70);
 	//Text* showHP = new Text("Lives :", 730, 350, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 0.0, 0.0, 1.0), 70);
 
 	std::string strMoney = std::to_string(pf.money);
 	char const* cMoney = strMoney.c_str();
-	Text* money = new Text(cMoney, 800, 270, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 1.0, 0.0, 1.0), 70);
+	Text* money = new Text(cMoney, 800, 220, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 1.0, 0.0, 1.0), 70);
 	//Text* showMoney = new Text("Gold :", 730, 310, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 1.0, 0.0, 1.0), 70);
 
+	//int currentTower = -1;
+	std::string strTowerDmg;
+	std::string strTowerSellFor;
+	std::string strTowerStats;
+	//char const* cTowerStat;
+	//std::string strTowerUpgradeFor;
+	Text* towerStat = new Text("!", 10, 10, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 0.0, 0.0, 1.0), 60);
+
+	Text* archerTowerCost = new Text("100$", 665, 515, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 1.0, 0.0, 1.0), 60);
+	Text* mortarTowerCost = new Text("500$", 810, 515, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 1.0, 0.0, 1.0), 60);
+	Text* thunderTowerCost = new Text("400$", 665, 370, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 1.0, 0.0, 1.0), 60);
+	Text* witchTowerCost = new Text("280$", 810, 370, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 1.0, 0.0, 1.0), 60);
 
 	int selectMenuOption = -1;
 	int NumMap[7][8] =
@@ -55,6 +67,8 @@ public:
 		0,1,0,0,0,0,0,0,
 		0,1,1,1,1,1,1,1
 	};
+
+	bool mouseOnTower = false;
 
 	void init();
 	void Draw(Shaders* textShaders);

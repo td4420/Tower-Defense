@@ -28,6 +28,8 @@ public:
 	bool checkChoose(int x, int y);
 	void highLight();
 	void Move();
+
+	Text(const char* fileFont, float x, float y, int size, float scaleX, float scaleY, Vector4 color);
 	Text(const char* s, float x, float y, const char* fileFont, float scaleX, float scaleY, Vector4 color, int size);
 	Text(const char* s, const char* fileFont, float scaleX, float scaleY, Vector4 color, int size, float x, float y);
 		

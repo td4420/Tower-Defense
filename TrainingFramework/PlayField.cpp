@@ -6,7 +6,7 @@
 
 PlayField::PlayField()
 {
-	money = 5000;
+	money = 1000;
 	HP = 20;
 }
 
