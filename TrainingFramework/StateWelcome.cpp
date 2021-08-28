@@ -2,59 +2,33 @@
 #include"StateWelcome.h"
 
 void StateWelcome::init() {
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	back = new Text("B A C K", 10, Globals::screenHeight - 32.5, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 1.0, 1.0, 1.0), 48);
+	back->init();
 	FILE* file;
-	file = fopen(fileState, "r");
+	file = fopen("../ResourcesPacket/bgWelcome.txt", "r");
 	char modelfile[50], texturefile[50];
-	
 	fscanf(file, "Model: %s\n", &modelfile);
-	modelLogo = new Model(modelfile);
-	modelLogo->Init();
+	model = new Model(modelfile);
+	model->Init();
 	fscanf(file, "Texture: %s\n", &texturefile);
-	textureLogo = new Texture(texturefile);
-	textureLogo->mTgaFilePath = texturefile;
-	textureLogo->Init();
-	loading->init();
-	pt->init();
-	tapToStart->init();
-	scale.SetScale(1, 1, 1);
-	trans.SetTranslation(-0.5, -0.1, 1);
-	mvp = scale * trans;
+	texture = new Texture();
+	texture->mTgaFilePath = texturefile;
+	texture->Init();
+
+	scale.SetScale(2, 4, 3);
+	pos.SetTranslation(-1, -3, 0);
+	mvp = scale * pos;
+
 }
 void StateWelcome::Update(float deltaTime) {
-	if (percentLoad < 100) {
-		if (percentLoad > 20 && percentLoad < 40 || percentLoad > 60 && percentLoad < 90) {
-			Sleep(100);
-			percentLoad += 1;
-		}
-		else percentLoad += 1;
-	}
-	tmp = std::to_string(percentLoad);
-	num_char = tmp.c_str();
-	loading->text = num_char;
-}
 
+}
 void StateWelcome::Draw(Shaders* textShader, Shaders* shapeShader) {
 
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-	//draw text
-	if (percentLoad < 100) {
-		loading->RenderText(textShader);
-		pt->RenderText(textShader);
-		cout << "1\n";
-	}
-	else tapToStart->RenderText(textShader);
-	//draw logo
-
-	DrawLogo(shapeShader);
-}
-
-void StateWelcome::DrawLogo(Shaders* shapeShader) {
 	glUseProgram(shapeShader->program);
-	glBindBuffer(GL_ARRAY_BUFFER, modelLogo->mVBO);
-	glBindTexture(GL_TEXTURE_2D, textureLogo->mTextureId);
 
+	glBindTexture(GL_TEXTURE_2D, texture->mTextureId);
+	glBindBuffer(GL_ARRAY_BUFFER, model->mVBO);
 	if (shapeShader->positionAttribute != -1)
 	{
 		glEnableVertexAttribArray(shapeShader->positionAttribute);
@@ -65,26 +39,29 @@ void StateWelcome::DrawLogo(Shaders* shapeShader) {
 		glEnableVertexAttribArray(shapeShader->uvAttribute);
 		glVertexAttribPointer(shapeShader->uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(2 * sizeof(Vector3)));
 	}
+
+
 	glUniformMatrix4fv(shapeShader->u_MVP, 1, GL_FALSE, *mvp.m);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, modelLogo->mIBO);
-	glDrawElements(GL_TRIANGLES, modelLogo->mNumberOfIndices, GL_UNSIGNED_INT, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, model->mIBO);
+	glDrawElements(GL_TRIANGLES, model->mNumberOfIndices, GL_UNSIGNED_INT, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	back->RenderText(textShader);
 }
 void StateWelcome::OnMouseOver(int x, int y) {
-	if (tapToStart->checkChoose(x, y) == true) {
-		tapToStart->color = Vector4(0.6, 1, 0.4, 1);
+	if (back->checkChoose(x, y) == true) {
+		back->color = Vector4(1.0, 0.5, 1.0, 1.0);
 	}
-	if (tapToStart->checkChoose(x, y) == false) {
-		tapToStart->color = Vector4(0.5, 0.5, 0.5, 0.5);
+	if (back->checkChoose(x, y) == false) {
+		back->color = Vector4(1.0, 1.0, 1.0, 1.0);
 	}
 }
 void StateWelcome::OnMouseClick(int x, int y) {
-	if (tapToStart->checkChoose(x, y) == true) {
-		tapToStart->isChoose = true;
+	if (back->checkChoose(x, y) == true) {
+		back->isChoose = true;
 	}
-	if (tapToStart->checkChoose(x, y) == false) {
-		tapToStart->isChoose = false;
+	if (back->checkChoose(x, y) == false) {
+		back->isChoose = false;
 	}
 }

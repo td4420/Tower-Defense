@@ -1,30 +1,21 @@
 #pragma once
 #include"StateBase.h"
+#include"Text.h"
 #include"Model.h"
 #include"Texture.h"
+#include"Globals.h"
 #include"Vertex.h"
-#include"Text.h"
-#include"Object.h"
-#include<sstream>
-#include<iostream>
+#include<vector>
 class StateWelcome : public StateBase {
 public:
-	StateControl state = StateControl::StateWelcome;
-	Model* modelLogo;
-	Texture* textureLogo;
-	char* fileState = "../ResourcesPacket/StateWelcome.txt";
-	int percentLoad = 0;
+	Model* model;
+	Texture* texture;
+	Text* back;
+	Matrix pos, scale, mvp;
 
-	std::string tmp = std::to_string(percentLoad);
-	char const* num_char = tmp.c_str();
-	Matrix scale, trans, mvp;
-	Text* loading = new Text(num_char ,350,320, "../Font/OceanSummer.ttf", 1,1, Vector4(0.6,0.6,0.6,0.6), 68);
-	Text* pt = new Text("%", 373, 320, "../Font/OceanSummer.ttf", 1, 1, Vector4(0.6, 0.6, 0.6, 0.6), 68);
-	Text* tapToStart = new Text("TAP TO START!", 310, 320, "../Font/OceanSummer.ttf", 1, 1, Vector4(0.6, 0.6, 0.6, 0.6), 68);
 	void init();
 	void Update(float deltaTime);
+	void Draw(Shaders* textShader, Shaders* shapeShader);
 	void OnMouseOver(int x, int y);
 	void OnMouseClick(int x, int y);
-	void Draw(Shaders* textShader, Shaders* shapeShader);
-	void DrawLogo(Shaders* shapeShader);
 };

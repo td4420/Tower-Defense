@@ -1,1 +1,4 @@
-﻿
+﻿cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  TrainingFramework.cpp
+C:\Users\Xuan Ngoc\Desktop\New folder\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(31,33): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+  TrainingFramework.vcxproj -> C:\Users\Xuan Ngoc\Desktop\New folder\Dao_3DFrameworkTraining\BIN\TrainingFramework.exe

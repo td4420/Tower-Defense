@@ -36,17 +36,17 @@ Game* myGame = new Game();
 //StatePlay* statePlay = new StatePlay();
 int Init(ESContext* esContext)
 {
-	
+
 	//glEnable(GL_DEPTH_TEST);
-	
-	
+
+
 	//creation of shaders and program 
 	//myButton->init();
 	//myStateMenu->init();
 	//stateWelcome->init();
 	//statePlay->init();
 	myGame->init();
-	
+
 	//myShaders = scenemanager->s_ListObject.at(0)->o_shaders;
 	myShaders->Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
 	return textShader->Init("../Resources/Shaders/Text.vs", "../Resources/Shaders/Text.fs");
@@ -64,7 +64,7 @@ void Draw(ESContext* esContext)
 	//stateWelcome->Draw(textShader, myShaders);
 	//myStateMenu->DrawLogo(myShaders);
 	//statePlay->Draw();
-	myGame->Draw(textShader,myShaders);
+	myGame->Draw(textShader, myShaders);
 	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
 }
 
@@ -92,7 +92,7 @@ void TouchActionUp(ESContext* esContext, int x, int y)
 	//myGame->OnMouseClick(x, y);
 	//printf("\n: mouse up at: %d, %d", x, y);
 }
-void TouchActionDrag(ESContext* esCotext, int x, int y) 
+void TouchActionDrag(ESContext* esCotext, int x, int y)
 {
 	//move drag
 	//printf("\n mouse when drag: %d, %d", x, y);
@@ -100,14 +100,14 @@ void TouchActionDrag(ESContext* esCotext, int x, int y)
 
 void TouchActionMove(ESContext* esContext, int x, int y)
 {
-	myGame->OnMouseOver(x,y);
+	myGame->OnMouseOver(x, y);
 
 	//stateWelcome->OnMouseOver(x, y);
 
 }
 void CleanUp()
 {
-	myGame->statePlay->CleanUp();
+	myGame->~Game();
 }
 int _tmain(int argc, TCHAR* argv[])
 {
