@@ -29,8 +29,8 @@ Enemies::Enemies(int type)
 		o_Texture.push_back(Texture("../Resources/enemy.tga"));
 		maxHP = 100;
 		currentHP = maxHP;
-		movementSpeed = 0.003f;
-		fixedSpeed = 0.002f;
+		movementSpeed = 0.1f;
+		fixedSpeed = 0.1f;
 		reward = 40;
 		for (int i = 0; i < animation.normalMoveLeft.size(); i++)
 		{
@@ -47,8 +47,8 @@ Enemies::Enemies(int type)
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/fastEnemy.tga"));
 		maxHP = 70;
 		currentHP = maxHP;
-		movementSpeed = 0.005f;
-		fixedSpeed = 0.005f;
+		movementSpeed = 0.2f;//0.005f;
+		fixedSpeed = 0.2f;//0.005f;
 		reward = 25;
 		for (int i = 0; i < animation.fastMoveLeft.size(); i++)
 		{
@@ -65,8 +65,8 @@ Enemies::Enemies(int type)
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/tanker.tga"));
 		maxHP = 300;
 		currentHP = maxHP;
-		movementSpeed = 0.001f;
-		fixedSpeed = 0.001f;
+		movementSpeed = 0.09f;
+		fixedSpeed = 0.09f;
 		reward = 100;
 
 	}
@@ -76,8 +76,8 @@ Enemies::Enemies(int type)
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/tanker.tga"));
 		maxHP = 300;
 		currentHP = maxHP;
-		movementSpeed = 0.001f;
-		fixedSpeed = 0.001f;
+		movementSpeed = 0.09f; //0.001f;
+		fixedSpeed = 0.09f;//0.001f;
 		reward = 100;
 		for (int i = 0; i < animation.tankMoveLeft.size(); i++)
 		{
@@ -88,8 +88,8 @@ Enemies::Enemies(int type)
 			o_Texture.push_back(animation.tankMoveRight.at(j));
 		}
 	}
-	HP->moveSpeed = movementSpeed;
-	HP->init();
+	//HP->moveSpeed = movementSpeed;
+	//HP->init();
 }
 
 Enemies::Enemies(Enemies* e)
@@ -107,23 +107,6 @@ Enemies::Enemies(Enemies* e)
 	}
 }
 
-Enemies::Enemies(Shaders shader, int maxHP, float speed, int reward)
-{
-	o_shaders = shader;
-
-	this->maxHP = maxHP;
-	this->currentHP = maxHP;
-	this->movementSpeed = speed;
-	this->reward = reward;
-	o_Model = Model("../Resources/model.nfg");
-	o_Texture.push_back(Texture("../Resources/enemy.tga"));
-	Scale.SetIdentity();
-	Rotation.SetIdentity();
-	Translation.SetIdentity();
-	MVP = Scale * Rotation * Translation;
-
-}
-
 Enemies::~Enemies()
 {
 	o_Model.~Model();
@@ -133,9 +116,7 @@ Enemies::~Enemies()
 	}
 }
 
-
-
-void Enemies::MoveToLeft()
+void Enemies::MoveToLeft(float deltaTime)
 {
 	float deltaX = o_position.x - locationX * 0.15;
 	if (deltaX <= -0.15)
@@ -145,12 +126,12 @@ void Enemies::MoveToLeft()
 		locationX--;
 		return;
 	}
-	o_position.x -= movementSpeed;
+	o_position.x -= movementSpeed * deltaTime;
 	Translation.SetTranslation(o_position);
 	MVP = Scale * Rotation * Translation;
 
 }
-void Enemies::MoveToRight()
+void Enemies::MoveToRight(float deltaTime)
 {
 
 	float deltaX = o_position.x - locationX * 0.15;
@@ -161,13 +142,13 @@ void Enemies::MoveToRight()
 		locationX++;
 		return;
 	}
-	o_position.x += movementSpeed;
+	o_position.x += movementSpeed * deltaTime;
 	Translation.SetTranslation(o_position);
 	MVP = Scale * Rotation * Translation;
 
 }
 
-void Enemies::MoveDown()
+void Enemies::MoveDown(float deltaTime)
 {
 	float deltaY = -o_position.y - locationY * 0.2;
 	if (deltaY >= 0.2)
@@ -177,13 +158,13 @@ void Enemies::MoveDown()
 		locationY++;
 		return;
 	}
-	o_position.y -= movementSpeed;
+	o_position.y -= movementSpeed * deltaTime;
 	Translation.SetTranslation(o_position);
 	MVP = Scale * Rotation * Translation;
 
 }
 
-void Enemies::MoveUp()
+void Enemies::MoveUp(float deltaTime)
 {
 	float deltaY = -o_position.y - locationY * 0.2;
 	if (deltaY <= -0.2)
@@ -193,13 +174,13 @@ void Enemies::MoveUp()
 		locationY--;
 		return;
 	}
-	o_position.y += movementSpeed;
+	o_position.y += movementSpeed * deltaTime;
 	Translation.SetTranslation(o_position);
 	MVP = Scale * Rotation * Translation;
 
 }
 
-void Enemies::MoveEnemies()
+void Enemies::MoveEnemies(float deltaTime)
 {
 	int temp;
 	if (enemyType == 1) temp = animation.normalMoveLeft.size() + 1;
@@ -220,7 +201,7 @@ void Enemies::MoveEnemies()
 	{
 		o_Texture.at(0) = o_Texture.at(animation.GetAnimationMoveLeft(enemyType) + 1);
 		toLeft = true;
-		MoveToLeft();
+		MoveToLeft(deltaTime);
 		return;
 	}
 	if ((locationX + 1 != lastLocationX) &&  //To not move back
@@ -228,7 +209,7 @@ void Enemies::MoveEnemies()
 	{
 		o_Texture.at(0) = o_Texture.at(animation.GetAnimationMoveRight(enemyType) + temp);
 		toLeft = false;
-		MoveToRight();
+		MoveToRight(deltaTime);
 		return;
 	}
 	if ((locationY - 1 != lastLocationY) && // To not move back
@@ -236,7 +217,7 @@ void Enemies::MoveEnemies()
 	{
 		if (!toLeft) o_Texture.at(0) = o_Texture.at(animation.GetAnimationMoveRight(enemyType) + temp);
 		else o_Texture.at(0) = o_Texture.at(animation.GetAnimationMoveLeft(enemyType) + 1);
-		MoveUp();
+		MoveUp(deltaTime);
 		return;
 	}
 	if ((locationY + 1 != lastLocationY) && // To not move back
@@ -244,16 +225,16 @@ void Enemies::MoveEnemies()
 	{
 		if (!toLeft) o_Texture.at(0) = o_Texture.at(animation.GetAnimationMoveRight(enemyType) + temp);
 		else o_Texture.at(0) = o_Texture.at(animation.GetAnimationMoveLeft(enemyType) + 1);
-		MoveDown();
+		MoveDown(deltaTime);
 		return;
 	}
 }
 
-void Enemies::Update()
+void Enemies::Update(float deltaTime)
 {
 	//cout << "X: " << (o_position.x + 0.075f) << " Y: " << (o_position.y - 0.1f) << endl;
 	CheckSlowed();
-	MoveEnemies();
+	MoveEnemies(deltaTime);
 
 	/*strHP = std::to_string(currentHP);
 	charHp = strHP.c_str();
@@ -312,7 +293,7 @@ void Enemies::Reset()
 	MVP = Scale * Rotation * Translation;
 }
 
-void Enemies::DrawHP(Shaders* textShaders)
-{
-	HP->RenderText(textShaders);
-}
+//void Enemies::DrawHP(Shaders* textShaders)
+//{
+//	HP->RenderText(textShaders);
+//}

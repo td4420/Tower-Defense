@@ -9,15 +9,13 @@ public:
     int projectileType;//same as towerType 
     int damage = 0;
     float movementSpeed = 0.005f;
-    float firingAngle;
+    //float firingAngle;
 
-    Vector2 towerPos;
-    //Vector2 targetPos;
-    Shaders projectileShaders;
+    Vector2 towerPos; 
     Enemies* target;
 
     bool reachedTarget = false;
-    bool moving = false;// so projectile doesnt change course on flight
+    //bool moving = false;// so projectile doesnt change course on flight
     bool nullified = false;
 
     float CalculateDistanceToTarget();
@@ -27,7 +25,10 @@ public:
     float GetAngleToEnemies();
     void Move(float angle);
 
+    void Reset();
+
     Projectile();
+    Projectile(int type);
     Projectile(Projectile* p);
     Projectile(int type, Shaders shaders);//initX, initY is location of the Tower that fires
     Projectile(int type, Shaders shaders, Enemies* e);

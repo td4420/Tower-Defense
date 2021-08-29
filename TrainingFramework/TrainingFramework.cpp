@@ -13,6 +13,7 @@
 #include"StateWelcome.h"
 #include"StatePlay.h"
 #include"Game.h"
+#include <chrono>
 using namespace std;
 
 #define MOVE_FORWARD 1
@@ -72,6 +73,14 @@ void Update(ESContext* esContext, float deltaTime)
 {
 	//stateWelcome->Update(deltaTime);
 	//statePlay->Update();
+	static std::chrono::time_point<std::chrono::steady_clock> oldTime = std::chrono::high_resolution_clock::now();
+	static int fps; fps++;
+
+	if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - oldTime) >= std::chrono::seconds{ 1 }) {
+		oldTime = std::chrono::high_resolution_clock::now();
+		std::cout << "FPS: " << fps << std::endl;
+		fps = 0;
+	}
 	myGame->Update(deltaTime);
 }
 
@@ -109,6 +118,17 @@ void CleanUp()
 {
 	myGame->statePlay->CleanUp();
 }
+
+void printFPS() {
+	static std::chrono::time_point<std::chrono::steady_clock> oldTime = std::chrono::high_resolution_clock::now();
+	static int fps; fps++;
+
+	if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - oldTime) >= std::chrono::seconds{ 1 }) {
+		oldTime = std::chrono::high_resolution_clock::now();
+		std::cout << "FPS: " << fps << std::endl;
+		fps = 0;
+	}
+}
 int _tmain(int argc, TCHAR* argv[])
 {
 	//glViewport(0, 0, Globals::screenWidth, Globals::screenHeight);
@@ -128,6 +148,7 @@ int _tmain(int argc, TCHAR* argv[])
 	esRegisterMouseUpFunc(&esContext, TouchActionUp);
 	esRegisterMouseMoveFunc(&esContext, TouchActionMove);
 	esRegisterMouseDragFunc(&esContext, TouchActionDrag);
+	//printFPS();
 	esMainLoop(&esContext);
 
 	//releasing OpenGL resources

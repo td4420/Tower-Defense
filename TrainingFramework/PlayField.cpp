@@ -134,7 +134,7 @@ bool PlayField::CheckSpawnTime()
 	else return false;
 }
 
-void PlayField::Update()
+void PlayField::Update(float deltaTime)
 {
 	for (int i = 0; i < enemyWave.size(); i++)
 	{
@@ -155,7 +155,7 @@ void PlayField::Update()
 
 		if (enemyWave.at(i)->alive == false || enemyWave.at(i)->reachedExit == true) enemyWave.erase(enemyWave.begin() + i);//glitch when reset
 
-		else enemyWave.at(i)->Update();
+		else enemyWave.at(i)->Update(deltaTime);
 	}
 
 	if (enemyWave.size() == 0 && tempEnemyWave.size() == 0) {

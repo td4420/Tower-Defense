@@ -14,11 +14,12 @@ Projectile::Projectile(Projectile* p)
 	o_Texture.push_back(p->o_Texture.at(0));
 }
 
-Projectile::Projectile(int type, Shaders shaders)
+Projectile::Projectile(int type)
 {
 	projectileType = type;
 	o_Model = Model("../Resources/modelProjectile.nfg");
 	nullified = false;
+	target = nullptr;
 
 	if (type == 0)
 	{
@@ -30,6 +31,32 @@ Projectile::Projectile(int type, Shaders shaders)
 		o_Texture.push_back("../ResourcesPacket/Textures/mortarBullet.tga");
 	}
 	if (type == 2)  o_Texture.push_back("../ResourcesPacket/Textures/thunderBullet.tga");
+
+	if (type == 3) o_Texture.push_back("../ResourcesPacket/Textures/bullet.tga");
+
+	movementSpeed = 0.02f;
+	Scale.SetIdentity();
+	Rotation.SetIdentity();
+}
+
+Projectile::Projectile(int type, Shaders shaders)
+{
+	projectileType = type;
+	o_Model = Model("../Resources/modelProjectile.nfg");
+	nullified = false;
+	target = nullptr;
+
+	if (type == 0)
+	{
+		o_Texture.push_back("../ResourcesPacket/Textures/fireBullet.tga");
+	}
+
+	if (type == 1)
+	{
+		o_Texture.push_back("../ResourcesPacket/Textures/mortarBullet.tga");
+	}
+	if (type == 2)  o_Texture.push_back("../ResourcesPacket/Textures/thunderBullet.tga");
+
 	if (type == 3) o_Texture.push_back("../ResourcesPacket/Textures/bullet.tga");
 	o_shaders = shaders;
 
@@ -83,24 +110,33 @@ void Projectile::Bounce(vector <Enemies*> enemyWave)//later
 
 float Projectile::GetAngleToEnemies()
 {
-	float deltaX = target->o_position.x - o_position.x;
-	float deltaY = target->o_position.y - o_position.y;
-	float angle = atan2f(deltaY, deltaX);
+	//if (target != nullptr) {
+		float deltaX = target->o_position.x - o_position.x;
+		float deltaY = target->o_position.y - o_position.y;
+		float angle = atan2f(deltaY, deltaX);
 
-	return angle;
+		return angle;
+	//}
 }
 
 void Projectile::Move(float angle)
 {
 	//cout << angle << endl;
-	firingAngle = angle;
+	//firingAngle = angle;
 
-	o_position.x += movementSpeed * cosf(firingAngle);
-	o_position.y += movementSpeed * sinf(firingAngle);
+	o_position.x += movementSpeed * cosf(angle);
+	o_position.y += movementSpeed * sinf(angle);
 	o_position.z = 0.0f;
 
 	Scale.SetIdentity();
 	Rotation.SetIdentity();
 	Translation.SetTranslation(o_position);
 	MVP = Scale * Rotation * Translation;
+}
+
+void Projectile::Reset()
+{
+	reachedTarget = false;
+	nullified = false;
+	target = nullptr;
 }

@@ -79,7 +79,7 @@ public:
 	void InitEnemyWave();
 	void SpawnEnemy();
 	void CleanUp();
-	void Update();
+	void Update(float deltaTime);
 	bool CheckSpawnTime();
 
 

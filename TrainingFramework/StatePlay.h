@@ -70,7 +70,7 @@ public:
 
 	void init();
 	void Draw(Shaders* textShaders);
-	void Update();
+	void Update(float deltaTime);
 	bool IsBuildable(int xPos, int yPos);
 	bool CheckSelectionOption(int x, int y);
 	void OnMouseClick(int x, int y);

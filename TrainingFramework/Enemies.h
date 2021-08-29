@@ -24,9 +24,9 @@ public:
 	int maxHP = 60;
 	int currentHP = 60;
 
-	string strHP = std::to_string(currentHP);
+	/*string strHP = std::to_string(currentHP);
 	char const* charHp = strHP.c_str();
-	Text* HP = new Text(charHp, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 0.0, 0.0, 1.0), 45, o_position.x, o_position.y + 0.02f);
+	Text* HP = new Text(charHp, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 0.0, 0.0, 1.0), 45, o_position.x, o_position.y + 0.02f);*/
 	//Text* HP = new Text(charHp, 810, 200, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 0.0, 0.0, 1.0), 45);
 
 	float movementSpeed = 0.001f;
@@ -55,13 +55,13 @@ public:
 
 	//void Bind();
 	void Reset();
-	void MoveEnemies();
-	void MoveToLeft();
-	void MoveToRight();
-	void MoveUp();
-	void MoveDown();
-	void DrawHP(Shaders *textShaders);
-	void Update();
+	void MoveEnemies(float deltaTime);
+	void MoveToLeft(float deltaTime);
+	void MoveToRight(float deltaTime);
+	void MoveUp(float deltaTime);
+	void MoveDown(float deltaTime);
+	//void DrawHP(Shaders *textShaders);
+	void Update(float deltaTime);
 	void Kill();
 	void CheckSlowed();
 };

@@ -24,6 +24,7 @@ public:
     std::vector <Enemies*> enemiesInRange;
     std::vector <Projectile*> projectileOnScreen;
     Enemies* currentTarget;
+    Projectile* bullet;
 
     void Build(int x, int y);
     void Upgrade();
@@ -32,8 +33,9 @@ public:
     void AddEnemiesInRange(std::vector <Enemies*> EnemyWave);
     void RemoveEnemiesOutOfRange();
     void SetTarget();
-    void Update();
+    void Update(vector <Enemies*> enemyWave);
     bool CheckReload();
+    void CleanUp();
 
     Tower();
     Tower(int towerType);

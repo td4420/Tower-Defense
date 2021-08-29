@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "StatePlay.h"
+#include <chrono>
 
 StatePlay::StatePlay()
 {
@@ -212,27 +213,38 @@ void StatePlay::Draw(Shaders * textShaders)
 	}
 }
 
-void StatePlay::Update()
+void StatePlay::Update(float deltaTime)
 {
 	if (!pf.uWin && !pf.gameOver) {
-		pf.Update();
+		/*static std::chrono::time_point<std::chrono::steady_clock> oldTime = std::chrono::high_resolution_clock::now();
+		static int fps; fps++;
+
+		if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - oldTime) >= std::chrono::seconds{ 1 }) {
+			oldTime = std::chrono::high_resolution_clock::now();
+			std::cout << "FPS: " << fps << std::endl;
+			fps = 0;
+		}*/
+
+		pf.Update(deltaTime);
 
 		for (int i = 0; i < towerList.size(); i++) {
-			towerList.at(i)->AddEnemiesInRange(pf.enemyWave);
-			towerList.at(i)->RemoveEnemiesOutOfRange();
+			towerList.at(i)->Update(pf.enemyWave);
+			//towerList.at(i)->AddEnemiesInRange(pf.enemyWave);
+			//towerList.at(i)->RemoveEnemiesOutOfRange();
 
-			if (towerList.at(i)->projectileOnScreen.size() != 0) {
-				for (int j = 0; j < towerList.at(i)->projectileOnScreen.size(); j++) {
-					if (towerList.at(i)->projectileOnScreen.at(j)->nullified == false) {
-						towerList.at(i)->projectileOnScreen.at(j)->Move(towerList.at(i)->projectileOnScreen.at(j)->GetAngleToEnemies());
-					}
+		
+			//for (int j = 0; j < towerList.at(i)->projectileOnScreen.size(); j++) {
+			//	if (towerList.at(i)->projectileOnScreen.at(j)->nullified == false
+			//		&& towerList.at(i)->projectileOnScreen.at(j)->target != nullptr) {
+			//		towerList.at(i)->projectileOnScreen.at(j)->Move(towerList.at(i)->projectileOnScreen.at(j)->GetAngleToEnemies());
+			//	}
 
-					if (towerList.at(i)->projectileOnScreen.at(j)->nullified == true) {
-						delete towerList.at(i)->projectileOnScreen.at(j);
-						towerList.at(i)->projectileOnScreen.erase(towerList.at(i)->projectileOnScreen.begin() + j);
-					}
-				}
-			}
+			//	/*if (towerList.at(i)->projectileOnScreen.at(j)->nullified == true) {
+			//		delete towerList.at(i)->projectileOnScreen.at(j);
+			//		towerList.at(i)->projectileOnScreen.erase(towerList.at(i)->projectileOnScreen.begin() + j);
+			//	}*/
+			//}
+			
 		}
 
 		strLives = std::to_string(pf.HP);
@@ -375,6 +387,7 @@ void StatePlay::OnMouseClick(int x, int y)
 			if (index != -1) {
 				pf.money += towerList.at(index)->cost / 2;
 				cout << "Tower sell for: " << towerList.at(index)->cost / 2 << endl;
+				delete towerList.at(index)->bullet;
 				delete towerList.at(index);
 				towerList.erase(towerList.begin() + index);
 
@@ -403,11 +416,8 @@ void StatePlay::CleanUp()
 	delete background;
 
 	for (int i = 0; i < towerList.size(); i++) {
-		for (int j = 0; j < towerList.at(i)->projectileOnScreen.size(); j++)
-		{
-			delete towerList.at(i)->projectileOnScreen.at(j);
-			towerList.at(i)->projectileOnScreen.erase(towerList.at(i)->projectileOnScreen.begin() + j);
-		}
+		towerList.at(i)->projectileOnScreen.clear();
+		delete towerList.at(i)->bullet;
 		delete towerList.at(i);
 	}
 

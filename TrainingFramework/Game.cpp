@@ -17,7 +17,7 @@ void Game::Update(float deltaTime) {
 	else if (curState == StateBase::StateControl::StateOption) {
 		stateOption->Update(deltaTime);
 	}else if (curState == StateBase::StateControl::StatePlay) {
-		statePlay->Update();
+		statePlay->Update(deltaTime);
 	}
 }
 void Game::Draw(Shaders* textShader, Shaders* shapeShader) {

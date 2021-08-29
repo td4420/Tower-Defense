@@ -15,6 +15,8 @@ Tower::Tower(int type)
 	o_Model = Model("../Resources/model.nfg");
 	reloadSpeed = 0.1f;
 	upgrade = 0;
+	bullet = new Projectile(type);
+	bullet->InitObject();
 
 	if (towerType == 0)//archer tower: small damage, medium range, fast reload
 	{
@@ -33,7 +35,7 @@ Tower::Tower(int type)
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTower.tga"));
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTower2temp.tga"));
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTower3temp.tga"));
-		damage = 70;
+		damage = 100;
 		range = 0.5f;
 		reloadTime = 25.0f;
 		timeSinceLastShot = reloadTime;
@@ -53,6 +55,18 @@ Tower::Tower(int type)
 	}
 
 	if (towerType == 3)//chance tower: 3%-5% chance for huge damage, 10-20% chance for slow
+	{
+		o_Texture.push_back("../ResourcesPacket/Textures/witchTower.tga");
+		o_Texture.push_back("../ResourcesPacket/Textures/witchTower2.tga");
+		o_Texture.push_back("../ResourcesPacket/Textures/witchTower3.tga");
+		damage = 10;
+		range = 0.3f;
+		reloadTime = 10.0f;
+		timeSinceLastShot = reloadTime;
+		cost = 280;
+	}
+
+	if (towerType == 4)//chance tower: 3%-5% chance for huge damage, 10-20% chance for slow
 	{
 		o_Texture.push_back("../ResourcesPacket/Textures/witchTower.tga");
 		o_Texture.push_back("../ResourcesPacket/Textures/witchTower2.tga");
@@ -152,14 +166,22 @@ void Tower::Upgrade()//Upgrade price = 1/2 cost, each upgrade increases cost by 
 	if (upgrade <= 1) upgrade++;
 
 	//cout << upgrade << endl;
-	if (upgrade >= 2) { //cout << "Max Upgrade!" << endl;
+	if (upgrade >= 2) { cout << "Max Upgrade!" << endl;
 		return;
 	}
 }
 
-void Tower::Update()
+void Tower::Update(vector <Enemies*> enemyWave)
 {
+	AddEnemiesInRange(enemyWave);
+	RemoveEnemiesOutOfRange();
 
+	for (int i = 0; i < projectileOnScreen.size(); i++)
+	{
+		if (projectileOnScreen.at(i)->nullified == false && projectileOnScreen.at(i)->target != nullptr) {
+			projectileOnScreen.at(i)->Move(projectileOnScreen.at(i)->GetAngleToEnemies());
+		}
+	}
 }
 
 float Tower::CalculateDistanceToEnemies(Enemies* e)//must Enemies* or White Screen
@@ -205,21 +227,25 @@ void Tower::RemoveEnemiesOutOfRange()//Remove enemies moved out of range and upd
 	//SetTarget();
 }
 
-void Tower::Shoot()//leak here
+void Tower::Shoot()//put in Draw();
 {
 	CheckReload();
 	if (enemiesInRange.size() != 0 && currentTarget != nullptr) {
 		//cout << currentTarget->currentHP << endl;
 		if (canFire) {
 			timeSinceLastShot = 0.0f;
-			Projectile* p = new Projectile(towerType, o_shaders);
+			/*Projectile* p = new Projectile(towerType, o_shaders);
 			p->target = currentTarget;
 			p->InitObject();
 			if (towerType != 2) p->SetFiringLocation(o_position.x, o_position.y);
 			if (towerType == 2) p->SetFiringLocation(currentTarget->o_position.x - 0.05f, currentTarget->o_position.y + 0.15f);
-			projectileOnScreen.push_back(p);
-			//shotFired++;
-			//cout << "Tower at " << o_position.x << " & " << o_position.y << " fired: " << shotFired << endl;
+			projectileOnScreen.push_back(p);*/
+			bullet->o_shaders = o_shaders;
+			bullet->target = currentTarget;
+			if (towerType != 2) bullet->SetFiringLocation(o_position.x, o_position.y);
+			if (towerType == 2) bullet->SetFiringLocation(currentTarget->o_position.x - 0.05f, currentTarget->o_position.y + 0.15f);
+
+			if (projectileOnScreen.empty()) projectileOnScreen.push_back(bullet);
 		}
 
 
@@ -235,9 +261,10 @@ void Tower::Shoot()//leak here
 			}
 
 			if (projectileOnScreen.at(i)->reachedTarget == true) {
+				//cout << "Hit!" << endl;
 				projectileOnScreen.at(i)->nullified = true;
 				currentTarget->currentHP -= damage;
-
+				//cout << currentTarget->currentHP << endl;
 				if (towerType == 2) currentTarget->slowed = true;
 
 				if (towerType == 3) {
@@ -257,7 +284,8 @@ void Tower::Shoot()//leak here
 
 			if (projectileOnScreen.at(i)->nullified == true)
 			{
-				delete projectileOnScreen.at(i);
+				projectileOnScreen.at(i)->Reset();
+				projectileOnScreen.at(i)->SetFiringLocation(o_position.x,o_position.y);
 				projectileOnScreen.erase(projectileOnScreen.begin() + i);
 			}
 		}
