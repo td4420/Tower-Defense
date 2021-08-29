@@ -221,7 +221,7 @@ void StatePlay::Update()
 			towerList.at(i)->AddEnemiesInRange(pf.enemyWave);
 			towerList.at(i)->RemoveEnemiesOutOfRange();
 
-			if (towerList.at(i)->projectileOnScreen.size() != 0) {
+			//if (towerList.at(i)->projectileOnScreen.size() != 0) {
 				for (int j = 0; j < towerList.at(i)->projectileOnScreen.size(); j++) {
 					if (towerList.at(i)->projectileOnScreen.at(j)->nullified == false) {
 						towerList.at(i)->projectileOnScreen.at(j)->Move(towerList.at(i)->projectileOnScreen.at(j)->GetAngleToEnemies());
@@ -232,7 +232,7 @@ void StatePlay::Update()
 						towerList.at(i)->projectileOnScreen.erase(towerList.at(i)->projectileOnScreen.begin() + j);
 					}
 				}
-			}
+			//}
 		}
 
 		strLives = std::to_string(pf.HP);

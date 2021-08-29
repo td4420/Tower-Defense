@@ -25,11 +25,10 @@ void Game::Draw(Shaders* textShader, Shaders* shapeShader) {
 	getCurState();
 	if (curState == StateBase::StateControl::StateWelcome) {
 		stateWelcome->Draw(textShader, shapeShader);
-		cout << "wellcome\n";
 	}
 	else if (curState == StateBase::StateControl::StateMenu) {
 		stateMenu->Draw(textShader, shapeShader);
-		cout << "menu\n";
+		
 	}
 	else if (curState == StateBase::StateControl::StateOption) {
 		stateOption->Draw(textShader, shapeShader);
@@ -37,11 +36,11 @@ void Game::Draw(Shaders* textShader, Shaders* shapeShader) {
 	}
 	else if (curState == StateBase::StateControl::StatePlay) {
 		statePlay->Draw(textShader);
-		cout << "play\n";
+		
 	}
 	else if (curState == StateBase::StateControl::StateHelp) {
 		stateHelp->Draw(textShader, shapeShader);
-		cout << "help\n";
+		
 	}
 }
 void Game::init() {

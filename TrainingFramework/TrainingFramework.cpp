@@ -13,6 +13,8 @@
 #include"StateWelcome.h"
 #include"StatePlay.h"
 #include"Game.h"
+#include <chrono>
+
 using namespace std;
 
 #define MOVE_FORWARD 1
@@ -73,6 +75,14 @@ void Update(ESContext* esContext, float deltaTime)
 	//stateWelcome->Update(deltaTime);
 	//statePlay->Update();
 	myGame->Update(deltaTime);
+	static std::chrono::time_point<std::chrono::steady_clock> oldTime = std::chrono::high_resolution_clock::now();
+	static int fps; fps++;
+
+	if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - oldTime) >= std::chrono::seconds{ 1 }) {
+		oldTime = std::chrono::high_resolution_clock::now();
+		std::cout << "FPS: " << fps << std::endl;
+		fps = 0;
+	}
 }
 
 void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
