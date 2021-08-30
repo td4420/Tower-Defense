@@ -18,6 +18,13 @@ void StatePlay::init()
 	
 	pf.Init(myShaders);
 
+	bgPlay = new Object();
+	bgPlay->o_Model = Model("../Resources/modelBackground.nfg");
+	bgPlay->o_Texture.push_back("../ResourcesPacket/Textures/bgPlay1.tga");
+	bgPlay->o_shaders = myShaders;
+	bgPlay->Build(0 * 0.15f, 0 * 0.2f);
+	bgPlay->InitObject();
+
 	background = new Object();
 	background->o_Model = Model("../Resources/modelBackground.nfg");
 	background->o_Texture.push_back("../ResourcesPacket/Textures/bgPlay.tga");
@@ -171,7 +178,7 @@ void StatePlay::Draw(Shaders * textShaders)
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
-		background->DrawObject();
+		bgPlay->DrawObject();
 		for (int i = 0; i < towerList.size(); i++) {
 			towerList.at(i)->DrawObject();
 			towerList.at(i)->Shoot();
@@ -229,22 +236,6 @@ void StatePlay::Update(float deltaTime)
 
 		for (int i = 0; i < towerList.size(); i++) {
 			towerList.at(i)->Update(pf.enemyWave);
-			//towerList.at(i)->AddEnemiesInRange(pf.enemyWave);
-			//towerList.at(i)->RemoveEnemiesOutOfRange();
-
-		
-			//for (int j = 0; j < towerList.at(i)->projectileOnScreen.size(); j++) {
-			//	if (towerList.at(i)->projectileOnScreen.at(j)->nullified == false
-			//		&& towerList.at(i)->projectileOnScreen.at(j)->target != nullptr) {
-			//		towerList.at(i)->projectileOnScreen.at(j)->Move(towerList.at(i)->projectileOnScreen.at(j)->GetAngleToEnemies());
-			//	}
-
-			//	/*if (towerList.at(i)->projectileOnScreen.at(j)->nullified == true) {
-			//		delete towerList.at(i)->projectileOnScreen.at(j);
-			//		towerList.at(i)->projectileOnScreen.erase(towerList.at(i)->projectileOnScreen.begin() + j);
-			//	}*/
-			//}
-			
 		}
 
 		strLives = std::to_string(pf.HP);
@@ -299,7 +290,6 @@ bool StatePlay::IsBuildable(int xPos, int yPos)
 	for (int i = 0; i < towerList.size(); i++) {
 		Vector3 o_position = towerList.at(i)->o_position;
 		if (xPos * 0.15f == o_position.x && yPos * -0.2f == o_position.y) {
-			//printf("\n has avaiable tower in here");
 			return false;
 		}
 	}
@@ -325,7 +315,6 @@ int StatePlay::FindIndexOfTower(int x, int y)
 		else
 		{
 			mouseOnTower = false;
-			//return -1;
 		}
 	}
 	return -1;
@@ -346,7 +335,8 @@ void StatePlay::OnMouseClick(int x, int y)
 			int yPos = static_cast<int>(std::round(y / 70));
 			if (-1 < xPos && xPos < 8 && -1 < yPos && yPos < 7) {
 				if (NumMap[yPos][xPos] == 0 && IsBuildable(xPos, yPos)) {
-					Tower* t = new Tower(selectMenuOption);//super leak :V
+		
+					Tower* t = new Tower(selectMenuOption);
 					if (pf.money >= t->cost) {
 						Shaders s = Shaders();
 						s.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
@@ -386,7 +376,8 @@ void StatePlay::OnMouseClick(int x, int y)
 			int index = FindIndexOfTower(x, y);
 			if (index != -1) {
 				pf.money += towerList.at(index)->cost / 2;
-				cout << "Tower sell for: " << towerList.at(index)->cost / 2 << endl;
+				cout << "Tower sold for: " << towerList.at(index)->cost / 2 << "$" << endl;
+				towerList.at(index)->projectileOnScreen.clear();
 				delete towerList.at(index)->bullet;
 				delete towerList.at(index);
 				towerList.erase(towerList.begin() + index);
@@ -414,7 +405,7 @@ void StatePlay::OnMouseOver(int x, int y) {
 void StatePlay::CleanUp()
 {
 	delete background;
-
+	delete bgPlay;
 	for (int i = 0; i < towerList.size(); i++) {
 		towerList.at(i)->projectileOnScreen.clear();
 		delete towerList.at(i)->bullet;
@@ -438,11 +429,11 @@ void StatePlay::CleanUp()
 	delete hpIcon;
 	delete moneyIcon;
 
-	for (int i = 0; i < towerList.size(); i++) {
+	/*for (int i = 0; i < towerList.size(); i++) {
 		for (int j = 0; j < towerList.at(i)->projectileOnScreen.size(); j++) {
 			delete towerList.at(i)->projectileOnScreen.at(j);
 			towerList.at(i)->projectileOnScreen.clear();
 		}
-	}
+	}*/
 	pf.CleanUp();
 }

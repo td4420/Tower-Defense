@@ -6,6 +6,7 @@
 #include"StateHelp.h"
 #include"StateLogo.h"
 #include"StatePlay.h"
+#include"StateHelp.h"
 #include<stack>
 using namespace std;
 class Game  {
@@ -17,6 +18,7 @@ public:
 	StateMenu* stateMenu = new StateMenu();
 	StateOption* stateOption = new StateOption();
 	StatePlay* statePlay = new StatePlay();
+	StateHelp* stateHelp = new StateHelp();
 	
 	void Update(float deltaTime);
 	void Draw(Shaders* textShader, Shaders* shapeShader);

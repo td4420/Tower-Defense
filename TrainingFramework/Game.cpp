@@ -4,13 +4,13 @@
 using namespace std;
 void Game::Update(float deltaTime) {
 	getCurState();
-	if (curState == StateBase::StateControl::StateLogo) {
+	/*if (curState == StateBase::StateControl::StateLogo) {
 		stateLogo->Update(deltaTime);
-	}
-	else if (curState == StateBase::StateControl::StateWelcome) {
+	}*/
+	/*else if (curState == StateBase::StateControl::StateWelcome) {
 		stateWelcome->Update(deltaTime);
-	}
-	else if (curState == StateBase::StateControl::StateMenu) {
+	}*/
+	if (curState == StateBase::StateControl::StateMenu) {
 		stateMenu->Update(deltaTime);
 	}
 	
@@ -19,14 +19,17 @@ void Game::Update(float deltaTime) {
 	}else if (curState == StateBase::StateControl::StatePlay) {
 		statePlay->Update(deltaTime);
 	}
+	else if (curState == StateBase::StateControl::StateHelp) {
+		stateHelp->Update(deltaTime);
+	}
 }
 void Game::Draw(Shaders* textShader, Shaders* shapeShader) {
 	getCurState();
-	if (curState == StateBase::StateControl::StateLogo) {
-		stateLogo->Draw(textShader, shapeShader);
-		//cout << "logo\n";
-	}
-	else if (curState == StateBase::StateControl::StateWelcome) {
+	//if (curState == StateBase::StateControl::StateLogo) {
+	//	stateLogo->Draw(textShader, shapeShader);
+	//	//cout << "logo\n";
+	//}
+	if (curState == StateBase::StateControl::StateWelcome) {
 		stateWelcome->Draw(textShader, shapeShader);
 		//cout << "welcome\n";
 	}
@@ -42,13 +45,17 @@ void Game::Draw(Shaders* textShader, Shaders* shapeShader) {
 		statePlay->Draw(textShader);
 		//cout << "play\n";
 	}
+	else if (curState == StateBase::StateControl::StateHelp) {
+		stateHelp->Draw(textShader, shapeShader);
+		//cout << "help\n";
+	}
 }
 void Game::init() {
-	stateLogo->init();
+	//stateLogo->init();
 	stateMenu->init();
-	stateWelcome->init();
 	statePlay->init();
 	stateOption->init();
+	stateHelp->init();
 	curState = StateBase::StateControl::StateMenu;
 	
 }
@@ -65,6 +72,9 @@ void Game::OnMouseOver(int x, int y) {
 	else if (curState == StateBase::StateControl::StatePlay) {
 		statePlay->OnMouseOver(x, y);
 	}
+	else if (curState == StateBase::StateControl::StateHelp) {
+		stateHelp->OnMouseOver(x, y);
+	}
 }
 void Game::OnMouseClick(int x, int y) {
 	if (curState == StateBase::StateControl::StateWelcome) {
@@ -78,6 +88,9 @@ void Game::OnMouseClick(int x, int y) {
 	}
 	else if (curState == StateBase::StateControl::StatePlay) {
 		statePlay->OnMouseClick(x, y);
+	}
+	else if (curState == StateBase::StateControl::StateHelp) {
+		stateHelp->OnMouseClick(x, y);
 	}
 }
 bool Game::findStack(stack<StateBase::StateControl> stack, StateBase::StateControl state) {
@@ -113,5 +126,21 @@ void Game::getCurState() {
 		stateMenu->options->isChoose = false;
 		curState = StateBase::StateControl::StateMenu;
 		return;
+	}
+
+	else if (curState == StateBase::StateControl::StateMenu && stateMenu->helps->isChoose == true) {
+		curState = StateBase::StateControl::StateHelp;
+		stateHelp->back->isChoose = false;
+		return;
+	}
+	else if (curState == StateBase::StateControl::StateHelp && stateHelp->back->isChoose == true) {//quit help
+		stateMenu->helps->isChoose = false;
+		curState = StateBase::StateControl::StateMenu;
+		return;
+	}
+
+	else if (curState == StateBase::StateControl::StateMenu && stateMenu->quit->isChoose == true) {
+		cout << "Good Bye!" << endl;
+		exit(-1);
 	}
 }

@@ -6,8 +6,6 @@ class Tower :
     public Object
 {
 public:
-    //odel towerModel = Model("../Resources/model.txt");
-    //Texture towerTexture = Texture("../Resources/nen.txt");
 
     Vector2 towerPos;//onscreen position
     int towerType = 0;

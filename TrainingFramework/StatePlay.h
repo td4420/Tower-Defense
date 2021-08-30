@@ -18,7 +18,6 @@ class StatePlay
 {
 public:
 	Shaders myShaders;
-	//Shaders *textShaders = new Shaders();
 	PlayField pf = PlayField();
 	std::vector <Tower*> towerList;
 	std::vector <Object*> towerButtonList;
@@ -28,7 +27,8 @@ public:
 	Object* sellButton;
 	Object* nextWaveButton;
 
-	Object* bugFixButton;
+	//Object* bugFixButton;
+	Object* bgPlay;
 	Object* background;
 	Object* hpIcon;
 	Object* moneyIcon;
@@ -47,8 +47,7 @@ public:
 	std::string strTowerDmg;
 	std::string strTowerSellFor;
 	std::string strTowerStats;
-	//char const* cTowerStat;
-	//std::string strTowerUpgradeFor;
+	
 	Text* towerStat = new Text("!", 10, 10, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 0.0, 0.0, 1.0), 60);
 
 	Text* gameOverText = new Text("GAME OVER!", 320, 370, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 0.0, 0.0, 1.0), 200);

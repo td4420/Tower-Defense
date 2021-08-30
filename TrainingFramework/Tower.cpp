@@ -15,7 +15,8 @@ Tower::Tower(int type)
 	o_Model = Model("../Resources/model.nfg");
 	reloadSpeed = 0.1f;
 	upgrade = 0;
-	bullet = new Projectile(type);
+	currentTarget = nullptr;
+	bullet = new Projectile(towerType);
 	bullet->InitObject();
 
 	if (towerType == 0)//archer tower: small damage, medium range, fast reload
@@ -35,7 +36,7 @@ Tower::Tower(int type)
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTower.tga"));
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTower2temp.tga"));
 		o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTower3temp.tga"));
-		damage = 100;
+		damage = 70;
 		range = 0.5f;
 		reloadTime = 25.0f;
 		timeSinceLastShot = reloadTime;
@@ -63,20 +64,20 @@ Tower::Tower(int type)
 		range = 0.3f;
 		reloadTime = 10.0f;
 		timeSinceLastShot = reloadTime;
-		cost = 280;
+		cost = 360;
 	}
 
-	if (towerType == 4)//chance tower: 3%-5% chance for huge damage, 10-20% chance for slow
-	{
-		o_Texture.push_back("../ResourcesPacket/Textures/witchTower.tga");
-		o_Texture.push_back("../ResourcesPacket/Textures/witchTower2.tga");
-		o_Texture.push_back("../ResourcesPacket/Textures/witchTower3.tga");
-		damage = 10;
-		range = 0.3f;
-		reloadTime = 10.0f;
-		timeSinceLastShot = reloadTime;
-		cost = 280;
-	}
+	//if (towerType == 4)//chance tower: 3%-5% chance for huge damage, 10-20% chance for slow
+	//{
+	//	o_Texture.push_back("../ResourcesPacket/Textures/witchTower.tga");
+	//	o_Texture.push_back("../ResourcesPacket/Textures/witchTower2.tga");
+	//	o_Texture.push_back("../ResourcesPacket/Textures/witchTower3.tga");
+	//	damage = 10;
+	//	range = 0.3f;
+	//	reloadTime = 10.0f;
+	//	timeSinceLastShot = reloadTime;
+	//	cost = 280;
+	//}
 }
 
 Tower::~Tower()
@@ -132,6 +133,12 @@ void Tower::Upgrade()//Upgrade price = 1/2 cost, each upgrade increases cost by 
 			damage += 2;
 			range += 0.05f;
 		}
+
+		if (towerType == 4)
+		{
+			damage += 2;
+			range += 0.05f;
+		}
 	}
 
 	if (upgrade == 1) {
@@ -161,6 +168,12 @@ void Tower::Upgrade()//Upgrade price = 1/2 cost, each upgrade increases cost by 
 			damage += 0;
 			range += 0.05f;
 		}
+
+		if (towerType == 4)
+		{
+			damage += 2;
+			range += 0.05f;
+		}
 	}
 
 	if (upgrade <= 1) upgrade++;
@@ -184,7 +197,7 @@ void Tower::Update(vector <Enemies*> enemyWave)
 	}
 }
 
-float Tower::CalculateDistanceToEnemies(Enemies* e)//must Enemies* or White Screen
+float Tower::CalculateDistanceToEnemies(Enemies* e)
 {
 	towerPos.x = o_position.x;
 	towerPos.y = o_position.y;
@@ -234,12 +247,7 @@ void Tower::Shoot()//put in Draw();
 		//cout << currentTarget->currentHP << endl;
 		if (canFire) {
 			timeSinceLastShot = 0.0f;
-			/*Projectile* p = new Projectile(towerType, o_shaders);
-			p->target = currentTarget;
-			p->InitObject();
-			if (towerType != 2) p->SetFiringLocation(o_position.x, o_position.y);
-			if (towerType == 2) p->SetFiringLocation(currentTarget->o_position.x - 0.05f, currentTarget->o_position.y + 0.15f);
-			projectileOnScreen.push_back(p);*/
+		
 			bullet->o_shaders = o_shaders;
 			bullet->target = currentTarget;
 			if (towerType != 2) bullet->SetFiringLocation(o_position.x, o_position.y);
@@ -285,7 +293,6 @@ void Tower::Shoot()//put in Draw();
 			if (projectileOnScreen.at(i)->nullified == true)
 			{
 				projectileOnScreen.at(i)->Reset();
-				projectileOnScreen.at(i)->SetFiringLocation(o_position.x,o_position.y);
 				projectileOnScreen.erase(projectileOnScreen.begin() + i);
 			}
 		}
@@ -303,7 +310,7 @@ void Tower::SetTarget()
 
 bool Tower::CheckReload()
 {
-	if (towerType != 4) {
+	
 		if (timeSinceLastShot >= reloadTime) {
 			//timeSinceLastShot = 0.0f;
 			canFire = true;
@@ -315,17 +322,5 @@ bool Tower::CheckReload()
 			canFire = false;
 			return false;
 		}
-	}
-
-	/*if (towerType == 3) {
-		timeSinceLastShot += reloadSpeed;
-		if (timeSinceLastShot >= 6.0f) {
-			timeSinceLastShot = 0.0f;
-			return false;
-		}
-		if (timeSinceLastShot >= reloadTime && timeSinceLastShot>=5.0f) {
-			return true;
-		}
-		else return false;
-	}*/
+	
 }

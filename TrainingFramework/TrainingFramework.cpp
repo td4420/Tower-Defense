@@ -116,7 +116,10 @@ void TouchActionMove(ESContext* esContext, int x, int y)
 }
 void CleanUp()
 {
+	myGame->stateMenu->CleanUp();
 	myGame->statePlay->CleanUp();
+	myGame->stateOption->CleanUp();
+	myGame->stateHelp->CleanUp();
 }
 
 void printFPS() {

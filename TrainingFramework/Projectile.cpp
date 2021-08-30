@@ -34,6 +34,8 @@ Projectile::Projectile(int type)
 
 	if (type == 3) o_Texture.push_back("../ResourcesPacket/Textures/bullet.tga");
 
+	//if (type == 4) o_Texture.push_back("../ResourcesPacket/Textures/bullet.tga");
+
 	movementSpeed = 0.02f;
 	Scale.SetIdentity();
 	Rotation.SetIdentity();
