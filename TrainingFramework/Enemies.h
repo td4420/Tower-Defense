@@ -55,13 +55,13 @@ public:
 
 	//void Bind();
 	void Reset();
-	void MoveEnemies(float deltaTime);
+	void MoveEnemies(float deltaTime, int NumMap[7][8]);
 	void MoveToLeft(float deltaTime);
 	void MoveToRight(float deltaTime);
 	void MoveUp(float deltaTime);
 	void MoveDown(float deltaTime);
 	//void DrawHP(Shaders *textShaders);
-	void Update(float deltaTime);
-	void Kill();
+	void Update(float deltaTime, int NumMap[7][8]);
+	void CleanUp();
 	void CheckSlowed();
 };

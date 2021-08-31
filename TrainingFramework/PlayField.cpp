@@ -12,15 +12,19 @@ PlayField::PlayField()
 
 void PlayField::CleanUp()
 {
-	/*for (int i = 0; i < enemyWave.size(); i++) {
-		delete enemyWave.at(i);
+	for (int i = 0; i < 10; i++)
+	{
+		//normal[i]->CleanUp();
+		//fast[i]->CleanUp();
+		//tank[i]->CleanUp();
+
+		delete normal[i];
+		delete fast[i];
+		delete tank[i];
 	}
-	for (int i = 0; i < tempEnemyWave.size(); i++) {
-		delete tempEnemyWave.at(i);
-	}*/
 }
 
-void PlayField::Init(Shaders shaders)
+void PlayField::Init(Shaders* shaders)
 {
 	myShaders = shaders;
 	int NumMap[7][8];
@@ -142,7 +146,6 @@ void PlayField::Update(float deltaTime)
 		{
 			money += enemyWave.at(i)->reward;
 			cout << "Gold: " << money << endl;
-			//enemyWave.erase(enemyWave.begin() + i);
 		}
 
 		if (enemyWave.at(i)->locationX == 7 && enemyWave.at(i)->locationY == 6)
@@ -150,12 +153,11 @@ void PlayField::Update(float deltaTime)
 			HP -= 1;
 			cout << "Lives: " << HP << endl;
 			enemyWave.at(i)->reachedExit = true;
-			//enemyWave.erase(enemyWave.begin() + i);
 		}
 
-		if (enemyWave.at(i)->alive == false || enemyWave.at(i)->reachedExit == true) enemyWave.erase(enemyWave.begin() + i);//glitch when reset
+		if (enemyWave.at(i)->alive == false || enemyWave.at(i)->reachedExit == true) enemyWave.erase(enemyWave.begin() + i);
 
-		else enemyWave.at(i)->Update(deltaTime);
+		else enemyWave.at(i)->Update(deltaTime, NumMapNormal);
 	}
 
 	if (enemyWave.size() == 0 && tempEnemyWave.size() == 0) {
@@ -164,7 +166,7 @@ void PlayField::Update(float deltaTime)
 
 	if (HP<=0) {
 		gameOver = true;
-		//cout << "Game Over!" << endl;
+		
 	}
 
 	if (waveNum > waveMax && HP>0) uWin = true;

@@ -9,10 +9,10 @@ class Object
 {
 public:
 	int o_Id;
-	Model o_Model;
+	Model* o_Model = new Model();
 	int numberOfTexture, numberOfCube;
-	vector<Texture> o_Texture, o_Cube;
-	Shaders o_shaders;
+	vector<Texture*> o_Texture;
+	Shaders *o_shaders;
 	Vector3 o_position, o_rotation, o_scale;
 	Matrix Rx, Ry, Rz;
 	Matrix Scale, Rotation, Translation;

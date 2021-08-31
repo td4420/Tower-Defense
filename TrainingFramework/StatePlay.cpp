@@ -14,28 +14,9 @@ void StatePlay::init()
 	gameOverText->init();
 	winText->init();
 	
-	myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
+	myShaders->Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
 	
 	pf.Init(myShaders);
-
-	bgPlay = new Object();
-	bgPlay->o_Model = Model("../Resources/modelBackground.nfg");
-	bgPlay->o_Texture.push_back("../ResourcesPacket/Textures/bgPlay1.tga");
-	bgPlay->o_shaders = myShaders;
-	bgPlay->Build(0 * 0.15f, 0 * 0.2f);
-	bgPlay->InitObject();
-
-	background = new Object();
-	background->o_Model = Model("../Resources/modelBackground.nfg");
-	background->o_Texture.push_back("../ResourcesPacket/Textures/bgPlay.tga");
-	background->o_shaders = myShaders;
-	background->Build(0*0.15f, 0*0.2f);
-	background->InitObject();
-
-	for (int i = 0; i < towerList.size(); i++) {
-		towerList.at(i)->o_shaders = myShaders;
-		towerList.at(i)->InitObject();
-	}
 
 	//add Button Tower 
 	Frame* frameArcher = new Frame();
@@ -48,26 +29,26 @@ void StatePlay::init()
 	frameList.push_back(frameWitch);
 
 	Object* archerTowerButton = new Object();
-	archerTowerButton->o_Model = Model("../Resources/model.nfg");
-	archerTowerButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/archerTowerButton.tga"));
+	archerTowerButton->o_Model = new Model("../Resources/model.nfg");
+	archerTowerButton->o_Texture.push_back(new Texture("../ResourcesPacket/Textures/archerTowerButton.tga"));
 	archerTowerButton->Build(9 * 0.15f, 1.5f * -0.2f);
 	frameArcher->Build(9 * 0.15f, 1.5f * -0.2f);
 
 	Object* mortarTowerButton = new Object();
-	mortarTowerButton->o_Model = Model("../Resources/model.nfg");
-	mortarTowerButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTowerButton.tga"));
+	mortarTowerButton->o_Model = new Model("../Resources/model.nfg");
+	mortarTowerButton->o_Texture.push_back(new Texture("../ResourcesPacket/Textures/mortarTowerButton.tga"));
 	mortarTowerButton->Build(11 * 0.15f, 1.5f * -0.2f);
 	frameMortar->Build(11 * 0.15f, 1.5f * -0.2f);
 
 	Object* slowTowerButton = new Object();
-	slowTowerButton->o_Model = Model("../Resources/model.nfg");
-	slowTowerButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/slowTowerButton.tga"));
+	slowTowerButton->o_Model = new Model("../Resources/model.nfg");
+	slowTowerButton->o_Texture.push_back(new Texture("../ResourcesPacket/Textures/slowTowerButton.tga"));
 	slowTowerButton->Build(9 * 0.15f, 3.5f * -0.2f);
 	frameSlow->Build(9 * 0.15f, 3.5f * -0.2f);
 
 	Object* witchTowerButton = new Object();
-	witchTowerButton->o_Model = Model("../Resources/model.nfg");
-	witchTowerButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/witchTowerButton.tga"));
+	witchTowerButton->o_Model = new Model("../Resources/model.nfg");
+	witchTowerButton->o_Texture.push_back(new Texture("../ResourcesPacket/Textures/witchTowerButton.tga"));
 	witchTowerButton->Build(11 * 0.15f, 3.5f * -0.2f);
 	frameWitch->Build(11 * 0.15f, 3.5f * -0.2f);
 
@@ -80,29 +61,24 @@ void StatePlay::init()
 	for (int i = 0; i < towerButtonList.size(); i++) {
 		towerButtonList.at(i)->o_shaders = myShaders;
 		towerButtonList.at(i)->InitObject();
-	}
 
-	for (int i = 0; i < frameList.size(); i++) {
 		frameList.at(i)->o_shaders = myShaders;
 		frameList.at(i)->InitObject();
 	}
 
-	//bugFixButton = new Object();
-	//bugFixButton->o_Model = Model("../Resources/model.nfg");
-	//bugFixButton->o_Texture.push_back("../ResourcesPacket/Textures/sand_tile.tga");
-
+	
 
 	// init upgrade button
 	upgradeButton = new Object();
-	upgradeButton->o_Model = Model("../Resources/model.nfg");
-	upgradeButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/upgradeButton.tga"));
+	upgradeButton->o_Model = new Model("../Resources/model.nfg");
+	upgradeButton->o_Texture.push_back(new Texture("../ResourcesPacket/Textures/upgradeButton.tga"));
 	upgradeButton->Build(12.0f * 0.15f, 0.0f * -0.2f);
 	
 
 	// init sell button
 	sellButton = new Object();
-	sellButton->o_Model = Model("../Resources/model.nfg");
-	sellButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/sellButton.tga"));
+	sellButton->o_Model = new Model("../Resources/model.nfg");
+	sellButton->o_Texture.push_back(new Texture("../ResourcesPacket/Textures/sellButton.tga"));
 	sellButton->Build(11.0f * 0.15f, 0.0f * -0.2f);
 
 	//functionButtonList.push_back(bugFixButton);
@@ -117,25 +93,40 @@ void StatePlay::init()
 
 	// init next wave button
 	nextWaveButton = new Object();
-	nextWaveButton->o_Model = Model("../Resources/model.nfg");
-	nextWaveButton->o_Texture.push_back(Texture("../ResourcesPacket/Textures/NextWaveButton.tga"));
+	nextWaveButton->o_Model = new Model("../Resources/model.nfg");
+	nextWaveButton->o_Texture.push_back(new Texture("../ResourcesPacket/Textures/NextWaveButton.tga"));
 	nextWaveButton->Build(8.0f * 0.15f, 0.0f * -0.2f);
 	nextWaveButton->o_shaders = myShaders;
 	nextWaveButton->InitObject();
 
+	bgPlay = new Object();
+	bgPlay->o_Model = new Model("../Resources/modelBackground.nfg");
+	bgPlay->o_Texture.push_back(new Texture("../ResourcesPacket/Textures/bgPlay1.tga"));
+	bgPlay->o_shaders = myShaders;
+	bgPlay->Build(0 * 0.15f, 0 * 0.2f);
+	bgPlay->InitObject();
+
+	background = new Object();
+	background->o_Model = new Model("../Resources/modelBackground.nfg");
+	background->o_Texture.push_back(new Texture("../ResourcesPacket/Textures/bgPlay.tga"));
+	background->o_shaders = myShaders;
+	background->Build(0 * 0.15f, 0 * 0.2f);
+	background->InitObject();
+
 	hpIcon = new Object();
-	hpIcon->o_Model = Model("../Resources/model.nfg");
-	hpIcon->o_Texture.push_back("../ResourcesPacket/Textures/hp.tga");
+	hpIcon->o_Model = new Model("../Resources/model.nfg");
+	hpIcon->o_Texture.push_back(new Texture("../ResourcesPacket/Textures/hp.tga"));
 	hpIcon->Build(10 * 0.15f, 5.2f * -0.2f);
 	hpIcon->o_shaders = myShaders;
 	hpIcon->InitObject();
 
 	moneyIcon = new Object();
-	moneyIcon->o_Model = Model("../Resources/model.nfg");
-	moneyIcon->o_Texture.push_back("../ResourcesPacket/Textures/money.tga");
+	moneyIcon->o_Model = new Model("../Resources/model.nfg");
+	moneyIcon->o_Texture.push_back(new Texture("../ResourcesPacket/Textures/money.tga"));
 	moneyIcon->Build(10 * 0.15f, 6.2f * -0.2f);
 	moneyIcon->o_shaders = myShaders;
 	moneyIcon->InitObject();
+
 }
 
 void StatePlay::Draw(Shaders * textShaders)
@@ -178,7 +169,6 @@ void StatePlay::Draw(Shaders * textShaders)
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
-		bgPlay->DrawObject();
 		for (int i = 0; i < towerList.size(); i++) {
 			towerList.at(i)->DrawObject();
 			towerList.at(i)->Shoot();
@@ -198,10 +188,11 @@ void StatePlay::Draw(Shaders * textShaders)
 		}
 		
 		pf.Draw(textShaders);
+
 		if (pf.waveEnd) {
 			nextWaveButton->DrawObject();
-
 		}
+		bgPlay->DrawObject();
 		hpIcon->DrawObject();
 		moneyIcon->DrawObject();
 
@@ -209,28 +200,19 @@ void StatePlay::Draw(Shaders * textShaders)
 		glDisable(GL_BLEND);
 		glDisable(GL_SAMPLE_ALPHA_TO_COVERAGE);
 
-		lives->RenderText(textShaders);
+		//lives->RenderText(textShaders);
 		money->RenderText(textShaders);
 
-
-		if (mouseOnTower)
+		/*if (mouseOnTower)
 		{
 			towerStat->RenderText(textShaders);
-		}
+		}*/
 	}
 }
 
 void StatePlay::Update(float deltaTime)
 {
 	if (!pf.uWin && !pf.gameOver) {
-		/*static std::chrono::time_point<std::chrono::steady_clock> oldTime = std::chrono::high_resolution_clock::now();
-		static int fps; fps++;
-
-		if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - oldTime) >= std::chrono::seconds{ 1 }) {
-			oldTime = std::chrono::high_resolution_clock::now();
-			std::cout << "FPS: " << fps << std::endl;
-			fps = 0;
-		}*/
 
 		pf.Update(deltaTime);
 
@@ -301,7 +283,7 @@ int StatePlay::FindIndexOfTower(int x, int y)
 	int yPos = static_cast<int>(std::round(y / 70));
 	for (int i = 0; i < towerList.size(); i++) {
 		Vector3 o_positon = towerList.at(i)->o_position;
-		if (xPos * 0.15f == o_positon.x && yPos * -0.2f == o_positon.y) {
+		if (xPos * 0.15f == o_positon.x && yPos * -0.2f == o_positon.y && towerList.at(i)!=nullptr) {
 			mouseOnTower = true;
 			
 			strTowerDmg = std::to_string(towerList.at(i)->damage);
@@ -338,9 +320,9 @@ void StatePlay::OnMouseClick(int x, int y)
 		
 					Tower* t = new Tower(selectMenuOption);
 					if (pf.money >= t->cost) {
-						Shaders s = Shaders();
-						s.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
-						t->o_shaders = s;
+						//Shaders s = Shaders();
+						//s.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
+						t->o_shaders = myShaders;
 						t->Build(xPos, yPos);
 						t->InitObject();
 						towerList.push_back(t);
@@ -349,6 +331,7 @@ void StatePlay::OnMouseClick(int x, int y)
 					}
 					else {
 						//not enought money
+						cout << "Not enough money!" << endl;
 						delete t;
 					}
 					
@@ -412,13 +395,9 @@ void StatePlay::CleanUp()
 		delete towerList.at(i);
 	}
 
-	for (int i = 0; i < frameList.size(); i++)
-	{
-		delete frameList.at(i);
-	}
-
 	for (int i = 0; i < towerButtonList.size(); i++) {
 		delete towerButtonList.at(i);
+		delete frameList.at(i);
 	}
 	
 	for (int i = 0; i < functionButtonList.size(); i++)
@@ -429,11 +408,5 @@ void StatePlay::CleanUp()
 	delete hpIcon;
 	delete moneyIcon;
 
-	/*for (int i = 0; i < towerList.size(); i++) {
-		for (int j = 0; j < towerList.at(i)->projectileOnScreen.size(); j++) {
-			delete towerList.at(i)->projectileOnScreen.at(j);
-			towerList.at(i)->projectileOnScreen.clear();
-		}
-	}*/
 	pf.CleanUp();
 }

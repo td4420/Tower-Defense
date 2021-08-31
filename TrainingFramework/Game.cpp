@@ -4,9 +4,6 @@
 using namespace std;
 void Game::Update(float deltaTime) {
 	getCurState();
-	/*if (curState == StateBase::StateControl::StateLogo) {
-		stateLogo->Update(deltaTime);
-	}*/
 	/*else if (curState == StateBase::StateControl::StateWelcome) {
 		stateWelcome->Update(deltaTime);
 	}*/
@@ -25,10 +22,7 @@ void Game::Update(float deltaTime) {
 }
 void Game::Draw(Shaders* textShader, Shaders* shapeShader) {
 	getCurState();
-	//if (curState == StateBase::StateControl::StateLogo) {
-	//	stateLogo->Draw(textShader, shapeShader);
-	//	//cout << "logo\n";
-	//}
+	
 	if (curState == StateBase::StateControl::StateWelcome) {
 		stateWelcome->Draw(textShader, shapeShader);
 		//cout << "welcome\n";
@@ -51,7 +45,7 @@ void Game::Draw(Shaders* textShader, Shaders* shapeShader) {
 	}
 }
 void Game::init() {
-	//stateLogo->init();
+	
 	stateMenu->init();
 	statePlay->init();
 	stateOption->init();
@@ -144,3 +138,4 @@ void Game::getCurState() {
 		exit(-1);
 	}
 }
+

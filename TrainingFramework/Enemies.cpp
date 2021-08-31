@@ -5,8 +5,8 @@
 
 Enemies::Enemies()
 {
-	o_Model = Model("../Resources/model.txt");
-	o_Texture.push_back(Texture("../Resources/enemy.tga"));
+	o_Model = new Model("../Resources/model.txt");
+	o_Texture.push_back(new Texture("../Resources/enemy.tga"));
 
 	Scale.SetIdentity();
 	Translation.SetIdentity();
@@ -15,7 +15,7 @@ Enemies::Enemies()
 
 Enemies::Enemies(int type)
 {
-	o_Model = Model("../Resources/model.nfg");
+	o_Model = new Model("../Resources/model.nfg");
 	Scale.SetIdentity();
 	Rotation.SetIdentity();
 	Translation.SetIdentity();
@@ -26,7 +26,7 @@ Enemies::Enemies(int type)
 
 	if (type == 1)
 	{
-		o_Texture.push_back(Texture("../Resources/enemy.tga"));
+		o_Texture.push_back(new Texture("../Resources/enemy.tga"));
 		maxHP = 100;
 		currentHP = maxHP;
 		movementSpeed = 0.1f;
@@ -44,7 +44,7 @@ Enemies::Enemies(int type)
 
 	if (type == 2)
 	{
-		o_Texture.push_back(Texture("../ResourcesPacket/Textures/fastEnemy.tga"));
+		o_Texture.push_back(new Texture("../ResourcesPacket/Textures/fastEnemy.tga"));
 		maxHP = 70;
 		currentHP = maxHP;
 		movementSpeed = 0.2f;//0.005f;
@@ -62,7 +62,7 @@ Enemies::Enemies(int type)
 
 	if (type == 3)
 	{
-		o_Texture.push_back(Texture("../ResourcesPacket/Textures/tanker.tga"));
+		o_Texture.push_back(new Texture("../ResourcesPacket/Textures/tanker.tga"));
 		maxHP = 300;
 		currentHP = maxHP;
 		movementSpeed = 0.09f;
@@ -73,7 +73,7 @@ Enemies::Enemies(int type)
 
 	if (type == 4)
 	{
-		o_Texture.push_back(Texture("../ResourcesPacket/Textures/tanker.tga"));
+		o_Texture.push_back(new Texture("../ResourcesPacket/Textures/tanker.tga"));
 		maxHP = 300;
 		currentHP = maxHP;
 		movementSpeed = 0.09f; //0.001f;
@@ -109,11 +109,6 @@ Enemies::Enemies(Enemies* e)
 
 Enemies::~Enemies()
 {
-	o_Model.~Model();
-	for (int i = 0; i < o_Texture.size(); i++)
-	{
-		o_Texture.at(i).~Texture();
-	}
 }
 
 void Enemies::MoveToLeft(float deltaTime)
@@ -180,13 +175,13 @@ void Enemies::MoveUp(float deltaTime)
 
 }
 
-void Enemies::MoveEnemies(float deltaTime)
+void Enemies::MoveEnemies(float deltaTime, int NumMap[7][8])
 {
 	int temp;
 	if (enemyType == 1) temp = animation.normalMoveLeft.size() + 1;
 	if (enemyType == 2) temp = animation.fastMoveLeft.size() + 1;
 	if (enemyType == 3 || enemyType == 4) temp = animation.tankMoveLeft.size() + 1;
-	int NumMap[7][8] =
+	/*int NumMap[7][8] =
 	{
 		1,1,0,0,0,0,0,0,
 		0,1,1,0,0,0,0,0,
@@ -195,7 +190,7 @@ void Enemies::MoveEnemies(float deltaTime)
 		0,1,1,1,1,1,1,0,
 		0,1,0,0,0,0,0,0,
 		0,1,1,1,1,1,1,1
-	};
+	};*/
 	if ((locationX - 1 != lastLocationX) && // To not move back
 		locationX > 0 && NumMap[locationY][locationX - 1] == 1)  // Check if can move
 	{
@@ -230,11 +225,11 @@ void Enemies::MoveEnemies(float deltaTime)
 	}
 }
 
-void Enemies::Update(float deltaTime)
+void Enemies::Update(float deltaTime, int NumMap[7][8])
 {
 	//cout << "X: " << (o_position.x + 0.075f) << " Y: " << (o_position.y - 0.1f) << endl;
 	CheckSlowed();
-	MoveEnemies(deltaTime);
+	MoveEnemies(deltaTime, NumMap);
 
 	/*strHP = std::to_string(currentHP);
 	charHp = strHP.c_str();
@@ -293,7 +288,11 @@ void Enemies::Reset()
 	MVP = Scale * Rotation * Translation;
 }
 
-//void Enemies::DrawHP(Shaders* textShaders)
-//{
-//	HP->RenderText(textShaders);
-//}
+void Enemies::CleanUp()
+{
+	delete o_Model;
+	for (int i = 0; i < o_Texture.size(); i++)
+	{
+		delete o_Texture.at(i);
+	}
+}

@@ -4,8 +4,7 @@
 
 Projectile::Projectile()
 {
-	o_Model = Model("../Resources/modelProjectile.nfg");
-	//o_Texture.push_back("../ResourcesPacket/Textures/machineGunTowerProjectile.tga");
+
 }
 
 Projectile::Projectile(Projectile* p)
@@ -17,24 +16,24 @@ Projectile::Projectile(Projectile* p)
 Projectile::Projectile(int type)
 {
 	projectileType = type;
-	o_Model = Model("../Resources/modelProjectile.nfg");
+	o_Model = new Model("../Resources/modelProjectile.nfg");
 	nullified = false;
 	target = nullptr;
 
 	if (type == 0)
 	{
-		o_Texture.push_back("../ResourcesPacket/Textures/fireBullet.tga");
+		o_Texture.push_back(new Texture ("../ResourcesPacket/Textures/fireBullet.tga"));
 	}
 
 	if (type == 1)
 	{
-		o_Texture.push_back("../ResourcesPacket/Textures/mortarBullet.tga");
+		o_Texture.push_back(new Texture ("../ResourcesPacket/Textures/mortarBullet.tga"));
 	}
-	if (type == 2)  o_Texture.push_back("../ResourcesPacket/Textures/thunderBullet.tga");
+	if (type == 2)  o_Texture.push_back(new Texture ("../ResourcesPacket/Textures/thunderBullet.tga"));
 
-	if (type == 3) o_Texture.push_back("../ResourcesPacket/Textures/bullet.tga");
+	if (type == 3) o_Texture.push_back(new Texture ("../ResourcesPacket/Textures/bullet.tga"));
 
-	//if (type == 4) o_Texture.push_back("../ResourcesPacket/Textures/bullet.tga");
+	//if (type == 4) o_Texture.push_back(new Texture "../ResourcesPacket/Textures/bullet.tga");
 
 	movementSpeed = 0.02f;
 	Scale.SetIdentity();
@@ -44,23 +43,23 @@ Projectile::Projectile(int type)
 Projectile::Projectile(int type, Shaders shaders)
 {
 	projectileType = type;
-	o_Model = Model("../Resources/modelProjectile.nfg");
+	o_Model = new Model("../Resources/modelProjectile.nfg");
 	nullified = false;
 	target = nullptr;
 
 	if (type == 0)
 	{
-		o_Texture.push_back("../ResourcesPacket/Textures/fireBullet.tga");
+		o_Texture.push_back(new Texture ("../ResourcesPacket/Textures/fireBullet.tga"));
 	}
 
 	if (type == 1)
 	{
-		o_Texture.push_back("../ResourcesPacket/Textures/mortarBullet.tga");
+		o_Texture.push_back(new Texture ("../ResourcesPacket/Textures/mortarBullet.tga"));
 	}
-	if (type == 2)  o_Texture.push_back("../ResourcesPacket/Textures/thunderBullet.tga");
+	if (type == 2)  o_Texture.push_back(new Texture ("../ResourcesPacket/Textures/thunderBullet.tga"));
 
-	if (type == 3) o_Texture.push_back("../ResourcesPacket/Textures/bullet.tga");
-	o_shaders = shaders;
+	if (type == 3) o_Texture.push_back(new Texture ("../ResourcesPacket/Textures/bullet.tga"));
+	
 
 	movementSpeed = 0.025f;
 	Scale.SetIdentity();
@@ -69,10 +68,7 @@ Projectile::Projectile(int type, Shaders shaders)
 
 Projectile::~Projectile()
 {
-	o_Model.~Model();
-	for (int i = 0; i < o_Texture.size(); i++) {
-		o_Texture.at(i).~Texture();
-	}
+
 }
 
 void Projectile::SetFiringLocation(float x, float y)

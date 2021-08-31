@@ -16,11 +16,11 @@ public:
 	GLuint iboId;
 
 	//Matrix MVP;
-	Shaders myShaders;
+	Shaders* myShaders = new Shaders();
 	Texture tileTexture = Texture("../Resources/grass_tile.tga");
 
 	Tile();
-	Tile(int type, int numX, int numY, float x, float y, Shaders shader);
+	Tile(int type, int numX, int numY, float x, float y, Shaders* shader);
 	Tile(int type, int numX, int numY);
 	
 

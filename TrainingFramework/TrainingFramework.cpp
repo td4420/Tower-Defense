@@ -5,14 +5,14 @@
 #include "Globals.h"
 #include <conio.h>
 #include <iostream>
-#include "SceneManager.h"
-#include "ResourceManager.h"
+
 #include"Text.h"
 #include"StateMenu.h"
 #include"StateBase.h"
 #include"StateWelcome.h"
 #include"StatePlay.h"
 #include"Game.h"
+#include "vld.h"
 #include <chrono>
 using namespace std;
 
@@ -120,6 +120,7 @@ void CleanUp()
 	myGame->statePlay->CleanUp();
 	myGame->stateOption->CleanUp();
 	myGame->stateHelp->CleanUp();
+	delete myGame;
 }
 
 void printFPS() {
@@ -158,8 +159,9 @@ int _tmain(int argc, TCHAR* argv[])
 	CleanUp();
 
 	//identifying memory leaks
-	MemoryDump();
-	printf("Press any key...\n");
+	//MemoryDump();
+	//printf("Press any key...\n");
+	cout << "Thank you for playing:) Good Bye!" << endl;
 	_getch();
 
 	return 0;

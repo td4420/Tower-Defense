@@ -11,7 +11,7 @@ Tile::Tile()
 
 Tile::Tile(int type, int numX, int numY)//leak
 {
-	tileType = type;
+	/*tileType = type;
 	o_Model = Model("../Resources/modelTile.nfg");
 	if (tileType == 0) {
 		canBuild = true;
@@ -31,10 +31,10 @@ Tile::Tile(int type, int numX, int numY)//leak
 	o_position.y = numX * -0.2f;
 	o_position.z = 0.0f;
 	Translation.SetTranslation(o_position);
-	MVP = Scale * Rotation * Translation;
+	MVP = Scale * Rotation * Translation;*/
 }
 
-Tile::Tile(int type, int numX, int numY, float x, float y, Shaders shaders)
+Tile::Tile(int type, int numX, int numY, float x, float y, Shaders* shaders)
 {
 	tileType = type;
 	if (tileType == 0) {
@@ -71,28 +71,28 @@ void Tile::Bind()
 
 void Tile::Draw()
 {
-	glUseProgram(myShaders.program);
+	glUseProgram(myShaders->program);
 	glBindTexture(GL_TEXTURE_2D, tileTexture.mTextureId);
 	glBindBuffer(GL_ARRAY_BUFFER, vboId);
 
-	if (myShaders.positionAttribute != -1)
+	if (myShaders->positionAttribute != -1)
 	{
-		glEnableVertexAttribArray(myShaders.positionAttribute);
-		glVertexAttribPointer(myShaders.positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
+		glEnableVertexAttribArray(myShaders->positionAttribute);
+		glVertexAttribPointer(myShaders->positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
 	}
 
-	if (myShaders.uvAttribute != -1)
+	if (myShaders->uvAttribute != -1)
 	{
-		glUniform1i(myShaders.uvAttribute, 0);
-		glEnableVertexAttribArray(myShaders.uvAttribute);
-		glVertexAttribPointer(myShaders.uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(2 * sizeof(Vector3)));
+		glUniform1i(myShaders->uvAttribute, 0);
+		glEnableVertexAttribArray(myShaders->uvAttribute);
+		glVertexAttribPointer(myShaders->uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(2 * sizeof(Vector3)));
 
 	}
 
 	GLuint indices[]{ 0,1,2 };
 	GLuint in[]{ 0,2,3 };
 
-	glUniformMatrix4fv(myShaders.u_MVP, 1, GL_FALSE, *MVP.m);
+	glUniformMatrix4fv(myShaders->u_MVP, 1, GL_FALSE, *MVP.m);
 	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, &indices);
 	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, &in);
 

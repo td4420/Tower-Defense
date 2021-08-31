@@ -57,7 +57,7 @@ public:
 	int numberOfTank = 0, numberOfFast = 0, numberOfNormal = 0;
 	vector <Enemies*> tempEnemyWave;
 	vector <Enemies*> enemyWave;
-	vector <Tower*> towerList;
+
 	const int waveLength = 10;
 	const int mapHeight = 7;
 	const int mapWidth = 8;
@@ -71,10 +71,9 @@ public:
 	bool uWin = false;
 	float timeSinceLastSpawn = 15.0f;
 	int waveNum = 0;//save the number of waves in a lv;
-	Shaders myShaders;
-	Object* background;
+	Shaders* myShaders = new Shaders();
 
-	void Init(Shaders myShaders);
+	void Init(Shaders* myShaders);
 	void Draw(Shaders* textShaders);
 	void InitEnemyWave();
 	void SpawnEnemy();

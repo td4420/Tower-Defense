@@ -4,15 +4,12 @@
 
 Tower::Tower()
 {
-	o_Model = Model("../Resources/model.nfg");
-	o_Texture.push_back(Texture("../ResourcesPacket/Textures/machineGunTower.tga"));
-	range = 0.3f;
 }
 
 Tower::Tower(int type)
 {
 	towerType = type;
-	o_Model = Model("../Resources/model.nfg");
+	o_Model = new Model("../Resources/model.nfg");
 	reloadSpeed = 0.1f;
 	upgrade = 0;
 	currentTarget = nullptr;
@@ -21,9 +18,9 @@ Tower::Tower(int type)
 
 	if (towerType == 0)//archer tower: small damage, medium range, fast reload
 	{
-		o_Texture.push_back(Texture("../ResourcesPacket/Textures/archerTower.tga"));
-		o_Texture.push_back(Texture("../ResourcesPacket/Textures/archerTower2.tga"));
-		o_Texture.push_back(Texture("../ResourcesPacket/Textures/archerTower3.tga"));
+		o_Texture.push_back(new Texture("../ResourcesPacket/Textures/archerTower.tga"));
+		o_Texture.push_back(new Texture("../ResourcesPacket/Textures/archerTower2.tga"));
+		o_Texture.push_back(new Texture("../ResourcesPacket/Textures/archerTower3.tga"));
 		damage = 10;
 		range = 0.3f;
 		reloadTime = 7.0f;
@@ -33,9 +30,9 @@ Tower::Tower(int type)
 
 	if (towerType == 1)//mortar tower: huge damage, long range, very slow reload
 	{
-		o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTower.tga"));
-		o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTower2temp.tga"));
-		o_Texture.push_back(Texture("../ResourcesPacket/Textures/mortarTower3temp.tga"));
+		o_Texture.push_back(new Texture("../ResourcesPacket/Textures/mortarTower.tga"));
+		o_Texture.push_back(new Texture("../ResourcesPacket/Textures/mortarTower2temp.tga"));
+		o_Texture.push_back(new Texture("../ResourcesPacket/Textures/mortarTower3temp.tga"));
 		damage = 70;
 		range = 0.5f;
 		reloadTime = 25.0f;
@@ -45,9 +42,9 @@ Tower::Tower(int type)
 
 	if (towerType == 2)//slow tower
 	{
-		o_Texture.push_back("../ResourcesPacket/Textures/slowTower.tga");
-		o_Texture.push_back("../ResourcesPacket/Textures/slowTower2.tga");
-		o_Texture.push_back("../ResourcesPacket/Textures/slowTower3.tga");
+		o_Texture.push_back(new Texture("../ResourcesPacket/Textures/slowTower.tga"));
+		o_Texture.push_back(new Texture("../ResourcesPacket/Textures/slowTower2.tga"));
+		o_Texture.push_back(new Texture("../ResourcesPacket/Textures/slowTower3.tga"));
 		damage = 30;
 		range = 0.4f;
 		reloadTime = 15.0f;
@@ -57,9 +54,9 @@ Tower::Tower(int type)
 
 	if (towerType == 3)//chance tower: 3%-5% chance for huge damage, 10-20% chance for slow
 	{
-		o_Texture.push_back("../ResourcesPacket/Textures/witchTower.tga");
-		o_Texture.push_back("../ResourcesPacket/Textures/witchTower2.tga");
-		o_Texture.push_back("../ResourcesPacket/Textures/witchTower3.tga");
+		o_Texture.push_back(new Texture("../ResourcesPacket/Textures/witchTower.tga"));
+		o_Texture.push_back(new Texture("../ResourcesPacket/Textures/witchTower2.tga"));
+		o_Texture.push_back(new Texture("../ResourcesPacket/Textures/witchTower3.tga"));
 		damage = 10;
 		range = 0.3f;
 		reloadTime = 10.0f;
@@ -82,10 +79,6 @@ Tower::Tower(int type)
 
 Tower::~Tower()
 {
-	o_Model.~Model();
-	for (int i = 0; i < o_Texture.size(); i++) {
-		o_Texture.at(i).~Texture();
-	}
 }
 
 void Tower::Build(int x, int y)//Set Tower Texture position based on Tile Num

@@ -17,21 +17,23 @@
 class StatePlay
 {
 public:
-	Shaders myShaders;
+	Shaders* myShaders = new Shaders();
 	PlayField pf = PlayField();
 	std::vector <Tower*> towerList;
 	std::vector <Object*> towerButtonList;
 	vector <Object*> functionButtonList;
 	vector <Frame*> frameList;
+
+	vector <Object*> objList;
 	Object* upgradeButton;
 	Object* sellButton;
 	Object* nextWaveButton;
 
 	//Object* bugFixButton;
-	Object* bgPlay;
-	Object* background;
-	Object* hpIcon;
-	Object* moneyIcon;
+	Object* bgPlay = new Object();
+	Object* background = new Object();
+	Object* hpIcon = new Object();
+	Object* moneyIcon = new Object();
 
 	std::string strLives = "Lives: " + std::to_string(pf.HP);
 	char const* cLives = strLives.c_str();
