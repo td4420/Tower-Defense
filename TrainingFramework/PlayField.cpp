@@ -24,15 +24,27 @@ void PlayField::CleanUp()
 	}
 }
 
-void PlayField::Init(Shaders* shaders)
+void PlayField::Init(Shaders* shaders, int mapType)
 {
 	myShaders = shaders;
 	int NumMap[7][8];
 
-	for (int i = 0; i < 7; i++)
+	if (mapType == 1)
 	{
-		for (int j = 0; j < 8; j++) {
-			NumMap[i][j] = NumMapNormal[i][j];
+		for (int i = 0; i < 7; i++)
+		{
+			for (int j = 0; j < 8; j++) {
+				currentNumMap[i][j] = NumMapEasy[i][j];
+			}
+		}
+	}
+	else 
+	{
+		for (int i = 0; i < 7; i++)
+		{
+			for (int j = 0; j < 8; j++) {
+				currentNumMap[i][j] = NumMapNormal[i][j];
+			}
 		}
 	}
 
@@ -44,7 +56,7 @@ void PlayField::Init(Shaders* shaders)
 			float countX = disX * j;
 			float countY = -disY * i;
 
-			TileMap[i][j] = Tile(NumMap[i][j], i, j, initX + countX, initY + countY, myShaders);
+			TileMap[i][j] = Tile(currentNumMap[i][j], i, j, initX + countX, initY + countY, myShaders);
 			TileMap[i][j].tileTexture.Init();
 			TileMap[i][j].Bind();
 
@@ -157,7 +169,7 @@ void PlayField::Update(float deltaTime)
 
 		if (enemyWave.at(i)->alive == false || enemyWave.at(i)->reachedExit == true) enemyWave.erase(enemyWave.begin() + i);
 
-		else enemyWave.at(i)->Update(deltaTime, NumMapNormal);
+		else enemyWave.at(i)->Update(deltaTime, currentNumMap);
 	}
 
 	if (enemyWave.size() == 0 && tempEnemyWave.size() == 0) {

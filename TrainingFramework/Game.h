@@ -22,6 +22,8 @@ public:
 	StatePlay* statePlay = new StatePlay();
 	StateHelp* stateHelp = new StateHelp();
 	
+	int initCount = 0;
+
 	void Update(float deltaTime);
 	void Draw(Shaders* textShader, Shaders* shapeShader);
 	void init();

@@ -42,7 +42,7 @@ void Game::Draw(Shaders* textShader, Shaders* shapeShader) {
 void Game::init() {
 	stateMap->init();
 	stateMenu->init();
-	statePlay->init();
+	//statePlay->init();
 	stateOption->init();
 	stateHelp->init();
 	curState = StateBase::StateControl::StateMenu;
@@ -101,6 +101,11 @@ bool Game::findStack(stack<StateBase::StateControl> stack, StateBase::StateContr
 void Game::getCurState() {
 	//play
 	if (curState == StateBase::StateControl::StateMap && (stateMap->M1->isChoose == true || stateMap->M2->isChoose == true)) {
+		if (initCount == 0)
+		{
+			initCount++;
+			statePlay->init(stateMap->Map);
+		}
 		curState = StateBase::StateControl::StatePlay;
 		return;
 	}

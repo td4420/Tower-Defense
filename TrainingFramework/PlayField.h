@@ -14,13 +14,13 @@ public:
 	int money = 2000;
 
 	int NumMapEasy[7][8] = {
-		0,0,0,0,0,1,1,1,
-		0,1,1,1,0,1,0,1,
-		0,1,0,1,0,1,0,1,
-		0,1,0,1,0,1,0,1,
-		0,1,0,1,0,1,0,1,
-		1,1,0,1,1,1,0,1,
-		0,0,0,0,0,0,0,1
+		1,1,0,1,1,1,0,0,
+		0,1,0,1,0,1,0,0,
+		0,1,0,1,0,1,0,0,
+		0,1,0,1,0,1,0,0,
+		0,1,0,1,0,1,0,0,
+		0,1,0,1,0,1,0,0,
+		0,1,1,1,0,1,1,1
 	};
 
 	int enemyWaveEasy[10][10] =//used to init waves
@@ -48,7 +48,7 @@ public:
 		0,1,1,1,1,1,1,1
 	};
 
-	int NumMap[7][8];
+	int currentNumMap[7][8];
 
 	Tile TileMap[7][8];
 	Enemies* normal[10] = { new Enemies(1), new Enemies(1),new Enemies(1), new Enemies(1), new Enemies(1), new Enemies(1), new Enemies(1), new Enemies(1), new Enemies(1), new Enemies(1) }; //30
@@ -73,7 +73,7 @@ public:
 	int waveNum = 0;//save the number of waves in a lv;
 	Shaders* myShaders = new Shaders();
 
-	void Init(Shaders* myShaders);
+	void Init(Shaders* myShaders, int mapType);
 	void Draw(Shaders* textShaders);
 	void InitEnemyWave();
 	void SpawnEnemy();

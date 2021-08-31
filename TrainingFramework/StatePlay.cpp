@@ -6,7 +6,7 @@ StatePlay::StatePlay()
 {
 }
 
-void StatePlay::init()
+void StatePlay::init(int mapType)
 {
 	lives->init();
 	money->init();
@@ -16,7 +16,14 @@ void StatePlay::init()
 	
 	myShaders->Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
 	
-	pf.Init(myShaders);
+	pf.Init(myShaders, mapType);
+	for (int i = 0; i < pf.mapHeight; i++)
+	{
+		for (int j = 0; j < pf.mapWidth; j++)
+		{
+			NumMap[i][j] = pf.currentNumMap[i][j];
+		}
+	}
 
 	//add Button Tower 
 	Frame* frameArcher = new Frame();
