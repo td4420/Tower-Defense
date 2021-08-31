@@ -69,7 +69,7 @@ public:
 
 	bool mouseOnTower = false;
 
-	void init();
+	void init(int mapType);
 	void Draw(Shaders* textShaders);
 	void Update(float deltaTime);
 	bool IsBuildable(int xPos, int yPos);

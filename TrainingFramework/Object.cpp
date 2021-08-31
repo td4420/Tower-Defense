@@ -19,6 +19,11 @@ Object::Object()
 	//o_Id = 0;
 }
 
+Object::Object(Model* model, Texture* texture, Shaders* shader) {
+	o_Model = model;
+	o_Texture.push_back(texture);
+	o_shaders = shader;
+}
 void Object::setMVPMatrix(Matrix v, Matrix p)
 {
 	MVP = WorldMatrix * v * p;

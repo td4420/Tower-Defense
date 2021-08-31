@@ -83,7 +83,7 @@ void StateOption::init()
 	onSoundNen = true;
 	onSoundGame = true;
 
-	back = new Text("B A C K", 10, Globals::screenHeight - 32.5, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 1.0, 1.0, 1.0), 78);
+	back = new Text("B A C K", 10, Globals::screenHeight - 32.5, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 1.0, 1.0, 1.0), 48);
 
 	//nhac nen
 	nhacNen = new Text("NHAC NEN :", 280, 550, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 1.0, 1.0, 1.0), 78);

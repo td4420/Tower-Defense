@@ -7,12 +7,14 @@
 #include"StateLogo.h"
 #include"StatePlay.h"
 #include"StateHelp.h"
+#include"StateMap.h"
 #include<stack>
 using namespace std;
 class Game  {
 public:
 	StateBase::StateControl curState;
 
+	StateMap* stateMap = new StateMap();
 	StateLogo* stateLogo = new StateLogo();
 	StateWelcome* stateWelcome = new StateWelcome();
 	StateMenu* stateMenu = new StateMenu();
@@ -20,6 +22,8 @@ public:
 	StatePlay* statePlay = new StatePlay();
 	StateHelp* stateHelp = new StateHelp();
 	
+	int initCount = 0;
+
 	void Update(float deltaTime);
 	void Draw(Shaders* textShader, Shaders* shapeShader);
 	void init();

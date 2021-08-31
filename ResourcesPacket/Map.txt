@@ -1,0 +1,3 @@
+NOM: 2
+MAP: ../ResourcesPacket/Textures/Map1.tga
+MAP: ../ResourcesPacket/Textures/Map2.tga

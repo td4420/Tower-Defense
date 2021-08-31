@@ -32,49 +32,27 @@ int keyPressed = 0;
 Shaders* myShaders = new Shaders();
 Shaders* textShader = new Shaders();
 Vector4 color(0.0, 0.3, 0.3, 0.8);
-//StateMenu* myStateMenu = new StateMenu();
-//StateWelcome* myStateWelcome = new StateWelcome();
+
 Game* myGame = new Game();
-//StateWelcome* stateWelcome = new StateWelcome();
-//StatePlay* statePlay = new StatePlay();
+
 int Init(ESContext* esContext)
 {
-	
-	//glEnable(GL_DEPTH_TEST);
-	
-	
-	//creation of shaders and program 
-	//myButton->init();
-	//myStateMenu->init();
-	//stateWelcome->init();
-	//statePlay->init();
 	myGame->init();
 	
-	//myShaders = scenemanager->s_ListObject.at(0)->o_shaders;
 	myShaders->Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
 	return textShader->Init("../Resources/Shaders/Text.vs", "../Resources/Shaders/Text.fs");
-
 }
+
 void Draw(ESContext* esContext)
 {
-
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	//scenemanager->Draw();
-	//myButton->Draw(myShaders);
-	//myStateMenu->Draw(textShader);
-	//myStateWelcome->Draw(myShaders);
-	//myStateWelcome->Drawtext(textShader);
-	//stateWelcome->Draw(textShader, myShaders);
-	//myStateMenu->DrawLogo(myShaders);
-	//statePlay->Draw();
+	
 	myGame->Draw(textShader,myShaders);
 	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
 }
 
 void Update(ESContext* esContext, float deltaTime)
 {
-	//stateWelcome->Update(deltaTime);
-	//statePlay->Update();
 	static std::chrono::time_point<std::chrono::steady_clock> oldTime = std::chrono::high_resolution_clock::now();
 	static int fps; fps++;
 
@@ -93,8 +71,6 @@ void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 void TouchActionDown(ESContext* esContext, int x, int y)
 {
 	myGame->OnMouseClick(x, y);
-	//stateWelcome->OnMouseClick(x,y);
-	//statePlay->OnMouseClick(x,y);
 	//printf("\n: mouse down at: %d, %d", x, y);
 }
 
@@ -112,8 +88,6 @@ void TouchActionDrag(ESContext* esCotext, int x, int y)
 void TouchActionMove(ESContext* esContext, int x, int y)
 {
 	myGame->OnMouseOver(x,y);
-
-	//stateWelcome->OnMouseOver(x, y);
 
 }
 void CleanUp()
