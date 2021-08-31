@@ -2,6 +2,8 @@
 #include "Object.h"
 #include "Enemies.h"
 #include "Projectile.h"
+#include "SFML/Audio.hpp"
+#include "SoundController.h"
 class Tower :
     public Object
 {
@@ -34,7 +36,8 @@ public:
     void Update(vector <Enemies*> enemyWave);
     bool CheckReload();
     void CleanUp();
-
+   
+    
     Tower();
     Tower(int towerType);
     ~Tower();

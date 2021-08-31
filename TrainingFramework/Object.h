@@ -4,10 +4,13 @@
 #include "Model.h"
 #include "Texture.h"
 #include "Shaders.h"
+#include "SFML/Audio.hpp"
+#include "SoundController.h"
 using namespace std;
 class Object
 {
 public:
+	
 	int o_Id;
 	Model* o_Model = new Model();
 	int numberOfTexture, numberOfCube;
@@ -28,4 +31,5 @@ public:
 	void SetWorldMatrix();
 	void setMVPMatrix(Matrix v, Matrix p);
 	void Build(float x, float y);
+	
 };

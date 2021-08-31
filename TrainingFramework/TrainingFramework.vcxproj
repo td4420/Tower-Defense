@@ -65,7 +65,7 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>freetype.lib;libEGL.lib;libGLESv2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics-d.lib;sfml-network-d.lib;sfml-system-d.lib;sfml-audio-d.lib;sfml-window-d.lib;freetype.lib;libEGL.lib;libGLESv2.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
@@ -91,7 +91,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
       <AdditionalLibraryDirectories>$(SolutionDir)\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libEGL.lib;libGLESv2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics.lib;sfml-network.lib;sfml-system.lib;sfml-audio.lib;sfml-window.lib;libEGL.lib;libGLESv2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -104,6 +104,8 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="PlayField.cpp" />
     <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="SoundController.cpp" />
     <ClCompile Include="StateHelp.cpp" />
     <ClCompile Include="StateLogo.cpp" />
     <ClCompile Include="StateMenu.cpp" />
@@ -133,6 +135,8 @@
     <ClInclude Include="PlayField.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Shaders.h" />
+    <ClInclude Include="Sound.h" />
+    <ClInclude Include="SoundController.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateBase.h" />
     <ClInclude Include="StateHelp.h" />

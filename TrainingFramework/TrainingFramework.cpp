@@ -12,8 +12,9 @@
 #include"StateWelcome.h"
 #include"StatePlay.h"
 #include"Game.h"
-#include "vld.h"
+//#include "vld.h"
 #include <chrono>
+#include "SFML/Audio.hpp"
 using namespace std;
 
 #define MOVE_FORWARD 1
@@ -24,6 +25,7 @@ using namespace std;
 #define ROTATE_DOWN 1 << 5
 #define ROTATE_LEFT 1 << 6
 #define ROTATE_RIGHT 1 << 7
+
 
 
 int keyPressed = 0;

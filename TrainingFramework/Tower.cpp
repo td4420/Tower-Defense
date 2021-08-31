@@ -4,10 +4,14 @@
 
 Tower::Tower()
 {
+
 }
+
 
 Tower::Tower(int type)
 {
+	SoundController::GetInstance();
+
 	towerType = type;
 	o_Model = new Model("../Resources/model.nfg");
 	reloadSpeed = 0.1f;
@@ -83,6 +87,7 @@ Tower::~Tower()
 
 void Tower::Build(int x, int y)//Set Tower Texture position based on Tile Num
 {
+	SoundController::GetInstance()->placeTowerS.play();
 	o_position.x = x * 0.15f;
 	o_position.y = y * -0.2f;
 	o_position.z = 0;
@@ -99,6 +104,7 @@ void Tower::Build(int x, int y)//Set Tower Texture position based on Tile Num
 void Tower::Upgrade()//Upgrade price = 1/2 cost, each upgrade increases cost by half of its original value
 {
 	if (upgrade == 0) {
+		SoundController::GetInstance()->upgradeTowerS.play();
 		o_Texture.at(0) = o_Texture.at(1);
 		cost += cost / 2;
 		if (towerType == 0)
@@ -135,6 +141,7 @@ void Tower::Upgrade()//Upgrade price = 1/2 cost, each upgrade increases cost by 
 	}
 
 	if (upgrade == 1) {
+		SoundController::GetInstance()->upgradeTowerS.play();
 		o_Texture.at(0) = o_Texture.at(2);
 		cost += cost / 2;
 		if (towerType == 0)

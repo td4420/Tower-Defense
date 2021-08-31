@@ -25,12 +25,14 @@ void Object::setMVPMatrix(Matrix v, Matrix p)
 }
 void Object::InitObject()
 {
+	
 	o_Model->Init();
 	for (int i = 0; i < o_Texture.size(); i++)
 	{
 		o_Texture.at(i)->Init();
 	}
 }
+
 void Object::Build(float x, float y) {
 	o_position.x = x;
 	o_position.y = y;
