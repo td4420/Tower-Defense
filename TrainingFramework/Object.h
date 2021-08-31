@@ -21,6 +21,7 @@ public:
 	//Object(Model model, vector<Texture> texture);
 	Object();
 	Object(Object* o);
+	Object(Model* model, Texture* texture, Shaders* shader);
 	~Object();
 	void InitObject();
 	void DrawObject();

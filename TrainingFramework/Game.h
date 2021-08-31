@@ -7,12 +7,14 @@
 #include"StateLogo.h"
 #include"StatePlay.h"
 #include"StateHelp.h"
+#include"StateMap.h"
 #include<stack>
 using namespace std;
 class Game  {
 public:
 	StateBase::StateControl curState;
 
+	StateMap* stateMap = new StateMap();
 	StateLogo* stateLogo = new StateLogo();
 	StateWelcome* stateWelcome = new StateWelcome();
 	StateMenu* stateMenu = new StateMenu();

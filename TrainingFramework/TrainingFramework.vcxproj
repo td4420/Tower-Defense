@@ -106,6 +106,7 @@
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="StateHelp.cpp" />
     <ClCompile Include="StateLogo.cpp" />
+    <ClCompile Include="StateMap.cpp" />
     <ClCompile Include="StateMenu.cpp" />
     <ClCompile Include="StateOption.cpp" />
     <ClCompile Include="StatePlay.cpp" />
@@ -137,6 +138,7 @@
     <ClInclude Include="StateBase.h" />
     <ClInclude Include="StateHelp.h" />
     <ClInclude Include="StateLogo.h" />
+    <ClInclude Include="StateMap.h" />
     <ClInclude Include="StateMenu.h" />
     <ClInclude Include="StateOption.h" />
     <ClInclude Include="StatePlay.h" />

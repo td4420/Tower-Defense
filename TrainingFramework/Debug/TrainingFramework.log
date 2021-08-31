@@ -1,1 +1,20 @@
-﻿
+﻿cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  StateMap.cpp
+C:\Users\Xuan Ngoc\Desktop\New folder\Dao_3DFrameworkTraining\TrainingFramework\StateMap.cpp(27,36): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\Xuan Ngoc\Desktop\New folder\Dao_3DFrameworkTraining\TrainingFramework\StateMap.cpp(37,36): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\Xuan Ngoc\Desktop\New folder\Dao_3DFrameworkTraining\TrainingFramework\StateMap.cpp(38,48): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\Xuan Ngoc\Desktop\New folder\Dao_3DFrameworkTraining\TrainingFramework\StateMap.cpp(68,37): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\Xuan Ngoc\Desktop\New folder\Dao_3DFrameworkTraining\TrainingFramework\StateMap.cpp(78,37): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+  Game.cpp
+C:\Users\Xuan Ngoc\Desktop\New folder\Dao_3DFrameworkTraining\TrainingFramework\StateWelcome.h(21,16): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\Xuan Ngoc\Desktop\New folder\Dao_3DFrameworkTraining\TrainingFramework\StateWelcome.h(22,11): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\Xuan Ngoc\Desktop\New folder\Dao_3DFrameworkTraining\TrainingFramework\StateWelcome.h(23,19): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+  Generating Code...
+  Compiling...
+  TrainingFramework.cpp
+C:\Users\Xuan Ngoc\Desktop\New folder\Dao_3DFrameworkTraining\TrainingFramework\StateWelcome.h(21,16): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\Xuan Ngoc\Desktop\New folder\Dao_3DFrameworkTraining\TrainingFramework\StateWelcome.h(22,11): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\Xuan Ngoc\Desktop\New folder\Dao_3DFrameworkTraining\TrainingFramework\StateWelcome.h(23,19): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\Xuan Ngoc\Desktop\New folder\Dao_3DFrameworkTraining\TrainingFramework\TrainingFramework.cpp(32,33): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+  Generating Code...
+  TrainingFramework.vcxproj -> C:\Users\Xuan Ngoc\Desktop\New folder\Dao_3DFrameworkTraining\BIN\TrainingFramework.exe
