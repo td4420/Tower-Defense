@@ -119,6 +119,7 @@ void Enemies::MoveToLeft(float deltaTime)
 		lastLocationX = locationX;
 		lastLocationY = locationY;
 		locationX--;
+		step++;
 		return;
 	}
 	o_position.x -= movementSpeed * deltaTime;
@@ -135,6 +136,7 @@ void Enemies::MoveToRight(float deltaTime)
 		lastLocationX = locationX;
 		lastLocationY = locationY;
 		locationX++;
+		step++;
 		return;
 	}
 	o_position.x += movementSpeed * deltaTime;
@@ -151,6 +153,7 @@ void Enemies::MoveDown(float deltaTime)
 		lastLocationX = locationX;
 		lastLocationY = locationY;
 		locationY++;
+		step++;
 		return;
 	}
 	o_position.y -= movementSpeed * deltaTime;
@@ -167,6 +170,7 @@ void Enemies::MoveUp(float deltaTime)
 		lastLocationX = locationX;
 		lastLocationY = locationY;
 		locationY--;
+		step++;
 		return;
 	}
 	o_position.y += movementSpeed * deltaTime;

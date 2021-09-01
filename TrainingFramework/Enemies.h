@@ -39,6 +39,7 @@ public:
 	bool slowed = false;
 	bool reachedExit = false;
 
+	int step = 0;
 
 	bool toLeft = false; //Check the last step is go to left or right
 	Animation animation;

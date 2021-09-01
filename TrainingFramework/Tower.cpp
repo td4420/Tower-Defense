@@ -302,7 +302,12 @@ void Tower::Shoot()//put in Draw();
 void Tower::SetTarget()
 {
 	if (!enemiesInRange.empty()) {
-		currentTarget = enemiesInRange.front();
+		currentTarget = enemiesInRange.at(0);
+		for (int i = 1; i < enemiesInRange.size(); i++)
+		{
+			if (enemiesInRange.at(i)->step > currentTarget->step)
+				currentTarget = enemiesInRange.at(i);
+		}
 	}
 
 	if (currentTarget != nullptr && enemiesInRange.empty()) currentTarget = nullptr;
