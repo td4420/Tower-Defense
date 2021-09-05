@@ -8,8 +8,8 @@
 class SoundController {
 public:
 	static SoundController* s_Instance;
-	std::vector<Sound> m_SoundList;
-	std::vector<sf::SoundBuffer> m_SoundBuffers;
+	std::vector<Sound>* m_SoundList;
+	std::vector<sf::SoundBuffer>* m_SoundBuffers;
 
 	sf::Sound placeTowerS;
 	sf::Sound sellTowerS;
@@ -18,13 +18,13 @@ public:
 	sf::Sound tower3Shoot;
 	sf::Sound upgradeTowerS;
 
-	void BufferTowerSound();
+	
 	void Init();
 	SoundController();
 	~SoundController();
 
 	void GenerateSoundEffect();
-	void BufferSoundEffect();
+
 	
 
 	static SoundController* GetInstance();

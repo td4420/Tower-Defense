@@ -22,11 +22,10 @@ void Game::Draw(Shaders* textShader, Shaders* shapeShader) {
 	
 	if (curState == StateBase::StateControl::StateMenu) {
 		stateMenu->Draw(textShader, shapeShader);
-		
 		curThemeMusic.openFromFile("./Sound/menutheme2.wav");
 		curThemeMusic.setLoop(true);
-		curThemeMusic.setVolume(35);
-		curThemeMusic.play(); 
+		curThemeMusic.setVolume(15);
+		curThemeMusic.play();
 	}
 	else if (curState == StateBase::StateControl::StateOption) {
 		stateOption->Draw(textShader, shapeShader);
