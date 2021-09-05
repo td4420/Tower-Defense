@@ -50,11 +50,9 @@ public:
 
 	int volumeGame = 50;
 	std::string tmpGame = std::to_string(volumeGame);
-	char const* vgame = tmpGame.c_str();
 
 	int volumeNen = 50;
 	std::string tmpNen = std::to_string(volumeNen);
-	char const* vnen = tmpNen.c_str();
 
 	vector<Text*> listText;
 	void init();

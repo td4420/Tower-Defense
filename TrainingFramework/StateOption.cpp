@@ -1,72 +1,6 @@
 #include"stdafx.h"
 #include"StateOption.h"
 #include<iostream>
-//void StateOption::init() {
-//	onSound = true;
-//	back->init();
-//	nhacNen->init();
-//	onNhacNen->init();
-//	offNhacNen->init();
-//	changeNhacNen->init();
-//
-//
-//	listText.push_back(back);
-//	listText.push_back(nhacNen);
-//	
-//	listText.push_back(changeNhacNen);
-//	//listText.push_back(onNhacNen);
-//	//listText.push_back(offNhacNen);
-//}
-//void StateOption::Update(float deltaTime) {
-//
-//}
-//void StateOption::Draw(Shaders* textShader, Shaders* shapeShader) {
-//	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-//	for (int i = 0; i < listText.size(); i++) {
-//		listText.at(i)->RenderText(textShader);
-//	}
-//	if (onSound == true) {
-//		onNhacNen->RenderText(textShader);
-//	}
-//	if (onSound == false) {
-//		offNhacNen->RenderText(textShader);
-//	}
-//	std::cout << onSound;
-//}
-//void StateOption::OnMouseOver(int x, int y) {
-//	if (back->checkChoose(x, y) == true) {
-//		back->color = Vector4(0.6, 0.4, 0.5, 1.0);
-//	}
-//	if (back->checkChoose(x, y) == false) {
-//		back->color = Vector4(0.5, 0.5, 0.5, 0.5);
-//	}
-//	if (onNhacNen->checkChoose(x, y) == true) {
-//		onNhacNen->color = Vector4(0.6, 0.4, 0.5, 1.0);
-//	}
-//	if (onNhacNen->checkChoose(x, y) == false) {
-//		onNhacNen->color = Vector4(0.5, 0.5, 0.5, 0.5);
-//	}
-//	if (offNhacNen->checkChoose(x, y) == true) {
-//		offNhacNen->color = Vector4(0.6, 0.4, 0.5, 1.0);
-//	}
-//	if (offNhacNen->checkChoose(x, y) == false) {
-//		offNhacNen->color = Vector4(0.5, 0.5, 0.5, 0.5);
-//	}
-//}
-//void StateOption::OnMouseClick(int x, int y) {
-//	if (back->checkChoose(x, y) == true) {
-//		back->isChoose = true;
-//	}
-//	if (back->checkChoose(x, y) == false) {
-//		back->isChoose = false;
-//	}
-//	if (onSound == true && onNhacNen->checkChoose(x, y) == true) {
-//		onSound = false;
-//	}
-//	else if (onSound == false && offNhacNen->checkChoose(x, y) == true) {
-//		onSound = true;
-//	}
-//}
 
 void StateOption::init()
 {	
@@ -89,7 +23,7 @@ void StateOption::init()
 	nhacNen = new Text("NHAC NEN :", 280, 550, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 1.0, 1.0, 1.0), 78);
 	onNhacNen = new Text("5", 550, 550, "../Font/wingdings2.ttf", 1, 1, Vector4(1.0, 1.0, 1.0, 1.0), 78);
 	offNhacNen = new Text("6", 550, 550, "../Font/wingdings2.ttf", 1, 1, Vector4(1.0, 1.0, 1.0, 1.0), 78);
-	changeNhacNen = new Text(vnen, 450, 550, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 1.0, 1.0, 1.0), 78);
+	changeNhacNen = new Text("50", 450, 550, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 1.0, 1.0, 1.0), 78);
 	giamVolumeNen = new Text("-", 415, 550, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 1.0, 1.0, 1.0), 78);
 	tangVolumeNen = new Text("+", 485, 550, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 1.0, 1.0, 1.0), 78);
 
@@ -97,7 +31,7 @@ void StateOption::init()
 	nhacGame = new Text("NHAC GAME :", 270, 450, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 1.0, 1.0, 1.0), 78);
 	onNhacGame = new Text("5", 550, 450, "../Font/wingdings2.ttf", 1, 1, Vector4(1.0, 1.0, 1.0, 1.0), 78);
 	offNhacGame = new Text("6", 550, 450, "../Font/wingdings2.ttf", 1, 1, Vector4(1.0, 1.0, 1.0, 1.0), 78);
-	changeNhacGame = new Text(vgame, 450, 450, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 1.0, 1.0, 1.0), 78);
+	changeNhacGame = new Text("50", 450, 450, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 1.0, 1.0, 1.0), 78);
 	giamVolumeGame = new Text("-", 415, 450, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 1.0, 1.0, 1.0), 78);
 	tangVolumeGame = new Text("+", 485, 450, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 1.0, 1.0, 1.0), 78);
 
@@ -121,30 +55,26 @@ void StateOption::init()
 	listText.push_back(back);
 
 	listText.push_back(nhacNen);
-	listText.push_back(changeNhacNen);
 	listText.push_back(tangVolumeNen);
 	listText.push_back(giamVolumeNen);
 
 
 	listText.push_back(nhacGame);
-	listText.push_back(changeNhacGame);
+	//listText.push_back(changeNhacGame);
 	listText.push_back(tangVolumeGame);
 	listText.push_back(giamVolumeGame);
 
-	//listText.push_back(changeNhacNen);
-	//listText.push_back(onNhacNen);
-	//listText.push_back(offNhacNen);
+	listText.push_back(changeNhacNen);
+	listText.push_back(changeNhacGame);
+	
 }
 void StateOption::Update(float deltaTime) {
 
 	tmpGame = std::to_string(volumeGame);
-	vgame = tmpGame.c_str();
-	changeNhacGame->text = vgame;
+	changeNhacGame->text = tmpGame.c_str();
 
 	tmpNen = std::to_string(volumeNen);
-	vnen = tmpNen.c_str();
-	changeNhacNen->text = vnen;
-
+	changeNhacNen->text = tmpNen.c_str();
 }
 void StateOption::Draw(Shaders* textShader, Shaders* shapeShader) {
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -291,12 +221,26 @@ void StateOption::OnMouseClick(int x, int y) {
 }
 void StateOption::CleanUp() {
 	delete modelLogo;
+	delete[] textureLogo->mTgaFilePath;
 	delete textureLogo;
+
+	listText.pop_back();
+	listText.pop_back();
+	delete[] changeNhacGame->fileFont;
+	delete[] changeNhacNen->fileFont;
+	delete changeNhacGame;
+	delete changeNhacNen;
+
 	for (int i = 0; i < listText.size(); i++) {
+		listText.at(i)->CleanUp();
 		delete listText.at(i);
 	}
+	onNhacGame->CleanUp();
 	delete onNhacGame;
+	offNhacGame->CleanUp();
 	delete offNhacGame;
+	onNhacNen->CleanUp();
 	delete onNhacNen;
+	offNhacNen->CleanUp();
 	delete offNhacNen;
 }

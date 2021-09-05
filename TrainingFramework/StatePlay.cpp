@@ -4,6 +4,13 @@
 
 StatePlay::StatePlay()
 {
+	Object* upgradeButton = nullptr;
+	Object* sellButton = nullptr;
+	Object* nextWaveButton = nullptr;
+	Object* bgPlay = nullptr;
+	Object* background = nullptr;
+	Object* hpIcon = nullptr;
+	Object* moneyIcon = nullptr;
 }
 
 void StatePlay::init(int mapType)
@@ -207,7 +214,7 @@ void StatePlay::Draw(Shaders * textShaders)
 		glDisable(GL_BLEND);
 		glDisable(GL_SAMPLE_ALPHA_TO_COVERAGE);
 
-		//lives->RenderText(textShaders);
+		lives->RenderText(textShaders);
 		money->RenderText(textShaders);
 
 		/*if (mouseOnTower)
@@ -228,12 +235,10 @@ void StatePlay::Update(float deltaTime)
 		}
 
 		strLives = std::to_string(pf.HP);
-		cLives = strLives.c_str();
-		lives->text = cLives;
+		lives->text = strLives.c_str();
 
 		strMoney = std::to_string(pf.money);
-		cMoney = strMoney.c_str();
-		money->text = cMoney;
+		money->text = strMoney.c_str();
 	}
 }
 
@@ -339,6 +344,9 @@ void StatePlay::OnMouseClick(int x, int y)
 					else {
 						//not enought money
 						cout << "Not enough money!" << endl;
+						t->bullet->CleanUp();
+						delete t->bullet;
+						t->CleanUp();
 						delete t;
 					}
 					
@@ -394,26 +402,75 @@ void StatePlay::OnMouseOver(int x, int y) {
 }
 void StatePlay::CleanUp()
 {
+	delete myShaders;
+	background->CleanUp();
 	delete background;
+	bgPlay->CleanUp();
 	delete bgPlay;
+
 	for (int i = 0; i < towerList.size(); i++) {
 		towerList.at(i)->projectileOnScreen.clear();
+		towerList.at(i)->bullet->CleanUp();
 		delete towerList.at(i)->bullet;
+		towerList.at(i)->CleanUp();
 		delete towerList.at(i);
 	}
 
 	for (int i = 0; i < towerButtonList.size(); i++) {
+		towerButtonList.at(i)->CleanUp();
 		delete towerButtonList.at(i);
+		frameList.at(i)->CleanUp();
 		delete frameList.at(i);
 	}
-	
+
 	for (int i = 0; i < functionButtonList.size(); i++)
 	{
+		functionButtonList.at(i)->CleanUp();
 		delete functionButtonList.at(i);
 	}
+	nextWaveButton->CleanUp();
 	delete nextWaveButton;
+
+	hpIcon->CleanUp();
 	delete hpIcon;
+
+	moneyIcon->CleanUp();
 	delete moneyIcon;
 
+	//lives->CleanUp();
+	delete[] lives->fileFont;
+	delete lives;
+	//money->CleanUp();
+	delete[] money->fileFont;
+	delete money;
+	delete[] towerStat->fileFont;
+	delete towerStat;
+
+	gameOverText->CleanUp();
+	delete gameOverText;
+	winText->CleanUp();
+	delete winText;
+
 	pf.CleanUp();
+}
+
+void StatePlay::CleanUpIfNotInit()
+{
+	delete myShaders;
+
+	//lives->CleanUp();
+	delete[] lives->fileFont;
+	delete lives;
+	//money->CleanUp();
+	delete[] money->fileFont;
+	delete money;
+	delete[] towerStat->fileFont;
+	delete towerStat;
+
+	gameOverText->CleanUp();
+	delete gameOverText;
+	winText->CleanUp();
+	delete winText;
+
+	pf.CleanUpEnemies();
 }

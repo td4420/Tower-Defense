@@ -17,6 +17,7 @@ void Object::SetWorldMatrix()
 Object::Object()
 {
 	//o_Id = 0;
+	o_Model = nullptr;
 }
 
 Object::Object(Model* model, Texture* texture, Shaders* shader) {
@@ -100,4 +101,15 @@ Object::Object(Object* o)
 Object::~Object()
 {
 
+}
+
+void Object::CleanUp()
+{
+	delete o_Model;
+
+	for (int i = 0; i < o_Texture.size(); i++)
+	{
+		delete[] o_Texture.at(i)->mTgaFilePath;//bug once enemy is out
+		delete o_Texture.at(i);
+	}
 }

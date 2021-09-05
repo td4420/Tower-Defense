@@ -71,13 +71,14 @@ public:
 	bool uWin = false;
 	float timeSinceLastSpawn = 15.0f;
 	int waveNum = 0;//save the number of waves in a lv;
-	Shaders* myShaders = new Shaders();
+	Shaders* myShaders;
 
 	void Init(Shaders* myShaders, int mapType);
 	void Draw(Shaders* textShaders);
 	void InitEnemyWave();
 	void SpawnEnemy();
 	void CleanUp();
+	void CleanUpEnemies();
 	void Update(float deltaTime);
 	bool CheckSpawnTime();
 

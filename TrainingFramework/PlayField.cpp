@@ -8,15 +8,36 @@ PlayField::PlayField()
 {
 	money = 1200;
 	HP = 20;
+
+	myShaders = nullptr;
 }
 
 void PlayField::CleanUp()
 {
+	for (int i = 0; i < mapHeight; i++)
+	{
+		for (int j = 0; j < mapWidth; j++)
+		{
+			delete[] TileMap[i][j].tileTexture.mTgaFilePath;
+		}
+	}
+
+	CleanUpEnemies();
+}
+
+void PlayField::CleanUpEnemies()
+{
+	cout << "E only" << endl;
 	for (int i = 0; i < 10; i++)
 	{
-		//normal[i]->CleanUp();
-		//fast[i]->CleanUp();
-		//tank[i]->CleanUp();
+		
+		//normal[i]->animation.CleanUp();
+		//fast[i]->animation.CleanUp();
+		//tank[i]->animation.CleanUp();
+		
+		normal[i]->CleanUp();
+		fast[i]->CleanUp();
+		tank[i]->CleanUp();
 
 		delete normal[i];
 		delete fast[i];

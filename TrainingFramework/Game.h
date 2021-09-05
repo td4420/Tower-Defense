@@ -16,8 +16,6 @@ public:
 	StateBase::StateControl curState;
 
 	StateMap* stateMap = new StateMap();
-	StateLogo* stateLogo = new StateLogo();
-	StateWelcome* stateWelcome = new StateWelcome();
 	StateMenu* stateMenu = new StateMenu();
 	StateOption* stateOption = new StateOption();
 	StatePlay* statePlay = new StatePlay();
@@ -33,5 +31,5 @@ public:
 	void OnMouseClick(int x, int y);
 	bool findStack(stack<StateBase::StateControl> stack,  StateBase::StateControl state);
 	void getCurState();
-
+	void CleanUp();
 };

@@ -6,7 +6,8 @@
 
 Tile::Tile()
 {
-
+	myShaders = nullptr;
+	tileTexture.mTgaFilePath = nullptr;
 }
 
 Tile::Tile(int type, int numX, int numY)//leak

@@ -25,7 +25,7 @@ public:
 
 	void GenerateSoundEffect();
 	void BufferSoundEffect();
-	
+	//void CleanUp();
 
 	static SoundController* GetInstance();
 };

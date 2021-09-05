@@ -15,7 +15,8 @@ public:
 	char* fileFont;
 	int size;
 	bool isChoose = false;
-	float moveSpeed = 0;
+	int initCount = 0;
+
 
 	FT_Library m_ft;
 	FT_Face m_face;
@@ -27,7 +28,7 @@ public:
 	void RenderText(Shaders* shader);
 	bool checkChoose(int x, int y);
 	void highLight();
-	void Move();
+	void CleanUp();
 
 	Text(const char* fileFont, float x, float y, int size, float scaleX, float scaleY, Vector4 color);
 	Text(const char* s, float x, float y, const char* fileFont, float scaleX, float scaleY, Vector4 color, int size);

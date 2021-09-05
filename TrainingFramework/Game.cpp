@@ -52,6 +52,7 @@ void Game::init() {
 	curState = StateBase::StateControl::StateMenu;
 	
 }
+
 void Game::OnMouseOver(int x, int y) {
 	if (curState == StateBase::StateControl::StatePlay) {
 		statePlay->OnMouseOver(x, y);
@@ -62,9 +63,7 @@ void Game::OnMouseOver(int x, int y) {
 	else if (curState == StateBase::StateControl::StateOption) {
 		stateOption->OnMouseOver(x, y);
 	}
-	else if (curState == StateBase::StateControl::StateWelcome) {
-	stateWelcome->OnMouseOver(x, y);
-	}
+	
 	else if (curState == StateBase::StateControl::StateHelp) {
 		stateHelp->OnMouseOver(x, y);
 	}
@@ -82,9 +81,7 @@ void Game::OnMouseClick(int x, int y) {
 	else if (curState == StateBase::StateControl::StateOption) {
 		stateOption->OnMouseClick(x, y);
 	}
-	else if (curState == StateBase::StateControl::StateWelcome) {
-		stateWelcome->OnMouseClick(x, y);
-	}
+	
 	else if (curState == StateBase::StateControl::StateHelp) {
 		stateHelp->OnMouseClick(x, y);
 	}
@@ -147,8 +144,30 @@ void Game::getCurState() {
 	}
 	//quit
 	else if (curState == StateBase::StateControl::StateMenu && stateMenu->quit->isChoose == true) {
+		this->CleanUp();
+		delete this;
 		cout << "Good Bye!" << endl;
 		exit(-1);
 	}
 }
 
+void Game::CleanUp()
+{
+	stateMenu->CleanUp();
+	stateHelp->CleanUp();
+	stateOption->CleanUp();
+	stateMap->CleanUp();
+
+	if (initCount == 0) statePlay->CleanUpIfNotInit();
+	else
+	{
+		statePlay->CleanUp();
+	}
+
+
+	delete stateMenu;
+	delete stateHelp;
+	delete stateOption;
+	delete stateMap;
+	delete statePlay;
+}

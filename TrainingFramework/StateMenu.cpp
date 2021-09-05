@@ -217,8 +217,11 @@ StateMenu::~StateMenu() {
 }
 void StateMenu::CleanUp() {
 	delete modelMenu;
+
+	delete[] textureMenu->mTgaFilePath;
 	delete textureMenu;
 	for (int i = 0; i < listText.size(); i++) {
+		listText.at(i)->CleanUp();
 		delete listText.at(i);
 	}
 }

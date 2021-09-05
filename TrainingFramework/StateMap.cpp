@@ -102,5 +102,17 @@ void StateMap::OnMouseClick(int x, int y) {
 	}
 }
 void StateMap::CleanUp() {
+	back->CleanUp();
+	M1->CleanUp();
+	M2->CleanUp();
 	delete back;
+	delete M1;
+	delete M2;
+
+	bg->CleanUp();
+	map1->CleanUp();
+	map2->CleanUp();
+	delete bg;
+	delete map1;
+	delete map2;
 }

@@ -12,7 +12,7 @@ class Object
 public:
 	
 	int o_Id;
-	Model* o_Model = new Model();
+	Model* o_Model;
 	int numberOfTexture, numberOfCube;
 	vector<Texture*> o_Texture;
 	Shaders *o_shaders;
@@ -32,5 +32,5 @@ public:
 	void SetWorldMatrix();
 	void setMVPMatrix(Matrix v, Matrix p);
 	void Build(float x, float y);
-	
+	void CleanUp();
 };

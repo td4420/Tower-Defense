@@ -12,10 +12,6 @@ class Enemies :
 	public Object
 {
 public:
-	/*enum EnemyType
-	{
-		NORMAL, FAST, TANK
-	};*/
 	int enemyType;//1:normal, 2:fast, 3:tank
 
 	Vector2 enemyPos;
@@ -23,11 +19,6 @@ public:
 	int lastLocationX = 0, lastLocationY = 0;
 	int maxHP = 60;
 	int currentHP = 60;
-
-	/*string strHP = std::to_string(currentHP);
-	char const* charHp = strHP.c_str();
-	Text* HP = new Text(charHp, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 0.0, 0.0, 1.0), 45, o_position.x, o_position.y + 0.02f);*/
-	//Text* HP = new Text(charHp, 810, 200, "../Font/OceanSummer.ttf", 1, 1, Vector4(1.0, 0.0, 0.0, 1.0), 45);
 
 	float movementSpeed = 0.001f;
 	float fixedSpeed = movementSpeed;
@@ -61,8 +52,6 @@ public:
 	void MoveToRight(float deltaTime);
 	void MoveUp(float deltaTime);
 	void MoveDown(float deltaTime);
-	//void DrawHP(Shaders *textShaders);
 	void Update(float deltaTime, int NumMap[7][8]);
-	void CleanUp();
 	void CheckSlowed();
 };

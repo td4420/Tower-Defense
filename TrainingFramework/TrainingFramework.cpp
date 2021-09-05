@@ -94,11 +94,12 @@ void TouchActionMove(ESContext* esContext, int x, int y)
 }
 void CleanUp()
 {
-	myGame->stateMenu->CleanUp();
-	myGame->statePlay->CleanUp();
-	myGame->stateOption->CleanUp();
-	myGame->stateHelp->CleanUp();
+	//SoundController::GetInstance()->CleanUp();
+	myGame->CleanUp();
 	delete myGame;
+
+	delete textShader;
+	delete myShaders;
 }
 
 void printFPS() {
@@ -130,15 +131,13 @@ int _tmain(int argc, TCHAR* argv[])
 	esRegisterMouseUpFunc(&esContext, TouchActionUp);
 	esRegisterMouseMoveFunc(&esContext, TouchActionMove);
 	esRegisterMouseDragFunc(&esContext, TouchActionDrag);
-	//printFPS();
+	
 	esMainLoop(&esContext);
 
 	//releasing OpenGL resources
 	CleanUp();
 
 	//identifying memory leaks
-	//MemoryDump();
-	//printf("Press any key...\n");
 	cout << "Thank you for playing:) Good Bye!" << endl;
 	_getch();
 

@@ -65,6 +65,9 @@ void StateHelp::OnMouseClick(int x, int y) {
 }
 void StateHelp::CleanUp() {
 	delete model;
+	delete[] texture->mTgaFilePath;
 	delete texture;
+
+	back->CleanUp();
 	delete back;
 }

@@ -13,7 +13,8 @@ public:
 	vector<Texture*> fastMoveRight;
 	vector<Texture*> tankMoveLeft;
 	vector<Texture*> tankMoveRight;
-	void Init();
+	void Init(int type);
+	void CleanUp();
 	int GetAnimationMoveRight(int type);
 	int GetAnimationMoveLeft(int type);
 };

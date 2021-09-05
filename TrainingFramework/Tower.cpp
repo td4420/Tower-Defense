@@ -10,8 +10,6 @@ Tower::Tower()
 
 Tower::Tower(int type)
 {
-	
-
 	towerType = type;
 	o_Model = new Model("../Resources/model.nfg");
 	reloadSpeed = 0.1f;

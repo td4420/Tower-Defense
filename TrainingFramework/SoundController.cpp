@@ -67,4 +67,11 @@ void SoundController::BufferSoundEffect()
 	upgradeTowerS.setBuffer(m_SoundBuffers.at(5));
 }
 
+//void SoundController::CleanUp()
+//{
+//	for (int i = 0; i < SoundController::m_SoundList.size(); i++)
+//	{
+//		delete &SoundController::m_SoundList.at(i);
+//	}
+//}
 

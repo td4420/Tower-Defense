@@ -35,8 +35,6 @@ public:
     void SetTarget();
     void Update(vector <Enemies*> enemyWave);
     bool CheckReload();
-    void CleanUp();
-   
     
     Tower();
     Tower(int towerType);

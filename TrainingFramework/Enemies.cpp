@@ -22,7 +22,7 @@ Enemies::Enemies(int type)
 	MVP = Scale * Rotation * Translation;
 	slowTime = 0.0f;
 	enemyType = type;
-	animation.Init();
+	animation.Init(enemyType);
 
 	if (type == 1)
 	{
@@ -62,7 +62,7 @@ Enemies::Enemies(int type)
 
 	if (type == 3)
 	{
-		o_Texture.push_back(new Texture("../ResourcesPacket/Textures/tanker.tga"));
+		//o_Texture.push_back(new Texture("../ResourcesPacket/Textures/tanker.tga"));
 		maxHP = 300;
 		currentHP = maxHP;
 		movementSpeed = 0.09f;
@@ -88,8 +88,6 @@ Enemies::Enemies(int type)
 			o_Texture.push_back(animation.tankMoveRight.at(j));
 		}
 	}
-	//HP->moveSpeed = movementSpeed;
-	//HP->init();
 }
 
 Enemies::Enemies(Enemies* e)
@@ -185,16 +183,7 @@ void Enemies::MoveEnemies(float deltaTime, int NumMap[7][8])
 	if (enemyType == 1) temp = animation.normalMoveLeft.size() + 1;
 	if (enemyType == 2) temp = animation.fastMoveLeft.size() + 1;
 	if (enemyType == 3 || enemyType == 4) temp = animation.tankMoveLeft.size() + 1;
-	/*int NumMap[7][8] =
-	{
-		1,1,0,0,0,0,0,0,
-		0,1,1,0,0,0,0,0,
-		0,0,1,1,1,1,1,0,
-		0,0,0,0,0,0,1,0,
-		0,1,1,1,1,1,1,0,
-		0,1,0,0,0,0,0,0,
-		0,1,1,1,1,1,1,1
-	};*/
+	
 	if ((locationX - 1 != lastLocationX) && // To not move back
 		locationX > 0 && NumMap[locationY][locationX - 1] == 1)  // Check if can move
 	{
@@ -290,13 +279,4 @@ void Enemies::Reset()
 	Rotation.SetIdentity();
 	Translation.SetIdentity();
 	MVP = Scale * Rotation * Translation;
-}
-
-void Enemies::CleanUp()
-{
-	delete o_Model;
-	for (int i = 0; i < o_Texture.size(); i++)
-	{
-		delete o_Texture.at(i);
-	}
 }

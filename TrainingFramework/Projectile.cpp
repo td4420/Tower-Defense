@@ -22,7 +22,7 @@ Projectile::Projectile(int type)
 
 	if (type == 0)
 	{
-		o_Texture.push_back(new Texture ("../ResourcesPacket/Textures/fireBullet.tga"));
+		o_Texture.push_back(new Texture("../ResourcesPacket/Textures/fireBullet.tga"));
 	}
 
 	if (type == 1)
