@@ -158,9 +158,14 @@ void Game::CleanUp()
 	stateOption->CleanUp();
 	stateMap->CleanUp();
 
-	if (initCount == 0) statePlay->CleanUpIfNotInit();
+	if (initCount == 0)
+	{
+		cout << "INIT" << endl;
+		statePlay->CleanUpIfNotInit();
+	}
 	else
 	{
+		//cout << "Te" << endl;
 		statePlay->CleanUp();
 	}
 

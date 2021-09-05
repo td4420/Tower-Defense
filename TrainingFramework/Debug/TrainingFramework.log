@@ -1,1 +1,30 @@
-﻿
+﻿cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  StatePlay.cpp
+C:\Users\LaptopAZ.vn\source\repos\Giant_TD\TrainingFramework\StatePlay.cpp(75,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\LaptopAZ.vn\source\repos\Giant_TD\TrainingFramework\StatePlay.cpp(102,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\LaptopAZ.vn\source\repos\Giant_TD\TrainingFramework\StatePlay.cpp(186,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\LaptopAZ.vn\source\repos\Giant_TD\TrainingFramework\StatePlay.cpp(191,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\LaptopAZ.vn\source\repos\Giant_TD\TrainingFramework\StatePlay.cpp(195,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\LaptopAZ.vn\source\repos\Giant_TD\TrainingFramework\StatePlay.cpp(199,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\LaptopAZ.vn\source\repos\Giant_TD\TrainingFramework\StatePlay.cpp(233,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\LaptopAZ.vn\source\repos\Giant_TD\TrainingFramework\StatePlay.cpp(247,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\LaptopAZ.vn\source\repos\Giant_TD\TrainingFramework\StatePlay.cpp(284,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\LaptopAZ.vn\source\repos\Giant_TD\TrainingFramework\StatePlay.cpp(296,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\LaptopAZ.vn\source\repos\Giant_TD\TrainingFramework\StatePlay.cpp(327,49): warning C4018: '<': signed/unsigned mismatch
+C:\Users\LaptopAZ.vn\source\repos\Giant_TD\TrainingFramework\StatePlay.cpp(411,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\LaptopAZ.vn\source\repos\Giant_TD\TrainingFramework\StatePlay.cpp(419,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\LaptopAZ.vn\source\repos\Giant_TD\TrainingFramework\StatePlay.cpp(426,20): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  Compiling...
+  TrainingFramework.cpp
+C:\Users\LaptopAZ.vn\source\repos\Giant_TD\TrainingFramework\StateWelcome.h(21,16): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\LaptopAZ.vn\source\repos\Giant_TD\TrainingFramework\StateWelcome.h(22,11): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\LaptopAZ.vn\source\repos\Giant_TD\TrainingFramework\StateWelcome.h(23,19): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\LaptopAZ.vn\source\repos\Giant_TD\TrainingFramework\TrainingFramework.cpp(34,33): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+  Game.cpp
+C:\Users\LaptopAZ.vn\source\repos\Giant_TD\TrainingFramework\StateWelcome.h(21,16): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\LaptopAZ.vn\source\repos\Giant_TD\TrainingFramework\StateWelcome.h(22,11): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\LaptopAZ.vn\source\repos\Giant_TD\TrainingFramework\StateWelcome.h(23,19): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+  Generating Code...
+Animation.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
+  TrainingFramework.vcxproj -> C:\Users\LaptopAZ.vn\Source\Repos\Giant_TD\BIN\TrainingFramework.exe

@@ -17,7 +17,7 @@ void StatePlay::init(int mapType)
 {
 	lives->init();
 	money->init();
-	towerStat->init();
+	//towerStat->init();
 	gameOverText->init();
 	winText->init();
 	
@@ -296,13 +296,13 @@ int StatePlay::FindIndexOfTower(int x, int y)
 	for (int i = 0; i < towerList.size(); i++) {
 		Vector3 o_positon = towerList.at(i)->o_position;
 		if (xPos * 0.15f == o_positon.x && yPos * -0.2f == o_positon.y && towerList.at(i)!=nullptr) {
-			mouseOnTower = true;
+			/*mouseOnTower = true;
 			
 			strTowerDmg = std::to_string(towerList.at(i)->damage);
 			strTowerSellFor = std::to_string(towerList.at(i)->cost / 2);
 			strTowerStats = "Damage " + strTowerDmg + " " + strTowerSellFor + "$";
 
-			towerStat->text = strTowerStats.c_str();
+			towerStat->text = strTowerStats.c_str();*/
 			//cout << "Mouse on tower at tile " << xPos << " " << yPos << endl;
 			return i;
 		}
@@ -443,8 +443,8 @@ void StatePlay::CleanUp()
 	//money->CleanUp();
 	delete[] money->fileFont;
 	delete money;
-	delete[] towerStat->fileFont;
-	delete towerStat;
+	//delete[] towerStat->fileFont;
+	//delete towerStat;
 
 	gameOverText->CleanUp();
 	delete gameOverText;
@@ -464,8 +464,8 @@ void StatePlay::CleanUpIfNotInit()
 	//money->CleanUp();
 	delete[] money->fileFont;
 	delete money;
-	delete[] towerStat->fileFont;
-	delete towerStat;
+	//delete[] towerStat->fileFont;
+	//delete towerStat;
 
 	gameOverText->CleanUp();
 	delete gameOverText;

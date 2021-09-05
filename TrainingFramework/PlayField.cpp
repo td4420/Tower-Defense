@@ -27,7 +27,6 @@ void PlayField::CleanUp()
 
 void PlayField::CleanUpEnemies()
 {
-	cout << "E only" << endl;
 	for (int i = 0; i < 10; i++)
 	{
 		

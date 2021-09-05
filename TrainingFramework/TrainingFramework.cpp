@@ -12,7 +12,7 @@
 #include"StateWelcome.h"
 #include"StatePlay.h"
 #include"Game.h"
-//#include "vld.h"
+#include "vld.h"
 #include <chrono>
 #include "SFML/Audio.hpp"
 using namespace std;
