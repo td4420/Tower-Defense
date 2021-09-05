@@ -1,1 +1,6 @@
-﻿  TrainingFramework.vcxproj -> D:\Dao_3DFrameworkTraining\BIN\TrainingFramework.exe
+﻿cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  Game.cpp
+C:\Users\Admin\source\repos\temp\TrainingFramework\StateWelcome.h(21,16): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\Admin\source\repos\temp\TrainingFramework\StateWelcome.h(22,11): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\Admin\source\repos\temp\TrainingFramework\StateWelcome.h(23,19): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+  TrainingFramework.vcxproj -> C:\Users\Admin\Source\Repos\temp\BIN\TrainingFramework.exe

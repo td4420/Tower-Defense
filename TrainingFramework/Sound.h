@@ -4,7 +4,7 @@
 
 class Sound {
 public:
-	std::string m_SoundPath= "placetower.wav";
+	std::string m_SoundPath;
 	float m_SoundPitch = 1.0f;
 	float m_Volume = 90.0f;
 	bool m_Loop = false;

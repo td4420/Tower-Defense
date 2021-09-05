@@ -37,6 +37,8 @@ Game* myGame = new Game();
 
 int Init(ESContext* esContext)
 {
+	//Buffer sounds for tower
+	SoundController::GetInstance();
 	myGame->init();
 	
 	myShaders->Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");

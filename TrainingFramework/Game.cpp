@@ -3,15 +3,15 @@
 #include"StateBase.h"
 using namespace std;
 void Game::Update(float deltaTime) {
+
 	
 	if (curState == StateBase::StateControl::StateMenu) {
 		stateMenu->Update(deltaTime);
-	}
-	
-	else if (curState == StateBase::StateControl::StateOption) {
+	}else if (curState == StateBase::StateControl::StateOption) {
 		stateOption->Update(deltaTime);
 	}else if (curState == StateBase::StateControl::StatePlay) {
 		statePlay->Update(deltaTime);
+
 	}
 	else if (curState == StateBase::StateControl::StateHelp) {
 		stateHelp->Update(deltaTime);
@@ -23,13 +23,17 @@ void Game::Draw(Shaders* textShader, Shaders* shapeShader) {
 	if (curState == StateBase::StateControl::StateMenu) {
 		stateMenu->Draw(textShader, shapeShader);
 		
+		curThemeMusic.openFromFile("./Sound/menutheme2.wav");
+		curThemeMusic.setLoop(true);
+		curThemeMusic.setVolume(35);
+		curThemeMusic.play(); 
 	}
 	else if (curState == StateBase::StateControl::StateOption) {
 		stateOption->Draw(textShader, shapeShader);
-		
+				
 	}else if (curState == StateBase::StateControl::StatePlay) {
 		statePlay->Draw(textShader);
-	
+		
 	}
 	else if (curState == StateBase::StateControl::StateMap) {
 		stateMap->Draw(textShader, shapeShader);

@@ -9,6 +9,7 @@
 #include"StateHelp.h"
 #include"StateMap.h"
 #include<stack>
+#include "SFML/Audio.hpp"
 using namespace std;
 class Game  {
 public:
@@ -22,6 +23,7 @@ public:
 	StatePlay* statePlay = new StatePlay();
 	StateHelp* stateHelp = new StateHelp();
 	
+	sf::Music curThemeMusic;
 	int initCount = 0;
 
 	void Update(float deltaTime);

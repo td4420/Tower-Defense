@@ -10,7 +10,7 @@ Tower::Tower()
 
 Tower::Tower(int type)
 {
-	SoundController::GetInstance();
+	
 
 	towerType = type;
 	o_Model = new Model("../Resources/model.nfg");
@@ -250,9 +250,14 @@ void Tower::Shoot()//put in Draw();
 		
 			bullet->o_shaders = o_shaders;
 			bullet->target = currentTarget;
-			if (towerType != 2) bullet->SetFiringLocation(o_position.x, o_position.y);
-			if (towerType == 2) bullet->SetFiringLocation(currentTarget->o_position.x - 0.05f, currentTarget->o_position.y + 0.15f);
-
+			if (towerType != 2) {
+				SoundController::GetInstance()->tower1Shoot.play();
+				bullet->SetFiringLocation(o_position.x, o_position.y);
+			}
+			if (towerType == 2) {
+				SoundController::GetInstance()->tower3Shoot.play();
+				bullet->SetFiringLocation(currentTarget->o_position.x - 0.05f, currentTarget->o_position.y + 0.15f);
+			}
 			if (projectileOnScreen.empty()) projectileOnScreen.push_back(bullet);
 		}
 

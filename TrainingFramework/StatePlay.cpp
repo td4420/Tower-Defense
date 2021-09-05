@@ -371,7 +371,7 @@ void StatePlay::OnMouseClick(int x, int y)
 				delete towerList.at(index)->bullet;
 				delete towerList.at(index);
 				towerList.erase(towerList.begin() + index);
-
+				SoundController::GetInstance()->sellTowerS.play();
 				selectMenuOption = -1;
 			}
 			if (!CheckSelectionOption(x, y)) selectMenuOption = -1;

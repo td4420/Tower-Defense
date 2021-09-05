@@ -43,7 +43,6 @@ void SoundController::GenerateSoundEffect()
 	SoundController::m_SoundList.push_back(Sound::Sound(SHOOT_TOWER_3));
 	SoundController::m_SoundList.push_back(Sound::Sound(SELL_TOWER));
 	
-
 	
 	for (int i = 0; i < SoundController::m_SoundList.size(); i++)
 	{
@@ -59,12 +58,12 @@ void SoundController::BufferSoundEffect()
 		SoundController::m_SoundBuffers.push_back(SoundController::m_SoundList.at(i).GetSoundBuffer());
 		
 	}
-	std::cout << m_SoundBuffers.size();
+	//std::cout << m_SoundBuffers.size();
 	placeTowerS.setBuffer(m_SoundBuffers.at(4));
 	sellTowerS.setBuffer(m_SoundBuffers.at(9));
-	Tower1Shoot.setBuffer(m_SoundBuffers.at(6));
-	Tower2Shoot.setBuffer(m_SoundBuffers.at(7));
-	Tower3Shoot.setBuffer(m_SoundBuffers.at(8));
+	tower1Shoot.setBuffer(m_SoundBuffers.at(6));
+	tower2Shoot.setBuffer(m_SoundBuffers.at(7));
+	tower3Shoot.setBuffer(m_SoundBuffers.at(8));
 	upgradeTowerS.setBuffer(m_SoundBuffers.at(5));
 }
 
