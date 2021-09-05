@@ -29,15 +29,17 @@ void PlayField::CleanUpEnemies()
 {
 	for (int i = 0; i < 10; i++)
 	{
-		
+
 		//normal[i]->animation.CleanUp();
 		//fast[i]->animation.CleanUp();
 		//tank[i]->animation.CleanUp();
-		
-		normal[i]->CleanUp();
-		fast[i]->CleanUp();
-		tank[i]->CleanUp();
 
+		//normal[i]->CleanUp();
+		//fast[i]->CleanUp();
+		//tank[i]->CleanUp();
+		delete normal[i]->o_Model;
+		delete fast[i]->o_Model;
+		delete tank[i]->o_Model;
 		delete normal[i];
 		delete fast[i];
 		delete tank[i];

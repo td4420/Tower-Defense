@@ -2,16 +2,16 @@
 #include"stdafx.h"
 #include "SoundController.h"
 #include <iostream>
-#define LEVEL_COMPLETE_MUSIC "./Sound/levelcomplete.wav"
-#define BOSS_ALARM "./Sound/bossalarm.wav"
-#define LOSE "./Sound/lose.wav"
-#define LOSE2 "./Sound/lose2.wav"
-#define PLACE_TOWER "./Sound/placetower.wav"
-#define UPGRADE_TOWER "./Sound/upgrade.wav"
-#define SHOOT_TOWER_1 "./Sound/shoot1.wav"
-#define SHOOT_TOWER_2 "./Sound/shoot2.wav"
-#define SHOOT_TOWER_3 "./Sound/shoot3.wav"
-#define SELL_TOWER "./Sound/selltower.wav"
+#define LEVEL_COMPLETE_MUSIC "../Sound/levelcomplete.wav"
+#define BOSS_ALARM "../Sound/bossalarm.wav"
+#define LOSE "../Sound/lose.wav"
+#define LOSE2 "../Sound/lose2.wav"
+#define PLACE_TOWER "../Sound/placetower.wav"
+#define UPGRADE_TOWER "../Sound/upgrade.wav"
+#define SHOOT_TOWER_1 "../Sound/shoot1.wav"
+#define SHOOT_TOWER_2 "../Sound/shoot2.wav"
+#define SHOOT_TOWER_3 "../Sound/shoot3.wav"
+#define SELL_TOWER "../Sound/selltower.wav"
 
 
 SoundController* SoundController::s_Instance = NULL;

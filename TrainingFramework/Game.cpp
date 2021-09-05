@@ -23,7 +23,7 @@ void Game::Draw(Shaders* textShader, Shaders* shapeShader) {
 	if (curState == StateBase::StateControl::StateMenu) {
 		stateMenu->Draw(textShader, shapeShader);
 		
-		curThemeMusic.openFromFile("./Sound/menutheme2.wav");
+		curThemeMusic.openFromFile("../Sound/menutheme2.wav");
 		curThemeMusic.setLoop(true);
 		curThemeMusic.setVolume(35);
 		curThemeMusic.play(); 
